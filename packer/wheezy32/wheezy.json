@@ -31,10 +31,9 @@
     {
       "type": "shell",
       "scripts": [
-        "script/base.sh",
-        "script/vagrant.sh",
-        "script/guestadditions.sh",
-        "script/cleanup.sh"
+        "scripts/base.sh",
+        "scripts/guestadditions.sh",
+        "scripts/cleanup.sh"
       ],
       "override": {
         "virtualbox": {

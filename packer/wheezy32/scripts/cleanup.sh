@@ -1,3 +1,6 @@
+# dhcp cleanup
+rm /var/lib/dhcp/*
+
 # cleanup
 apt-get -y autoremove
 apt-get -y clean
