@@ -13,9 +13,9 @@
         "<esc><wait>",
         "auto <wait>",
         "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
-        "netcfg/get_hostname={{ .Name }} <wait>",
-        "netcfg/get_domain=vagrantup.com <wait>",
-        "debconf/frontend=noninteractive <wait>",
+        "hostname={{ .Name }} <wait>",
+        "domain=vagrantup.com <wait>",
+        "frontend=noninteractive <wait>",
         "<enter><wait>"
       ],
       "ssh_password": "vagrant",
