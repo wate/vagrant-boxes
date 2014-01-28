@@ -1,7 +1,7 @@
 {
   "builders": [
     {
-      "type": "virtualbox",
+      "type": "virtualbox-iso",
       "guest_os_type": "Debian",
       "disk_size": 10240,
       "iso_url": "http://cdimage.debian.org/debian-cd/current/i386/iso-cd/debian-7.3.0-i386-netinst.iso",
@@ -36,7 +36,7 @@
         "scripts/cleanup.sh"
       ],
       "override": {
-        "virtualbox": {
+        "virtualbox-iso": {
           "execute_command": "echo 'vagrant'|sudo -S bash '{{.Path}}'"
         }
       }
