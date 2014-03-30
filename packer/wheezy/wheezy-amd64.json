@@ -3,7 +3,7 @@
     {
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
-      "disk_size": 10240,
+      "disk_size": 40960,
       "iso_url": "http://cdimage.debian.org/debian-cd/7.4.0/amd64/iso-cd/debian-7.4.0-amd64-netinst.iso",
       "iso_checksum_type": "md5",
       "iso_checksum": "e7e9433973f082a297793c3c5010b2c5",
