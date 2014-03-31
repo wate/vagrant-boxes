@@ -1,5 +1,5 @@
 # GuestAdditions setup
-apt-get -y purge virtualbox-guest-utils
+apt-get -y purge virtualbox-guest-utils xauth
 apt-get -y install dkms
 apt-get -y autoremove
 
