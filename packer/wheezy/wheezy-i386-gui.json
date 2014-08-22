@@ -2,17 +2,17 @@
   "builders": [
     {
       "type": "virtualbox-iso",
-      "guest_os_type": "Debian_64",
+      "guest_os_type": "Debian",
       "disk_size": 40960,
-      "iso_url": "http://cdimage.debian.org/debian-cd/7.6.0/amd64/iso-cd/debian-7.6.0-amd64-netinst.iso",
+      "iso_url": "http://cdimage.debian.org/debian-cd/7.6.0/i386/iso-cd/debian-7.6.0-i386-netinst.iso",
       "iso_checksum_type": "md5",
-      "iso_checksum": "8a3c2ad7fd7a9c4c7e9bcb5cae38c135",
+      "iso_checksum": "528e1a7315da1bbf50bd4d187880a519",
       "http_directory": "preseed",
       "boot_wait": "5s",
       "boot_command": [
         "<esc><wait>",
         "auto <wait>",
-        "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+        "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed-gui.cfg <wait>",
         "hostname={{ .Name }} <wait>",
         "domain=vagrantup.com <wait>",
         "frontend=noninteractive <wait>",
@@ -32,7 +32,7 @@
       "type": "shell",
       "scripts": [
         "scripts/base.sh",
-        "scripts/guestadditions.sh",
+        "scripts/guestadditions-gui.sh",
         "scripts/cleanup.sh"
       ],
       "override": {
@@ -45,7 +45,7 @@
   "post-processors": [
     {
       "type": "vagrant",
-      "output": "debian-wheezy-amd64.box"
+      "output": "debian-wheezy-i386-gui.box"
     }
   ]
 }
