@@ -4,9 +4,9 @@
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
       "disk_size": 40960,
-      "iso_url": "http://cdimage.debian.org/cdimage/jessie_di_beta_1/amd64/iso-cd/debian-jessie-DI-b1-amd64-netinst.iso",
+      "iso_url": "http://cdimage.debian.org/cdimage/jessie_di_rc1/amd64/iso-cd/debian-jessie-DI-rc1-amd64-netinst.iso",
       "iso_checksum_type": "md5",
-      "iso_checksum": "8a386a16ab2939e00bfd5efa27007216",
+      "iso_checksum": "2ab639aa971279f2cfbe45ea01a51529",
       "http_directory": "preseed",
       "boot_wait": "5s",
       "boot_command": [
