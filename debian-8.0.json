@@ -1,6 +1,11 @@
 {
+  "variables": {
+    "version": "",
+    "cloud_token": ""
+  },
   "builders": [
     {
+      "name": "debian-8.0",
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
       "disk_size": 40960,
@@ -31,9 +36,9 @@
     {
       "type": "shell",
       "scripts": [
-        "scripts/base.sh",
-        "scripts/guestadditions.sh",
-        "scripts/cleanup.sh",
+        "scripts/debian/base.sh",
+        "scripts/debian/guestadditions.sh",
+        "scripts/debian/cleanup.sh",
         "scripts/minimize.sh"
       ],
       "override": {
@@ -47,6 +52,12 @@
     {
       "type": "vagrant",
       "output": "debian-8.0.box"
+    },
+    {
+      "type": "vagrant-cloud",
+      "box_tag": "wate/debian-8.0",
+      "access_token": "{{user `cloud_token`}}",
+      "version": "{{user `version`}}"
     }
   ]
 }

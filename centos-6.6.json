@@ -1,9 +1,14 @@
 {
+  "variables": {
+    "version": "0.0.1",
+    "cloud_token": ""
+  },
   "builders": [
     {
       "boot_command": [
         "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos-6.6/ks.cfg<enter><wait>"
       ],
+      "name": "centos-6.6",
       "boot_wait": "10s",
       "disk_size": 40960,
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
@@ -37,12 +42,6 @@
       "vm_name": "centos-6.6"
     }
   ],
-  "post-processors": [
-    {
-      "output": "centos-6.6.box",
-      "type": "vagrant"
-    }
-  ],
   "provisioners": [
     {
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
@@ -54,5 +53,17 @@
       ],
       "type": "shell"
     }
+  ],
+  "post-processors": [
+    {
+      "output": "centos-6.6.box",
+      "type": "vagrant"
+      },
+      {
+        "type": "vagrant-cloud",
+        "box_tag": "wate/centos-6.6",
+        "access_token": "{{user `cloud_token`}}",
+        "version": "{{user `version`}}"
+      }
   ]
 }
