@@ -1,3 +1,7 @@
+#!/bin/bash -eux
+
+rm -rf /dev/.udev/
+
 # dhcp cleanup
 rm /var/lib/dhcp/*
 rm /etc/resolv.conf

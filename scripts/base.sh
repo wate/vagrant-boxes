@@ -1,5 +1,11 @@
+#!/bin/bash -eux
+
+apt-get update
+apt-get -y upgrade
+
 # add ssh confguration
 echo "UseDNS no" >> /etc/ssh/sshd_config
+echo "GSSAPIAuthentication no" >> /etc/ssh/sshd_config
 
 # Install vagrant keys
 mkdir -p -m 0700 /home/vagrant/.ssh

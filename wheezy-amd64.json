@@ -1,5 +1,5 @@
 {
-  "builders": [
+    "builders": [
     {
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
@@ -12,7 +12,7 @@
       "boot_command": [
         "<esc><wait>",
         "auto <wait>",
-        "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+        "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/wheezy/preseed.cfg <wait>",
         "hostname={{ .Name }} <wait>",
         "domain=vagrantup.com <wait>",
         "frontend=noninteractive <wait>",
@@ -33,6 +33,7 @@
       "scripts": [
         "scripts/base.sh",
         "scripts/guestadditions.sh",
+        "scripts/minimize.sh",
         "scripts/cleanup.sh"
       ],
       "override": {
@@ -45,7 +46,7 @@
   "post-processors": [
     {
       "type": "vagrant",
-      "output": "debian-wheezy-amd64.box"
+      "output": "wheezy-amd64.box"
     }
   ]
 }
