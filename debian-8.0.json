@@ -1,11 +1,10 @@
 {
   "variables": {
-    "version": "",
+    "version": "0.0.1",
     "cloud_token": ""
   },
   "builders": [
     {
-      "name": "debian-8.0",
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
       "disk_size": 40960,
