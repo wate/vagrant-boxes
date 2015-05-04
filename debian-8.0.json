@@ -1,12 +1,7 @@
 {
-  "variables": {
-    "version": "0.0.1",
-    "cloud_token": "ypYsJNwnPj1GZrY7M3jHVnz5AUqyqmz-CCdtEp_kY4bTBoL3aa-K7pMKq6qEsDS36f4"
-  },
   "builders": [
     {
       "type": "virtualbox-iso",
-      "name" :"jessie",
       "guest_os_type": "Debian_64",
       "disk_size": 40960,
       "iso_url": "http://cdimage.debian.or.jp/8.0.0/amd64/iso-cd/debian-8.0.0-amd64-netinst.iso",
@@ -18,7 +13,7 @@
         "<esc><wait>",
         "auto <wait>",
         "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-8.0/preseed.cfg <wait>",
-        "hostname={{ .Name }} <wait>",
+        "hostname=jessie <wait>",
         "domain=vagrantup.com <wait>",
         "frontend=noninteractive <wait>",
         "<enter><wait>"
