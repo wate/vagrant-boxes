@@ -34,8 +34,8 @@
       "scripts": [
         "scripts/base.sh",
         "scripts/guestadditions.sh",
-        "scripts/minimize.sh",
-        "scripts/cleanup.sh"
+        "scripts/cleanup.sh",
+        "scripts/minimize.sh"
       ],
       "override": {
         "virtualbox-iso": {
