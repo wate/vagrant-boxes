@@ -1,2 +1,13 @@
-*.box
+# Created by https://www.gitignore.io
+
+### Packer ###
+# Cache objects
 packer_cache/
+
+# For built boxes
+*.box
+
+
+### Vagrant ###
+.vagrant/
+
