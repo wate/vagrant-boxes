@@ -1,18 +1,19 @@
 {
-  "builders": [
+
+    "builders": [
     {
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
       "disk_size": 40960,
-      "iso_url": "http://cdimage.debian.or.jp/8.0.0/amd64/iso-cd/debian-8.0.0-amd64-netinst.iso",
+      "iso_url": "http://cdimage.debian.org/debian-cd/7.8.0/amd64/iso-cd/debian-7.8.0-amd64-netinst.iso",
       "iso_checksum_type": "sha1",
-      "iso_checksum": "eab72f4ba73adea580aeaec91649e846aac89fa9",
+      "iso_checksum": "e63fc19d23dd614f4e2f129237ea6517858ff8cc",
       "http_directory": "http",
       "boot_wait": "5s",
       "boot_command": [
         "<esc><wait>",
         "auto <wait>",
-        "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+        "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-7.8/preseed.cfg <wait>",
         "hostname={{ .Name }} <wait>",
         "domain=vagrantup.com <wait>",
         "frontend=noninteractive <wait>",
@@ -33,6 +34,7 @@
       "scripts": [
         "scripts/base.sh",
         "scripts/guestadditions.sh",
+        "scripts/minimize.sh",
         "scripts/cleanup.sh"
       ],
       "override": {
@@ -45,7 +47,7 @@
   "post-processors": [
     {
       "type": "vagrant",
-      "output": "debian-jessie-amd64.box"
+      "output": "debian-7.8.box"
     }
   ]
 }
