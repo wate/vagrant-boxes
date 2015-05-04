@@ -1,8 +1,4 @@
 {
-  "variables": {
-    "version": "0.0.1",
-    "cloud_token": ""
-  },
   "builders": [
     {
       "boot_command": [
@@ -57,12 +53,6 @@
     {
       "output": "centos-6.6.box",
       "type": "vagrant"
-      },
-      {
-        "type": "vagrant-cloud",
-        "box_tag": "wate/centos-6.6",
-        "access_token": "{{user `cloud_token`}}",
-        "version": "{{user `version`}}"
       }
   ]
 }

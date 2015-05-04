@@ -1,11 +1,12 @@
 {
   "variables": {
     "version": "0.0.1",
-    "cloud_token": ""
+    "cloud_token": "ypYsJNwnPj1GZrY7M3jHVnz5AUqyqmz-CCdtEp_kY4bTBoL3aa-K7pMKq6qEsDS36f4"
   },
   "builders": [
     {
       "type": "virtualbox-iso",
+      "name" :"jessie",
       "guest_os_type": "Debian_64",
       "disk_size": 40960,
       "iso_url": "http://cdimage.debian.or.jp/8.0.0/amd64/iso-cd/debian-8.0.0-amd64-netinst.iso",
@@ -51,12 +52,6 @@
     {
       "type": "vagrant",
       "output": "debian-8.0.box"
-    },
-    {
-      "type": "vagrant-cloud",
-      "box_tag": "wate/debian-8.0",
-      "access_token": "{{user `cloud_token`}}",
-      "version": "{{user `version`}}"
     }
   ]
 }

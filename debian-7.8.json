@@ -1,12 +1,8 @@
 {
-  "variables": {
-    "version": "0.0.1",
-    "cloud_token": ""
-  },
   "builders": [
     {
-      "name": "debian-7.8",
       "type": "virtualbox-iso",
+      "name" :"wheezy",
       "guest_os_type": "Debian_64",
       "disk_size": 40960,
       "iso_url": "http://cdimage.debian.org/debian-cd/7.8.0/amd64/iso-cd/debian-7.8.0-amd64-netinst.iso",
@@ -52,12 +48,6 @@
     {
       "type": "vagrant",
       "output": "debian-7.8.box"
-    },
-    {
-      "type": "vagrant-cloud",
-      "box_tag": "wate/debian-7.8",
-      "access_token": "{{user `cloud_token`}}",
-      "version": "{{user `version`}}"
     }
   ]
 }
