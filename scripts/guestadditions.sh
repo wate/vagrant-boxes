@@ -16,4 +16,3 @@ if [ ! -d "/usr/lib/VBoxGuestAdditions" ]; then
 fi
 
 mkdir /vagrant
-
