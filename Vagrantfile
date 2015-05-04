@@ -12,12 +12,6 @@ Vagrant.configure(2) do |config|
     config.cache.scope = :box
   end
 
-  config.vm.provision 'shell', inline: <<-SHELL
-    export DEBIAN_FRONTEND=noninteractive
-    sudo apt-get update
-    sudo apt-get install -y debconf-utils
-  SHELL
-
   config.vm.define 'jessie' do |jessie|
     jessie.vm.box = 'debian-8.0'
     jessie.vm.box_url = 'file://debian-8.0.box'
@@ -42,6 +36,16 @@ Vagrant.configure(2) do |config|
       export DEBIAN_FRONTEND
       sudo apt-get update
       sudo apt-get -y upgrade
+    SHELL
+  end
+  config.vm.define 'centos-6.6' do |centos66|
+    centos66.vm.box = 'centos-6.6'
+    centos66.vm.box_url = 'file://centos-6.6.box'
+    centos66.vm.provider 'virtualbox' do |v|
+      v.name = 'centos-6.6'
+    end
+    centos66.vm.provision 'shell', inline: <<-SHELL
+      sudo yum update -y
     SHELL
   end
 end
