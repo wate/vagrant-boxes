@@ -2,7 +2,6 @@
   "builders": [
     {
       "type": "virtualbox-iso",
-      "name" :"wheezy",
       "guest_os_type": "Debian_64",
       "disk_size": 40960,
       "iso_url": "http://cdimage.debian.org/debian-cd/7.8.0/amd64/iso-cd/debian-7.8.0-amd64-netinst.iso",
