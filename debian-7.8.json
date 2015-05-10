@@ -31,10 +31,15 @@
     {
       "type": "shell",
       "scripts": [
-        "scripts/debian/base.sh",
-        "scripts/debian/guestadditions.sh",
-        "scripts/debian/cleanup.sh",
-        "scripts/minimize.sh"
+        "scripts/debian/pre-base.sh",
+        "scripts/01-base.sh",
+        "scripts/02-sudoers.sh",
+        "scripts/03-vagrant.sh",
+        "scripts/debian/pre-guestadditions.sh",
+        "scripts/04-guestadditions.sh",
+        "scripts/05-cleanup.sh",
+        "scripts/debian/post-cleanup.sh",
+        "scripts/99-minimize.sh"
       ],
       "override": {
         "virtualbox-iso": {
