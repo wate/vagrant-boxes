@@ -10,14 +10,26 @@ Requiment
 building Debian Vagrant box
 ----------------------------------
 
-### Wheezy
+### Debian 7.8
 
 ```
-packer build wheezy-amd64.json
+packer build debian-7.8.json
 ```
 
-### Jesssie
+### Debian 8.0
 
 ```
-packer build jessie-amd64.json
+packer build debian-8.0.json
+```
+
+### CentOS 6.6
+
+```
+packer build centos-6.6.json
+```
+
+### CentOS 7.1
+
+```
+packer build centos-7.1.json
 ```
