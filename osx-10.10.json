@@ -39,7 +39,10 @@
     }
   ],
   "post-processors": [
-    "vagrant"
+    {
+      "type": "vagrant",
+      "output": "osx-10.10.box"
+    }
   ],
   "provisioners": [
     {
