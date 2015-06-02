@@ -16,7 +16,7 @@
       "iso_checksum_type": "md5",
       "iso_checksum": "fb75aa090dcad9f3b412ed4bc561bdc0",
       "iso_interface": "sata",
-      "iso_url": "OSX_InstallESD_10.10.3_14D136.dmg",
+      "iso_url": "packer_cache/OSX_InstallESD_10.10.3_14D136.dmg",
       "shutdown_command": "echo '{{user `username`}}'|sudo -S shutdown -h now",
       "ssh_port": 22,
       "ssh_username": "{{user `username`}}",
