@@ -45,6 +45,7 @@
         "scripts/01-base.sh",
         "scripts/centos/post-base.sh",
         "scripts/02-vagrant.sh",
+        "scripts/centos/pre-guestadditions.sh",
         "scripts/03-guestadditions.sh",
         "scripts/04-cleanup.sh",
         "scripts/centos/post-cleanup.sh",
