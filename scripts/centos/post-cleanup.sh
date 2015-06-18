@@ -1,5 +1,7 @@
 #!/bin/bash -eux
 
+# yum -y remove gcc make kernel-devel kernel-headers perl
+yum -y remove gcc kernel-devel kernel-headers perl
 yum -y clean all
 
 # clean up redhat interface persistence
