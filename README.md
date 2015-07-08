@@ -16,7 +16,7 @@ building Debian Vagrant box
 packer build debian-7.8.json
 ```
 
-### Debian 8.0
+### Debian 8.1
 
 ```
 packer build debian-8.1.json
