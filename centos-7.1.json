@@ -13,6 +13,7 @@
       "iso_checksum": "fd1951905c4c26560c807e81767278fec46ef8bb",
       "iso_checksum_type": "sha1",
       "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1503.iso",
+      "iso_url": "./packer_cache/CentOS-7-x86_64-NetInstall-1503.iso",
       "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
       "ssh_password": "vagrant",
       "ssh_port": 22,

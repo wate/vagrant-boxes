@@ -19,7 +19,7 @@ packer build debian-7.8.json
 ### Debian 8.0
 
 ```
-packer build debian-8.0.json
+packer build debian-8.1.json
 ```
 
 ### CentOS 6.6

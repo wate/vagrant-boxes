@@ -13,8 +13,8 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define 'jessie' do |jessie|
-    jessie.vm.box = 'debian-8.0'
-    jessie.vm.box_url = 'file://debian-8.0.box'
+    jessie.vm.box = 'debian-8.1'
+    jessie.vm.box_url = 'file://debian-8.1.box'
     jessie.vm.provider 'virtualbox' do |v|
       v.name = 'jessie'
       v.customize ["modifyvm", :id, "--ostype", "Debian_64"]

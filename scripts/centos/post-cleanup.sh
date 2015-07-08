@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
-# These were only needed for building VMware/Virtualbox extensions:
-yum -y remove gcc cpp kernel-devel kernel-headers perl
+# yum -y remove gcc make kernel-devel kernel-headers perl
+yum -y remove gcc kernel-devel kernel-headers perl
 yum -y clean all
 
 # clean up redhat interface persistence
