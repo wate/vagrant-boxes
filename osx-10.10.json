@@ -11,7 +11,7 @@
       "boot_wait": "2s",
       "disk_size": 20480,
       "guest_additions_mode": "disable",
-      "guest_os_type": "MacOS109_64",
+      "guest_os_type": "MacOS1010_64",
       "hard_drive_interface": "sata",
       "iso_checksum_type": "md5",
       "iso_checksum": "fb75aa090dcad9f3b412ed4bc561bdc0",
