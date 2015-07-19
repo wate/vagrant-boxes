@@ -1,11 +1,18 @@
 {
+  "push": {
+    "name": "wate/debian-7",
+    "exclude": [".*", "*.json", "*.box", "output-*", "packer_cache", "Vagrantfile"]
+  },
+  "variables": {
+      "atlas_username": "wate",
+      "atlas_name": "debian-7"
+  },
   "builders": [
     {
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
       "disk_size": 40960,
-      "iso_url": "http://cdimage.debian.org/debian-cd/7.8.0/amd64/iso-cd/debian-7.8.0-amd64-netinst.iso",
-      "iso_url": "./packer_cache/debian-7.8.0-amd64-netinst.iso",
+      "iso_url": "http://debian.nctu.edu.tw/debian-cd/7.8.0/amd64/iso-cd/debian-7.8.0-amd64-netinst.iso",
       "iso_checksum_type": "sha1",
       "iso_checksum": "e63fc19d23dd614f4e2f129237ea6517858ff8cc",
       "http_directory": "http",
@@ -53,6 +60,17 @@
     {
       "type": "vagrant",
       "output": "debian-7.8.box"
+    },
+    {
+      "type": "atlas",
+      "only": ["virtualbox-iso"],
+      "artifact": "{{user `atlas_username`}}/{{user `atlas_name`}}",
+      "artifact_type": "vagrant.box",
+      "metadata": {
+        "provider": "virtualbox",
+        "description": "Debian 7.8(64bit)日本語環境用",
+        "version": "0.8.1"
+      }
     }
   ]
 }
