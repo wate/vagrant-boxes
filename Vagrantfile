@@ -5,16 +5,15 @@ Vagrant.configure(2) do |config|
   # vagrant-vbguest
   if Vagrant.has_plugin?('vagrant-vbguest')
     config.vbguest.auto_reboot  = true
-    config.vbguest.auto_update  = true
+    config.vbguest.auto_update  = false
   end
   # vagrant-cachier
   if Vagrant.has_plugin?('vagrant-cachier')
     config.cache.scope = :box
   end
 
-  config.vm.define 'jessie' do |jessie|
-    jessie.vm.box = 'debian-8.1'
-    jessie.vm.box_url = 'file://debian-8.1.box'
+  config.vm.define 'debian-8' do |jessie|
+    jessie.vm.box = 'wate/debian-8'
     jessie.vm.provider 'virtualbox' do |v|
       v.name = 'jessie'
       v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
@@ -26,9 +25,8 @@ Vagrant.configure(2) do |config|
       apt-get -y upgrade
     SHELL
   end
-  config.vm.define 'wheezy' do |wheezy|
-    wheezy.vm.box = 'debian-7.8'
-    wheezy.vm.box_url = 'file://debian-7.8.box'
+  config.vm.define 'debian-7' do |wheezy|
+    wheezy.vm.box = 'wate/debian-7'
     wheezy.vm.provider 'virtualbox' do |v|
       v.name = 'wheezy'
       v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
@@ -40,25 +38,23 @@ Vagrant.configure(2) do |config|
       apt-get -y upgrade
     SHELL
   end
-  config.vm.define 'centos-6.6' do |centos66|
-    centos66.vm.box = 'centos-6.6'
-    centos66.vm.box_url = 'file://centos-6.6.box'
-    centos66.vm.provider 'virtualbox' do |v|
+  config.vm.define 'centos-6.6' do |centos6|
+    centos6.vm.box = 'wate/centos-6'
+    centos6.vm.provider 'virtualbox' do |v|
       v.name = 'centos-6.6'
       v.customize ["modifyvm", :id, "--ostype", "RedHat_64"]
     end
-    centos66.vm.provision 'shell', inline: <<-SHELL
+    centos6.vm.provision 'shell', inline: <<-SHELL
       yum update -y
     SHELL
   end
-  config.vm.define 'centos-7.1' do |centos71|
-    centos71.vm.box = 'centos-7.1'
-    centos71.vm.box_url = 'file://centos-7.1.box'
-    centos71.vm.provider 'virtualbox' do |v|
+  config.vm.define 'centos-7.1' do |centos7|
+    centos7.vm.box = 'wate/centos-7'
+    centos7.vm.provider 'virtualbox' do |v|
       v.name = 'centos-7.1'
       v.customize ["modifyvm", :id, "--ostype", "RedHat_64"]
     end
-    centos71.vm.provision 'shell', inline: <<-SHELL
+    centos7.vm.provision 'shell', inline: <<-SHELL
       yum update -y
     SHELL
   end
