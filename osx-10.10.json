@@ -1,27 +1,27 @@
 {
   "variables": {
+    "autologin": "false",
+    "install_vagrant_keys": "true",
+    "update_system": "true",
     "username": "vagrant",
-    "password": "vagrant",
-    "install_vagrant_keys": true,
-    "autologin": true,
-    "update_system": true
+    "password": "vagrant"
   },
   "builders": [
     {
       "boot_wait": "2s",
       "disk_size": 20480,
-      "guest_additions_mode": "disable",
-      "guest_os_type": "MacOS109_64",
+      "guest_additions_mode": "attach",
+      "guest_os_type": "MacOS1010_64",
       "hard_drive_interface": "sata",
       "iso_checksum_type": "md5",
-      "iso_checksum": "fb75aa090dcad9f3b412ed4bc561bdc0",
+      "iso_checksum": "68411db03948158555512447282b5079",
       "iso_interface": "sata",
-      "iso_url": "packer_cache/OSX_InstallESD_10.10.3_14D136.dmg",
-      "shutdown_command": "echo '{{user `username`}}'|sudo -S shutdown -h now",
+      "iso_url": "packer_cache/OSX_InstallESD_10.10.4_14E46.dmg",
       "ssh_port": 22,
       "ssh_username": "{{user `username`}}",
       "ssh_password": "{{user `password`}}",
       "ssh_wait_timeout": "10000s",
+      "shutdown_command": "echo '{{user `username`}}'|sudo -S shutdown -h now",
       "type": "virtualbox-iso",
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--audiocontroller", "hda"],

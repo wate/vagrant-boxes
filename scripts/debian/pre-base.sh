@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
-apt-get update
-apt-get -y upgrade
+# apt-get update
+# apt-get -y upgrade
 
 # set GRUB_TIMEOUT is none
 sed -i '/^GRUB_TIMEOUT/s/[0-9]$/0/g' /etc/default/grub
