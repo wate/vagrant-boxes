@@ -13,23 +13,23 @@ building Debian Vagrant box
 ### Debian 7.8
 
 ```
-packer build debian-7.8.json
+packer build debian-7.json
 ```
 
 ### Debian 8.1
 
 ```
-packer build debian-8.1.json
+packer build debian-8.json
 ```
 
-### CentOS 6.6
+### CentOS 6.7
 
 ```
-packer build centos-6.6.json
+packer build centos-6.json
 ```
 
 ### CentOS 7.1
 
 ```
-packer build centos-7.1.json
+packer build centos-7.json
 ```
