@@ -20,7 +20,7 @@
       "boot_command": [
         "<esc><wait>",
         "auto <wait>",
-        "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-7.8/preseed.cfg <wait>",
+        "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-7/preseed.cfg <wait>",
         "hostname=wheezy <wait>",
         "domain=vagrantup.com <wait>",
         "frontend=noninteractive <wait>",
@@ -56,21 +56,21 @@
       }
     }
   ],
-  "post-processors": [
-    {
-      "type": "vagrant",
-      "output": "debian-7.8.box"
-    },
-    {
-      "type": "atlas",
-      "only": ["virtualbox-iso"],
-      "artifact": "{{user `atlas_username`}}/{{user `atlas_name`}}",
-      "artifact_type": "vagrant.box",
-      "metadata": {
-        "provider": "virtualbox",
-        "description": "Debian 7.8(64bit)日本語環境用",
-        "version": "0.8.1"
+  "post-processors": [[
+      {
+        "type": "vagrant",
+        "keep_input_artifact": false
+      },
+      {
+        "type": "atlas",
+        "only": ["virtualbox-iso"],
+        "artifact": "{{user `atlas_username`}}/{{user `atlas_name`}}",
+        "artifact_type": "vagrant.box",
+        "metadata": {
+          "provider": "virtualbox",
+          "description": "Debian 7.8(64bit)日本語環境用",
+          "version": "0.8.2"
+        }
       }
-    }
-  ]
+  ]]
 }
