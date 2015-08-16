@@ -1,6 +1,6 @@
 {
   "variables": {
-    "autologin": "false",
+    "autologin": "true",
     "install_vagrant_keys": "true",
     "update_system": "true",
     "username": "vagrant",
@@ -10,11 +10,11 @@
     {
       "boot_wait": "2s",
       "disk_size": 20480,
-      "guest_additions_mode": "attach",
+      "guest_additions_mode": "disable",
       "guest_os_type": "MacOS109_64",
       "hard_drive_interface": "sata",
       "iso_checksum_type": "md5",
-      "iso_checksum": "34bd653b0c36a614dc360ee800d8a155",
+      "iso_checksum": "bf28dd595214b6df393a1d2cb062c45c",
       "iso_interface": "sata",
       "iso_url": "packer_cache/OSX_InstallESD_10.10.5_14F27.dmg",
       "ssh_port": 22,
