@@ -12,9 +12,9 @@
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
       "disk_size": 40960,
-      "iso_url": "http://debian.nctu.edu.tw/debian-cd/7.8.0/amd64/iso-cd/debian-7.8.0-amd64-netinst.iso",
+      "iso_url": "http://cdimage.debian.org/cdimage/archive/7.9.0/amd64/iso-cd/debian-7.9.0-amd64-netinst.iso",
       "iso_checksum_type": "sha1",
-      "iso_checksum": "e63fc19d23dd614f4e2f129237ea6517858ff8cc",
+      "iso_checksum": "97ea6007435f83007219441b6d64ff4fbcca928c",
       "http_directory": "http",
       "boot_wait": "5s",
       "boot_command": [
@@ -68,8 +68,8 @@
         "artifact_type": "vagrant.box",
         "metadata": {
           "provider": "virtualbox",
-          "description": "Debian 7.8(64bit)日本語環境用",
-          "version": "0.8.2"
+          "description": "Debian 7.9(64bit)日本語環境用",
+          "version": "0.9.0"
         }
       }
   ]]

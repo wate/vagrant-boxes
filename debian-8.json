@@ -12,9 +12,9 @@
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
       "disk_size": 40960,
-      "iso_url": "http://cdimage.debian.or.jp/8.1.0/amd64/iso-cd/debian-8.1.0-amd64-netinst.iso",
+      "iso_url": "http://cdimage.debian.or.jp/8.2.0/amd64/iso-cd/debian-8.2.0-amd64-netinst.iso",
       "iso_checksum_type": "sha1",
-      "iso_checksum": "b17191f9d1b0092c2b488eb0d65fe9c77df1a207",
+      "iso_checksum": "a41801dcc0e37bce2406e18b334f99ae366d6fde",
       "http_directory": "http",
       "boot_wait": "5s",
       "boot_command": [
@@ -68,8 +68,8 @@
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
-        "description": "Debian 8.1(64bit)日本語環境用",
-        "version": "0.1.2"
+        "description": "Debian 8.2(64bit)日本語環境用\nVirtualBox Guest Additions 5.0.2",
+        "version": "0.2.0"
       }
     }
   ]]
