@@ -10,13 +10,13 @@ Requiment
 building Debian Vagrant box
 ----------------------------------
 
-### Debian 7.8
+### Debian 7.9
 
 ```
 packer build debian-7.json
 ```
 
-### Debian 8.1
+### Debian 8.2
 
 ```
 packer build debian-8.json
