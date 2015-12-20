@@ -18,9 +18,9 @@
       "guest_os_type": "RedHat_64",
       "hard_drive_interface": "sata",
       "http_directory": "http",
-      "iso_checksum": "fd1951905c4c26560c807e81767278fec46ef8bb",
+      "iso_checksum": "b9e2480ca2f1b17f27c03f2cf31c4920d5cc70bf",
       "iso_checksum_type": "sha1",
-      "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1503.iso",
+      "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1511.iso",
       "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -42,7 +42,7 @@
         ]
       ],
       "virtualbox_version_file": ".vbox_version",
-      "vm_name": "centos-7.1"
+      "vm_name": "centos-7.2"
     }
   ],
   "provisioners": [
@@ -73,8 +73,8 @@
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
-        "description": "CentOS 7.1(64bit)日本語環境用\nVirtualBox Guest Additions 5.0.2",
-        "version": "0.1.3"
+        "description": "CentOS 7(64bit)日本語環境用\nRHEL 7.2相当",
+        "version": "0.1.4"
       }
     }
   ]]
