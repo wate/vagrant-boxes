@@ -21,6 +21,7 @@
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "rc-service sshd stop<enter>",
         "mount /dev/sda3 /mnt<enter>",
         "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter>",
@@ -39,7 +40,10 @@
       {
         "type": "shell",
         "scripts": [
-          "scripts/alpine/00base.sh"
+          "scripts/01-base.sh",
+          "scripts/alpine/post-base.sh",
+          "scripts/02-vagrant.sh",
+          "scripts/alpine/minimize.sh"
         ],
         "override": {
           "virtualbox-iso": {
@@ -51,7 +55,7 @@
   "post-processors": [[
     {
       "type": "vagrant",
-      "output": "build/Alpine-3.3.3.box"
+      "output": "Alpine-3.3.3.box"
     }
   ]]
 }
