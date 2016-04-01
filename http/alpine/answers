@@ -1,4 +1,4 @@
-KEYMAPOPTS="jp"
+KEYMAPOPTS="us us"
 HOSTNAMEOPTS="-n localhost"
 INTERFACESOPTS="auto lo
 iface lo inet loopback
@@ -8,7 +8,7 @@ iface eth0 inet dhcp
     hostname localhost
 "
 DNSOPTS="-d local -n 8.8.8.8 8.8.4.4"
-TIMEZONEOPTS="-z Japan"
+TIMEZONEOPTS="-z UTC"
 PROXYOPTS="none"
 APKREPOSOPTS="-f"
 SSHDOPTS="-c openssh"
