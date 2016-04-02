@@ -1,8 +1,7 @@
 #!/bin/sh -eux
 
-mkdir ~vagrant/.ssh
-wget --no-check-certificate \
-    'https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub' \
-    -O ~vagrant/.ssh/authorized_keys
-chown -R vagrant ~vagrant/.ssh
-chmod -R go-rwsx ~vagrant/.ssh
+# Install vagrant keys
+mkdir -p -m 0700 /home/vagrant/.ssh
+wget -O /home/vagrant/.ssh/authorized_keys https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub
+chmod 0600 /home/vagrant/.ssh/authorized_keys
+chown -R vagrant:vagrant /home/vagrant/.ssh

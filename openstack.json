@@ -1,0 +1,29 @@
+{
+  "variables": {
+    "os_auth_url": "{{env `OS_AUTH_URL`}}",
+    "os_username": "{{env `OS_USERNAME`}}",
+    "os_password": "{{env `OS_PASSWORD`}}",
+    "os_region": "{{env ` OS_REGION_NAME`}}",
+    "os_tenant_id": "{{env `OS_TENANT_ID`}}"
+  },
+  "builders": [
+    {
+      "type": "openstack",
+      "flavor": "g-1gb",
+      "identity_endpoint": "{{user `os_auth_url`}}",
+      "username": "{{user `os_username`}}",
+      "password": "{{user `os_password`}}",
+      "tenant_id": "{{user `os_tenant_id`}}",
+      "source_image_name": "vmi-debian-8-amd64",
+      "image_name": "packer",
+      "region": "{{user `os_region`}}",
+      "ssh_keypair_name": "main"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": "echo 'Hello World'"
+    }
+  ]
+}
