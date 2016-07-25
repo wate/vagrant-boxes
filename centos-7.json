@@ -73,8 +73,8 @@
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
-        "description": "CentOS 7.2(64bit)日本語環境用\n",
-        "version": "0.2.1"
+        "description": "CentOS 7.2(64bit)日本語環境用",
+        "version": "0.2.3"
       }
     }
   ]]
