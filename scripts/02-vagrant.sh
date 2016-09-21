@@ -1,7 +1,8 @@
 #!/bin/sh -eux
 
-# Install vagrant keys
-mkdir -p -m 0700 /home/vagrant/.ssh
-wget -O /home/vagrant/.ssh/authorized_keys https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
-chmod 0600 /home/vagrant/.ssh/authorized_keys
-chown -R vagrant:vagrant /home/vagrant/.ssh
+HOME_DIR="/home/vagrant";
+PUBKEY_URL="https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub";
+mkdir -p $HOME_DIR/.ssh;
+wget --no-check-certificate "$PUBKEY_URL" -O $HOME_DIR/.ssh/authorized_keys;
+chown -R vagrant $HOME_DIR/.ssh;
+chmod -R go-rwsx $HOME_DIR/.ssh;
