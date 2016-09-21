@@ -3,8 +3,8 @@
 rm -rf /dev/.udev/
 
 # dhcp cleanup
-rm /var/lib/dhcp/*
-rm /etc/resolv.conf
+rm /var/lib/dhcp/*;
+rm /etc/resolv.conf;
 
 # Delete all Linux headers
 dpkg --list | awk '{ print $2 }' | grep 'linux-headers' | xargs apt-get -y purge;
@@ -30,5 +30,5 @@ apt-get -y clean;
 for i in $(dpkg -l | grep ^rc | cut -d' ' -f3);do dpkg -P "$i";done
 
 # zeroclear
-dd if=/dev/zero of=/tmp/zeroclear bs=1M
-rm -f /tmp/zeroclear
+dd if=/dev/zero of=/tmp/zeroclear bs=1M;
+rm -f /tmp/zeroclear;
