@@ -13,7 +13,7 @@
         "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos-7/ks.cfg<enter><wait>"
       ],
       "boot_wait": "10s",
-      "disk_size": 40960,
+      "disk_size": 20480,
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "guest_os_type": "RedHat_64",
       "hard_drive_interface": "sata",
@@ -53,8 +53,8 @@
         "scripts/01-base.sh",
         "scripts/centos/post-base.sh",
         "scripts/02-vagrant.sh",
-        "scripts/03-guestadditions.sh",
-        "scripts/04-cleanup.sh",
+        "scripts/03-virtualbox.sh",
+        "scripts/90-cleanup.sh",
         "scripts/centos/post-cleanup.sh",
         "scripts/99-minimize.sh"
       ],
@@ -74,7 +74,7 @@
       "metadata": {
         "provider": "virtualbox",
         "description": "CentOS 7.2(64bit)日本語環境用",
-        "version": "0.2.3"
+        "version": "0.2.4"
       }
     }
   ]]
