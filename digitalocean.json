@@ -1,6 +1,6 @@
 {
   "variables": {
-    "do_api_token": "{{env `DIGITALOCEAN_API_TOKEN`}}"
+    "do_api_token": "{{env `DO_API_TOKEN`}}"
   },
   "builders": [
     {
