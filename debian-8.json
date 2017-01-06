@@ -69,7 +69,7 @@
       "metadata": {
         "provider": "virtualbox",
         "description": "Debian 8.6(64bit)日本語環境用",
-        "version": "0.6.1"
+        "version": "0.6.2"
       }
     }
   ]]
