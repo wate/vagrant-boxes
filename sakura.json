@@ -3,7 +3,7 @@
     "sakura_token": "{{env `SAKURACLOUD_ACCESS_TOKEN`}}",
     "sakura_token_secret": "{{env `SAKURACLOUD_ACCESS_TOKEN_SECRET`}}",
     "sakura_zone": "{{env `SAKURACLOUD_ZONE`}}",
-    "admin_acount": "admin",
+    "admin_acount": "wate",
     "admin_password": "pass_W0rd"
   },
   "builders": [
