@@ -3,8 +3,9 @@
     "sakura_token": "{{env `SAKURACLOUD_ACCESS_TOKEN`}}",
     "sakura_token_secret": "{{env `SAKURACLOUD_ACCESS_TOKEN_SECRET`}}",
     "sakura_zone": "{{env `SAKURACLOUD_ZONE`}}",
+    "root_password": "passW0rd",
     "admin_acount": "wate",
-    "admin_password": "pass_W0rd"
+    "admin_password": "passW0rd"
   },
   "builders": [
     {
@@ -13,32 +14,31 @@
       "access_token_secret": "{{user `sakura_token_secret`}}",
       "zone": "{{user `sakura_zone`}}",
       "archive_name": "jessie",
-      "disk_size": 20,
-      "core": 1,
-      "memory_size": 1,
       "os_type": "iso",
       "iso_id": 112900116218,
-      "user_name": "{{user `admin_acount`}}",
-      "password": "{{user `admin_password`}}",
-      "us_keyboard": false,
-      "disable_virtio_net": false,
-      "boot_wait": "30s",
+      "core" : 2,
+      "memory_size": 4,
+      "boot_wait": "20s",
       "boot_command": [
         "<enter><wait10>",
         "j<enter><wait><enter><wait><enter>",
-        "<wait30s>",
-        "<enter><wait><enter><wait>",
+        "<wait1m>",
         "<enter><wait><enter><wait><enter><wait>",
+        "{{user `root_password`}}<enter><wait>{{user `root_password`}}<enter><wait>",
         "<enter><wait>",
         "{{user `admin_acount`}}<enter><wait>",
         "{{user `admin_password`}}<enter><wait>{{user `admin_password`}}<enter>",
+
         "<wait1m>",
         "<enter><wait><enter><wait><enter><wait><enter><wait><tab><enter>",
-        "<wait2m>",
+
+        "<wait1m>",
         "<enter><wait><enter><wait><enter>",
+
         "<wait1m>",
         "<enter>",
-        "<wait10>",
+
+        "<wait1m>",
         "<spacebar><down>",
         "<down>",
         "<down>",
@@ -50,13 +50,15 @@
         "<spacebar><down>",
         "<spacebar><down>",
         "<spacebar><enter>",
-        "<wait1m>",
-        "<enter>",
-        "<down><enter>",
-        "<wait1m>",
+
+        "<wait2m>",
+
+        "<enter><down><enter>",
+        "<wait30>",
         "<enter>",
         "<wait>"
-      ]
+      ],
+      "password": "{{user `root_password`}}"
     }
   ],
   "provisioners": [
