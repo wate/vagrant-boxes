@@ -16,8 +16,6 @@
       "archive_name": "jessie",
       "os_type": "iso",
       "iso_id": 112900116218,
-      "core" : 2,
-      "memory_size": 4,
       "boot_wait": "20s",
       "boot_command": [
         "<enter><wait10>",
