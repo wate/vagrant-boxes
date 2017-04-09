@@ -1,10 +1,18 @@
 #!/bin/bash -eux
 
-# apt-get update
-# apt-get -y upgrade
+arch="`uname -r | sed 's/^.*[0-9]\{1,\}\.[0-9]\{1,\}\.[0-9]\{1,\}\(-[0-9]\{1,2\}\)-//'`"
 
-# set GRUB_TIMEOUT is none
-sed -i '/^GRUB_TIMEOUT/s/[0-9]$/0/g' /etc/default/grub
-sed -i 's/frontend=noninteractive//g' /etc/default/grub
-# If use in systemd # sed -i 's/quiet/quiet\ init=\/bin\/systemd/g' /etc/default/grub
-/usr/sbin/update-grub
+apt-get update;
+
+apt-get -y upgrade linux-image-$arch;
+apt-get -y install linux-headers-`uname -r`;
+
+if [ -d /etc/init ]; then
+    # update package index on boot
+    cat <<EOF >/etc/init/refresh-apt.conf;
+description "update package index"
+start on networking
+task
+exec /usr/bin/apt-get update
+EOF
+fi

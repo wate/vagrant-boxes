@@ -11,10 +11,10 @@
     {
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
-      "disk_size": 40960,
-      "iso_url": "http://cdimage.debian.or.jp/8.4.0/amd64/iso-cd/debian-8.4.0-amd64-netinst.iso",
+      "disk_size": 20480,
+      "iso_url": "http://cdimage.debian.or.jp/8.7.1/amd64/iso-cd/debian-8.7.1-amd64-netinst.iso",
       "iso_checksum_type": "sha1",
-      "iso_checksum": "92cb8946618e3ed776827e7fcb56e452d993dbf8",
+      "iso_checksum": "81bc2c68de1e0581d19e4c559be913968cf8bb5a",
       "http_directory": "http",
       "boot_wait": "5s",
       "boot_command": [
@@ -43,9 +43,9 @@
         "scripts/01-base.sh",
         "scripts/debian/post-base.sh",
         "scripts/02-vagrant.sh",
-        "scripts/debian/pre-guestadditions.sh",
-        "scripts/03-guestadditions.sh",
-        "scripts/04-cleanup.sh",
+        "scripts/debian/pre-virtualbox.sh",
+        "scripts/03-virtualbox.sh",
+        "scripts/90-cleanup.sh",
         "scripts/debian/post-cleanup.sh",
         "scripts/99-minimize.sh"
       ],
@@ -68,8 +68,8 @@
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
-        "description": "Debian 8.4(64bit)日本語環境用\nVirtualBox Guest Additions 5.0.20",
-        "version": "0.4.1"
+        "description": "Debian 8.7(64bit)日本語環境用",
+        "version": "0.7.1"
       }
     }
   ]]

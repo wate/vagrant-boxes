@@ -1,0 +1,70 @@
+{
+  "variables": {
+    "sakura_token": "{{env `SAKURACLOUD_ACCESS_TOKEN`}}",
+    "sakura_token_secret": "{{env `SAKURACLOUD_ACCESS_TOKEN_SECRET`}}",
+    "sakura_zone": "{{env `SAKURACLOUD_ZONE`}}",
+    "root_password": "passW0rd",
+    "admin_acount": "wate",
+    "admin_password": "passW0rd"
+  },
+  "builders": [
+    {
+      "type": "sakuracloud",
+      "access_token": "{{user `sakura_token`}}",
+      "access_token_secret": "{{user `sakura_token_secret`}}",
+      "zone": "{{user `sakura_zone`}}",
+      "archive_name": "jessie",
+      "os_type": "iso",
+      "iso_id": 112900116218,
+      "boot_wait": "20s",
+      "boot_command": [
+        "<enter><wait10>",
+        "j<enter><wait><enter><wait><enter>",
+        "<wait1m>",
+        "<enter><wait><enter><wait><enter><wait>",
+        "{{user `root_password`}}<enter><wait>{{user `root_password`}}<enter><wait>",
+        "<enter><wait>",
+        "{{user `admin_acount`}}<enter><wait>",
+        "{{user `admin_password`}}<enter><wait>{{user `admin_password`}}<enter>",
+
+        "<wait1m>",
+        "<enter><wait><enter><wait><enter><wait><enter><wait><tab><enter>",
+
+        "<wait1m>",
+        "<enter><wait><enter><wait><enter>",
+
+        "<wait1m>",
+        "<enter>",
+
+        "<wait1m>",
+        "<spacebar><down>",
+        "<down>",
+        "<down>",
+        "<down>",
+        "<down>",
+        "<down>",
+        "<down>",
+        "<down>",
+        "<spacebar><down>",
+        "<spacebar><down>",
+        "<spacebar><enter>",
+
+        "<wait2m>",
+
+        "<enter><down><enter>",
+        "<wait30>",
+        "<enter>",
+        "<wait>"
+      ],
+      "password": "{{user `root_password`}}"
+    }
+  ],
+  "provisioners": [
+    {
+        "type": "shell",
+        "inline": [
+            "echo hoge"
+        ]
+    }
+  ]
+}

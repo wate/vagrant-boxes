@@ -19,20 +19,6 @@ Vagrant.configure(2) do |config|
       v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
     end
   end
-  config.vm.define 'debian-7' do |wheezy|
-    wheezy.vm.box = 'wate/debian-7'
-    wheezy.vm.provider 'virtualbox' do |v|
-      v.name = 'wheezy'
-      v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
-    end
-  end
-  config.vm.define 'centos-6' do |centos6|
-    centos6.vm.box = 'wate/centos-6'
-    centos6.vm.provider 'virtualbox' do |v|
-      v.name = 'centos-6'
-      v.customize ["modifyvm", :id, "--ostype", "RedHat_64"]
-    end
-  end
   config.vm.define 'centos-7' do |centos7|
     centos7.vm.box = 'wate/centos-7'
     centos7.vm.provider 'virtualbox' do |v|

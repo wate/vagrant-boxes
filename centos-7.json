@@ -13,14 +13,14 @@
         "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos-7/ks.cfg<enter><wait>"
       ],
       "boot_wait": "10s",
-      "disk_size": 40960,
+      "disk_size": 20480,
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "guest_os_type": "RedHat_64",
       "hard_drive_interface": "sata",
       "http_directory": "http",
-      "iso_checksum": "b9e2480ca2f1b17f27c03f2cf31c4920d5cc70bf",
+      "iso_checksum": "156f4cb711fdbd668943711f853fb6da89581aad",
       "iso_checksum_type": "sha1",
-      "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1511.iso",
+      "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1611.iso",
       "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
       "ssh_password": "vagrant",
       "ssh_port": 22,
@@ -53,8 +53,8 @@
         "scripts/01-base.sh",
         "scripts/centos/post-base.sh",
         "scripts/02-vagrant.sh",
-        "scripts/03-guestadditions.sh",
-        "scripts/04-cleanup.sh",
+        "scripts/03-virtualbox.sh",
+        "scripts/90-cleanup.sh",
         "scripts/centos/post-cleanup.sh",
         "scripts/99-minimize.sh"
       ],
@@ -73,8 +73,8 @@
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
-        "description": "CentOS 7.2(64bit)日本語環境用\n",
-        "version": "0.2.0"
+        "description": "CentOS 7.3(64bit)日本語環境用",
+        "version": "0.3.0"
       }
     }
   ]]
