@@ -4,8 +4,7 @@
     "exclude": [".*", "*.json", "*.box", "output-*", "packer_cache", "Vagrantfile"]
   },
   "variables": {
-      "atlas_username": "wate",
-      "atlas_name": "debian-8"
+    "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}"
   },
   "builders": [
     {
@@ -56,21 +55,22 @@
       }
     }
   ],
-  "post-processors": [[
-    {
-      "type": "vagrant",
-      "keep_input_artifact": false
-    },
-    {
-      "type": "atlas",
-      "only": ["virtualbox-iso"],
-      "artifact": "{{user `atlas_username`}}/{{user `atlas_name`}}",
-      "artifact_type": "vagrant.box",
-      "metadata": {
-        "provider": "virtualbox",
-        "description": "Debian 8.8(64bit)日本語環境用",
-        "version": "0.8.0"
+  "post-processors": [
+    [
+      {
+        "type": "vagrant",
+        "output": "output.box"
+      },
+      {
+        "type": "vagrant-cloud",
+        "only": [
+          "virtualbox-iso"
+        ],
+        "access_token": "{{user `vagrantcloud_token`}}",
+        "box_tag": "wate/debian-8",
+        "version": "0.8.0",
+        "version_description": "Debian 8.8(64bit)日本語環境用"
       }
-    }
-  ]]
+    ]
+  ]
 }
