@@ -74,7 +74,7 @@
       "metadata": {
         "provider": "virtualbox",
         "description": "CentOS 7.3(64bit)日本語環境用",
-        "version": "0.3.0"
+        "version": "0.3.1"
       }
     }
   ]]
