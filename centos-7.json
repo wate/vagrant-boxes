@@ -67,9 +67,6 @@
       },
       {
         "type": "vagrant-cloud",
-        "only": [
-          "virtualbox-iso"
-        ],
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "wate/centos-7",
         "version": "0.3.1",
