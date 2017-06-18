@@ -63,7 +63,7 @@
         "type": "vagrant-cloud",
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "wate/debian-9",
-        "version": "0.9.0",
+        "version": "0.0.0",
         "version_description": "Debian 9.0(64bit)日本語環境用"
       }
     ]
