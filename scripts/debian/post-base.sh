@@ -9,5 +9,5 @@ grep -q 'secure_path' /etc/sudoers \
 echo "pre-up sleep 2" >> /etc/network/interfaces;
 
 # Set up password-less sudo for the vagrant user
-echo 'vagrant ALL=(ALL) NOPASSWD:ALL' >/etc/sudoers.d/99_vagrant;
-chmod 440 /etc/sudoers.d/99_vagrant;
+echo 'vagrant ALL=(ALL) NOPASSWD:ALL' >/etc/sudoers.d/vagrant;
+chmod 440 /etc/sudoers.d/vagrant;
