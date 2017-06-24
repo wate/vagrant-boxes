@@ -15,6 +15,7 @@ if [ "x${swapuuid}" != "x" ]; then
     /sbin/mkswap -U "$swapuuid" "$swappart";
 fi
 
-dd if=/dev/zero of=/EMPTY bs=1M || echo "dd exit code $? is suppressed";
-rm -f /EMPTY;
+touch /tmp/empty;
+dd if=/dev/zero of=/tmp/empty bs=1M || echo "dd exit code $? is suppressed";
+rm -f /tmp/empty;
 sync;
