@@ -11,7 +11,7 @@
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
       "disk_size": 20480,
-      "iso_url": "http://cdimage.debian.or.jp/8.8.0/amd64/iso-cd/debian-8.8.0-amd64-netinst.iso",
+      "iso_url": "http://debian.nctu.edu.tw/debian-cd/8.8.0/amd64/iso-cd/debian-8.8.0-amd64-netinst.iso",
       "iso_checksum_type": "sha1",
       "iso_checksum": "bcc662eb3921022bab06c2f18b9307f55a4ae3dd",
       "http_directory": "http",
