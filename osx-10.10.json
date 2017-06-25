@@ -51,15 +51,7 @@
       "type": "file"
     },
     {
-      "execute_command": "chmod +x {{ .Path }}; sudo {{ .Vars }} {{ .Path }}",
-      "scripts": [
-        "./scripts/osx/vagrant.sh",
-        "./scripts/osx/xcode-cli-tools.sh",
-        "./scripts/osx/add-network-interface-detection.sh",
-        "./scripts/osx/autologin.sh",
-        "./scripts/osx/system-update.sh",
-        "./scripts/osx/shrink.sh"
-      ],
+      "type": "shell",
       "environment_vars": [
         "AUTOLOGIN={{user `autologin`}}",
         "INSTALL_VAGRANT_KEYS={{user `install_vagrant_keys`}}",
@@ -67,7 +59,15 @@
         "UPDATE_SYSTEM={{user `update_system`}}",
         "USERNAME={{user `username`}}"
       ],
-      "type": "shell"
+      "scripts": [
+        "./provision/osx/vagrant.sh",
+        "./provision/osx/xcode-cli-tools.sh",
+        "./provision/osx/add-network-interface-detection.sh",
+        "./provision/osx/autologin.sh",
+        "./provision/osx/system-update.sh",
+        "./provision/osx/shrink.sh"
+      ],
+      "execute_command": "chmod +x {{ .Path }}; sudo {{ .Vars }} {{ .Path }}"
     }
   ]
 }
