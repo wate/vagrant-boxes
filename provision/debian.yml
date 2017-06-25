@@ -83,7 +83,7 @@
       mount:
         path: /tmp/vbox
         state: unmounted
-    - name: remove fstab
+    - name: remove iso image
       mount:
         path: /tmp/vbox
         state: absent

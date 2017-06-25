@@ -1,0 +1,156 @@
+- name: centos base image
+  hosts: all
+  become: yes
+  tasks:
+    - name: upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+    - name: install development and kernel source packages
+      yum:
+        name: "{{ item }}"
+      with_items:
+        - gcc
+        - kernel-devel
+        - kernel-headers
+        - perl
+    - name: add fix slow DNS setting
+      lineinfile:
+        path: /etc/sysconfig/network
+        line: 'RES_OPTIONS="single-request-reopen"'
+      register: result
+    - name: restart network service
+      systemd:
+        name: network
+        state: restarted
+      when: result|changed
+    - name: add exempt_group line
+      lineinfile:
+        path: /etc/sudoers
+        line: "Defaults\texempt_group=sudo"
+    - name: add the secure path line
+      lineinfile:
+        path: /etc/sudoers
+        regexp: "^\\s+%sudo%s+ALL=\\(ALL:ALL\\)"
+        line: "%sudo  ALL=NOPASSWD:ALL"
+    - name: setup password-less sudo for the vagrant user
+      copy:
+        src: vagrant
+        dest: /etc/sudoers.d/vagrant
+        mode: 0440
+    - name: add vagrant user
+      user:
+        name: vagrant
+        password: "{{ 'vagrant'|password_hash('sha512') }}"
+        home: /home/vagrant
+    - name: add SSH authorized key
+      authorized_key:
+        user: vagrant
+        key: https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
+    - name: get VirtualBox version
+      command: "cat /home/vagrant/.vbox_version"
+      register: vbox_version
+    - name: check VBoxGuestAdditions iso image
+      stat:
+        path: /home/vagrant/VBoxGuestAdditions_{{ vbox_version.stdout }}.iso
+      register: result
+    - name: download VBoxGuestAdditions iso image
+      get_url:
+        url: http://dlc-cdn.sun.com/virtualbox/{{ vbox_version.stdout }}/VBoxGuestAdditions_{{ vbox_version.stdout }}.iso
+        dest: /home/vagrant/VBoxGuestAdditions_{{ vbox_version.stdout }}.iso
+      when: not result.stat.exists
+    - name: create mount directory
+      file:
+        path: /tmp/vbox
+        state: directory
+    - name: mount VBoxGuestAdditions iso image
+      mount:
+        path: /tmp/vbox
+        src: /home/vagrant/VBoxGuestAdditions_{{ vbox_version.stdout }}.iso
+        fstype: iso9660
+        opts: loop
+        state: mounted
+    - name: install VBoxGuestAdditions
+      command: sh /tmp/vbox/VBoxLinuxAdditions.run
+    - name: unmount VBoxGuestAdditions iso image
+      mount:
+        path: /tmp/vbox
+        state: unmounted
+    - name: remove iso image
+      mount:
+        path: /tmp/vbox
+        state: absent
+    - name: remove mount directory
+      file:
+        path: /tmp/vbox
+        state: absent
+    - name: remove VBoxGuestAdditions iso image
+      file:
+        path: /home/vagrant/VBoxGuestAdditions_{{ vbox_version.stdout }}.iso
+        state: absent
+    - name: create vagrant shared directory
+      file:
+        path: /vagrant
+        state: directory
+    - name: remove development and kernel source packages
+      yum:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - gcc
+        - cpp
+        - kernel-devel
+        - kernel-headers
+        - perl
+    - name: cleanup packages
+      command: yum clean all -y
+    - name: clean up network interface persistence
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - /etc/udev/rules.d/70-persistent-net.rules
+        - /lib/udev/rules.d/75-persistent-net-generator.rules
+        - /dev/.udev
+    - name: radio off
+      command: nmcli radio all off
+    - name: stop NetworkManager service
+      systemd:
+        name: NetworkManager
+        state: stopped
+    - name: get all interface configration
+      shell: ls -1 /etc/sysconfig/network-scripts/ifcfg-* | grep -v ifcfg-lo
+      ignore_errors: yes
+      register: result
+    - name: remove all interface configration
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items: "{{ result.stdout_lines }}"
+    - name: remove NetworkManager files
+      file:
+        path: /var/lib/NetworkManager/*
+        state: absent
+    - name: setup /etc/rc.d/rc.local for CentOS7
+      blockinfile:
+        path: /etc/rc.d/rc.local
+        marker: "#PACKER-{mark}"
+        block: |
+          LANG=C
+          # delete all connection
+          for con in \`nmcli -t -f uuid con\`; do
+            if [ "\$con" != "" ]; then
+              nmcli con del \$con
+            fi
+          done
+          # add gateway interface connection.
+          gwdev=\`nmcli dev | grep ethernet | egrep -v 'unmanaged' | head -n 1 | awk '{print \$1}'\`
+          if [ "\$gwdev" != "" ]; then
+            nmcli c add type eth ifname \$gwdev con-name \$gwdev
+          fi
+          sed -i "/^#PACKER-BEGIN/,/^#PACKER-END/d" /etc/rc.d/rc.local
+          chmod -x /etc/rc.d/rc.local
+    - name: change permission
+      file:
+        path: /etc/rc.d/rc.local
+        mode: "u+x"
