@@ -1,8 +1,4 @@
 {
-  "push": {
-    "name": "wate/debian-8",
-    "exclude": [".*", "*.json", "*.box", "output-*", "packer_cache", "Vagrantfile"]
-  },
   "variables": {
     "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}"
   },
@@ -36,36 +32,26 @@
   ],
   "provisioners": [
     {
+      "type": "ansible",
+      "playbook_file": "provision/debian.yml"
+    },
+    {
       "type": "shell",
-      "scripts": [
-        "scripts/debian/pre-base.sh",
-        "scripts/01-base.sh",
-        "scripts/debian/post-base.sh",
-        "scripts/02-vagrant.sh",
-        "scripts/debian/pre-virtualbox.sh",
-        "scripts/03-virtualbox.sh",
-        "scripts/90-cleanup.sh",
-        "scripts/debian/post-cleanup.sh",
-        "scripts/99-minimize.sh"
-      ],
-      "override": {
-        "virtualbox-iso": {
-          "execute_command": "echo 'vagrant'|sudo -S bash '{{.Path}}'"
-        }
-      }
+      "scripts": "provision/minimize.sh",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
     }
   ],
   "post-processors": [
     [
       {
         "type": "vagrant",
-        "output": "output.box"
+        "output": "jessie.box"
       },
       {
         "type": "vagrant-cloud",
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "wate/debian-8",
-        "version": "0.8.0",
+        "version": "0.8.1",
         "version_description": "Debian 8.8(64bit)日本語環境用"
       }
     ]
