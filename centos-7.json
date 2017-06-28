@@ -65,7 +65,7 @@
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "wate/centos-7",
         "no_release": false,
-        "version": "0.3.3",
+        "version": "0.3.4",
         "version_description": "CentOS 7.3(64bit)日本語環境用"
       }
     ]
