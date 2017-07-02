@@ -1,14 +1,15 @@
 - name: debian base image
   hosts: all
   become: yes
+  gather_facts: no
   tasks:
     - name: update all packages to the latest version
       apt:
+        update_cache: yes
         upgrade: dist
     - name: install linux image
       apt:
         name: linux-image-{{ ansible_kernel.split('-')|last }}
-        update_cache: yes
     - name: install linux headers
       apt:
         name: linux-headers-{{ ansible_kernel }}
@@ -179,6 +180,7 @@
         - acpid
     - name: remove unused dependency packages
       apt:
+        purge: yes
         autoremove: yes
     - name: remove setting files
       shell: for i in $(dpkg -l | grep ^rc | awk '{print $2}'); do dpkg -P "$i"; done
