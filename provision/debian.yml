@@ -1,7 +1,7 @@
 - name: debian base image
   hosts: all
   become: yes
-  gather_facts: yes
+  gather_facts: no
   tasks:
     - name: update all packages to the latest version
       apt:
