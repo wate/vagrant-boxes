@@ -1,8 +1,4 @@
 {
-  "push": {
-    "name": "wate/centos-7",
-    "exclude": [".*", "*.json", "*.box", "output-*", "packer_cache", "Vagrantfile"]
-  },
   "variables": {
       "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}"
   },
@@ -45,6 +41,15 @@
   ],
   "provisioners": [
     {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "inline": [
+        "yum update -y",
+        "reboot"
+      ]
+    },
+    {
+      "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "scripts": [
         "scripts/centos/pre-base.sh",
@@ -55,21 +60,21 @@
         "scripts/90-cleanup.sh",
         "scripts/centos/post-cleanup.sh",
         "scripts/99-minimize.sh"
-      ],
-      "type": "shell"
+      ]
     }
   ],
   "post-processors": [
     [
       {
         "type": "vagrant",
-        "output": "output.box"
+        "output": "centos7.box"
       },
       {
         "type": "vagrant-cloud",
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "wate/centos-7",
-        "version": "0.3.1",
+        "no_release": false,
+        "version": "0.3.5",
         "version_description": "CentOS 7.3(64bit)日本語環境用"
       }
     ]
