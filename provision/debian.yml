@@ -5,8 +5,14 @@
     - dev-sec.os-hardening
     - dev-sec.ssh-hardening
   vars:
-    ssh_max_auth_retries: 6
-    sftp_enabled: yes
+    os_security_packages_list:
+      - xinetd
+      - inetd
+      - ypserv
+      - telnet-server
+      - rsh-server
+      - rsync
+    ssh_use_dns: no
   tasks:
     - name: update all packages to the latest version
       apt:
