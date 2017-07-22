@@ -1,6 +1,12 @@
 - name: debian base image
   hosts: all
   become: yes
+  roles:
+    - dev-sec.os-hardening
+    - dev-sec.ssh-hardening
+  vars:
+    ssh_max_auth_retries: 6
+    sftp_enabled: yes
   tasks:
     - name: update all packages to the latest version
       apt:

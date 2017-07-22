@@ -6,17 +6,6 @@
       yum:
         name: '*'
         state: latest
-    - name: restart server
-      shell: sleep 2 && shutdown -r now "Ansible updates triggered"
-      async: 1
-      poll: 0
-      ignore_errors: yes
-    - name: waiting for server to come back
-      wait_for:
-        host: "{{ inventory_hostname }}"
-        delay: 30
-      delegate_to: 127.0.0.1
-      become: no
     - name: install development and kernel source packages
       yum:
         name: "{{ item }}"

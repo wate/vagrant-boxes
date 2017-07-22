@@ -52,7 +52,7 @@
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "wate/debian-8",
         "no_release": false,
-        "version": "0.8.3",
+        "version": "0.8.2",
         "version_description": "Debian 8.8(64bit)日本語環境用"
       }
     ]
