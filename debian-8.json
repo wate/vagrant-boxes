@@ -1,8 +1,4 @@
 {
-  "push": {
-    "name": "wate/debian-8",
-    "exclude": [".*", "*.json", "*.box", "output-*", "packer_cache", "Vagrantfile"]
-  },
   "variables": {
     "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}"
   },
@@ -37,6 +33,7 @@
   "provisioners": [
     {
       "type": "shell",
+      "execute_command": "echo 'vagrant'|sudo -S bash '{{.Path}}'",
       "scripts": [
         "scripts/debian/pre-base.sh",
         "scripts/01-base.sh",
@@ -47,25 +44,21 @@
         "scripts/90-cleanup.sh",
         "scripts/debian/post-cleanup.sh",
         "scripts/99-minimize.sh"
-      ],
-      "override": {
-        "virtualbox-iso": {
-          "execute_command": "echo 'vagrant'|sudo -S bash '{{.Path}}'"
-        }
-      }
+      ]
     }
   ],
   "post-processors": [
     [
       {
         "type": "vagrant",
-        "output": "output.box"
+        "output": "debian8.box"
       },
       {
         "type": "vagrant-cloud",
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "wate/debian-8",
-        "version": "0.8.0",
+        "no_release": false,
+        "version": "0.8.4",
         "version_description": "Debian 8.8(64bit)日本語環境用"
       }
     ]
