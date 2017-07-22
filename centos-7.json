@@ -1,4 +1,8 @@
 {
+  "push": {
+    "name": "wate/centos-7",
+    "exclude": [".*", "*.json", "*.box", "output-*", "packer_cache", "Vagrantfile"]
+  },
   "variables": {
       "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}"
   },
