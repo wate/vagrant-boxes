@@ -1,7 +1,6 @@
 - name: centos base image
   hosts: all
   become: yes
-  gather_facts: no
   tasks:
     - name: upgrade all packages
       yum:
