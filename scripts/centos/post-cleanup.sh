@@ -1,14 +1,14 @@
 #!/bin/bash -eux
 
 # Remove development and kernel source packages
-yum -y remove gcc cpp kernel-devel kernel-headers perl;
+yum -y remove gcc cpp kernel-devel kernel-headers perl
 yum -y clean all
 
 # Clean up network interface persistence
-rm -f /etc/udev/rules.d/70-persistent-net.rules;
+rm -f /etc/udev/rules.d/70-persistent-net.rules
 ln -s -f /dev/null /etc/udev/rules.d/70-persistent-net.rules
-rm -f /lib/udev/rules.d/75-persistent-net-generator.rules;
-rm -rf /dev/.udev/;
+rm -f /lib/udev/rules.d/75-persistent-net-generator.rules
+rm -rf /dev/.udev/
 
 # radio off & remove all interface configration
 nmcli radio all off
