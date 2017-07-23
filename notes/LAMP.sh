@@ -4,7 +4,6 @@
 #
 # @sacloud-desc Apache, PHP, MariaDBをインストールします。
 # @sacloud-require-archive distro-centos distro-ver-7.*
-# @sacloud-require-archive distro-sl distro-ver-7.*
 # @sacloud-radios-begin required default=remi-php70 php_version "利用するPHPのバージョン"
 #  remi-php54   "5.4"
 #  remi-php55   "5.5"
