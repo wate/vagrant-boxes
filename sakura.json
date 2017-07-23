@@ -55,11 +55,12 @@
         "scripts/centos/pre-base.sh",
         "scripts/01-base.sh",
         "scripts/centos/post-base.sh",
+        "scripts/sakura/pre-vagrant.sh",
         "scripts/02-vagrant.sh",
         "scripts/03-virtualbox.sh",
         "scripts/sakura/post-virtualbox.sh",
         "scripts/90-cleanup.sh",
-        "scripts/centos/post-cleanup.sh",
+        "scripts/sakura/post-cleanup.sh",
         "scripts/99-minimize.sh"
       ]
     }

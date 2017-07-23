@@ -5,20 +5,8 @@ systemctl enable firewalld.service
 
 systemctl disable auditd.service
 systemctl disable kdump.service
-systemctl disable messagebus.service
-systemctl disable wpa_supplicant.service
-
-##
-systemctl disable abrt-ccpp.service
-systemctl disable abrt-oops.service
-systemctl disable abrt-vmcore.service
-systemctl disable abrt-xorg.service
-systemctl disable abrtd.service
-systemctl disable avahi-daemon.service
 systemctl disable lvm2-lvmetad.socket
 systemctl disable lvm2-monitor.service
-systemctl disable smartd.service
-##
 
 # network
 cat << 'EOF' > /etc/sysconfig/network
