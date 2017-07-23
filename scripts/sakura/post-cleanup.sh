@@ -1,7 +1,5 @@
 #!/bin/bash -eux
 
-# Remove development and kernel source packages
-yum -y remove gcc cpp kernel-devel kernel-headers perl
 yum -y clean all
 
 # Clean up network interface persistence
@@ -19,6 +17,13 @@ for ifcfg in `ls -1 /etc/sysconfig/network-scripts/ifcfg-* | grep -v ifcfg-lo`; 
 done
 rm -rf /var/lib/NetworkManager/*
 
+# clean
+/usr/bin/rm -rf /tmp/*
+/usr/bin/rm -fr /var/log/anaconda*
+/usr/bin/rm -f /root/install.log*
+/usr/bin/rm -f /root/anaconda-ks.cfg
+/usr/bin/rm -f /var/lib/dhclient/dhclient-*.leases
+/usr/bin/rm -f /etc/dhcp/dhclient-eth0.conf
 
 echo "==> Setup /etc/rc.d/rc.local for CentOS7"
 cat <<_EOF_ | cat >> /etc/rc.d/rc.local
