@@ -41,13 +41,26 @@
   ],
   "provisioners": [
     {
-      "type": "ansible",
-      "playbook_file": "provision/centos.yml"
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "inline": [
+        "yum update -y",
+        "reboot"
+      ]
     },
     {
       "type": "shell",
-      "scripts": "provision/minimize.sh",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "scripts": [
+        "scripts/centos/pre-base.sh",
+        "scripts/01-base.sh",
+        "scripts/centos/post-base.sh",
+        "scripts/02-vagrant.sh",
+        "scripts/03-virtualbox.sh",
+        "scripts/90-cleanup.sh",
+        "scripts/centos/post-cleanup.sh",
+        "scripts/99-minimize.sh"
+      ]
     }
   ],
   "post-processors": [
@@ -61,7 +74,7 @@
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "wate/centos-7",
         "no_release": false,
-        "version": "0.3.4",
+        "version": "0.3.5",
         "version_description": "CentOS 7.3(64bit)日本語環境用"
       }
     ]

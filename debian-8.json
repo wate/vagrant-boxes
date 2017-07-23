@@ -32,27 +32,33 @@
   ],
   "provisioners": [
     {
-      "type": "ansible",
-      "playbook_file": "provision/debian.yml"
-    },
-    {
       "type": "shell",
-      "scripts": "provision/minimize.sh",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+      "execute_command": "echo 'vagrant'|sudo -S bash '{{.Path}}'",
+      "scripts": [
+        "scripts/debian/pre-base.sh",
+        "scripts/01-base.sh",
+        "scripts/debian/post-base.sh",
+        "scripts/02-vagrant.sh",
+        "scripts/debian/pre-virtualbox.sh",
+        "scripts/03-virtualbox.sh",
+        "scripts/90-cleanup.sh",
+        "scripts/debian/post-cleanup.sh",
+        "scripts/99-minimize.sh"
+      ]
     }
   ],
   "post-processors": [
     [
       {
         "type": "vagrant",
-        "output": "jessie.box"
+        "output": "debian8.box"
       },
       {
         "type": "vagrant-cloud",
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "wate/debian-8",
         "no_release": false,
-        "version": "0.8.3",
+        "version": "0.8.4",
         "version_description": "Debian 8.8(64bit)日本語環境用"
       }
     ]

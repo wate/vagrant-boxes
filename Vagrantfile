@@ -7,37 +7,24 @@ Vagrant.configure(2) do |config|
     config.cache.scope = :box
   end
 
-  config.vm.provision "ansible" do |ansible|
-    ansible.groups = {
-      "vagrant" => [
-        "jessie",
-        "stretch",
-        "centos7"
-      ],
-    }
-    ansible.playbook = "playbook.yml"
-  end
-  config.vm.define 'stretch' do |stretch|
-    stretch.vm.network "private_network", ip: "192.168.33.250"
-    stretch.vm.box = 'wate/debian-9'
-    stretch.vm.provider 'virtualbox' do |v|
-      v.name = 'stretch'
-      v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
-    end
-  end
-  config.vm.define 'centos7' do |centos7|
-    centos7.vm.network "private_network", ip: "192.168.33.251"
+  config.vm.define 'centos-7' do |centos7|
     centos7.vm.box = 'wate/centos-7'
     centos7.vm.provider 'virtualbox' do |v|
       v.name = 'centos7'
       v.customize ["modifyvm", :id, "--ostype", "Redhat_64"]
     end
   end
-  config.vm.define 'jessie' do |jessie|
-    jessie.vm.network "private_network", ip: "192.168.33.252"
+  config.vm.define 'debian-8' do |jessie|
     jessie.vm.box = 'wate/debian-8'
     jessie.vm.provider 'virtualbox' do |v|
       v.name = 'jessie'
+      v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
+    end
+  end
+  config.vm.define 'debian-9' do |stretch|
+    stretch.vm.box = 'wate/debian-9'
+    stretch.vm.provider 'virtualbox' do |v|
+      v.name = 'stretch'
       v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
     end
   end

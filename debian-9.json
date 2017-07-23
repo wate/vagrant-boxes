@@ -30,27 +30,33 @@
   ],
   "provisioners": [
     {
-      "type": "ansible",
-      "playbook_file": "provision/debian.yml"
-    },
-    {
       "type": "shell",
-      "scripts": "provision/minimize.sh",
-      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+      "execute_command": "echo 'vagrant'|sudo -S bash '{{.Path}}'",
+      "scripts": [
+        "scripts/debian/pre-base.sh",
+        "scripts/01-base.sh",
+        "scripts/debian/post-base.sh",
+        "scripts/02-vagrant.sh",
+        "scripts/debian/pre-virtualbox.sh",
+        "scripts/03-virtualbox.sh",
+        "scripts/90-cleanup.sh",
+        "scripts/debian/post-cleanup.sh",
+        "scripts/99-minimize.sh"
+      ]
     }
   ],
   "post-processors": [
     [
       {
         "type": "vagrant",
-        "output": "stretch.box"
+        "output": "debian9.box"
       },
       {
         "type": "vagrant-cloud",
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "wate/debian-9",
         "no_release": false,
-        "version": "0.0.3",
+        "version": "0.0.4",
         "version_description": "Debian 9.0(64bit)日本語環境用"
       }
     ]
