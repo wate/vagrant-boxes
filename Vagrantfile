@@ -14,6 +14,14 @@ Vagrant.configure(2) do |config|
       v.customize ["modifyvm", :id, "--ostype", "Redhat_64"]
     end
   end
+  config.vm.define 'sakura' do |sakura|
+    sakura.vm.box = 'sakura'
+    config.vm.provision "shell", path: "notes/LAMP.sh"
+    sakura.vm.provider 'virtualbox' do |v|
+      v.name = 'sakura'
+      v.customize ["modifyvm", :id, "--ostype", "Redhat_64"]
+    end
+  end
   config.vm.define 'debian-8' do |jessie|
     jessie.vm.box = 'wate/debian-8'
     jessie.vm.provider 'virtualbox' do |v|
