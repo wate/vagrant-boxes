@@ -14,11 +14,11 @@ Vagrant.configure(2) do |config|
       v.customize ["modifyvm", :id, "--ostype", "Redhat_64"]
     end
   end
-  config.vm.define 'sakura' do |sakura|
-    sakura.vm.box = 'sakura'
-    config.vm.provision "shell", path: "notes/LAMP.sh"
-    sakura.vm.provider 'virtualbox' do |v|
-      v.name = 'sakura'
+  config.vm.define 'sakura_cloud' do |sakura_cloud|
+    sakura_cloud.vm.box = 'sakura_cloud'
+    sakura_cloud.vm.provision "shell", path: "notes/LAMP.sh"
+    sakura_cloud.vm.provider 'virtualbox' do |v|
+      v.name = 'sakura_cloud'
       v.customize ["modifyvm", :id, "--ostype", "Redhat_64"]
     end
   end

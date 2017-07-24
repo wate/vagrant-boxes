@@ -5,7 +5,7 @@
   "builders": [
     {
       "boot_command": [
-        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/sakura/ks.cfg<enter><wait>"
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/sakura/cloud_ks.cfg<enter><wait>"
       ],
       "boot_wait": "10s",
       "disk_size": 20480,
@@ -69,7 +69,7 @@
     [
       {
         "type": "vagrant",
-        "output": "sakura.box"
+        "output": "sakura_cloud.box"
       }
     ]
   ]

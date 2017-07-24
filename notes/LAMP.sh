@@ -33,6 +33,7 @@ yum install -y httpd mod_ssl || exit 1
 systemctl start httpd.service || exit 1
 systemctl enable httpd.service || exit 1
 firewall-cmd --add-service=http --zone=public --permanent || exit 1
+firewall-cmd --add-service=https --zone=public --permanent || exit 1
 firewall-cmd --reload || exit 1
 
 yum install -y --enablerepo=epel,remi,${REMI_PHP_REPO_ID} php php-devel php-pear php-gd php-pdo php-intl php-mcrypt php-mbstring php-mysqlnd php-xml || exit 1
