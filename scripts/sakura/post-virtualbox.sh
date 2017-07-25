@@ -172,11 +172,6 @@ systemctl enable chronyd.service
 systemctl disable ntpdate.service
 systemctl disable ntpd.service
 
-# sshd
-# sed -i -e "/\#MaxSessions 10$/a #AllowUsers\nDenyUsers toor administrator administrateur admin adm test guest info mysql user oracle" /etc/ssh/sshd_config
-# sed -i -e '/GSSAPIAuthentication yes$/d' /etc/ssh/sshd_config
-# sed -i -e '/^GSSAPICleanupCredentials yes$/d' /etc/ssh/sshd_config
-# sed -i -e '/^UsePAM yes$/d' /etc/ssh/sshd_config
 
 # fail2ban
 touch /var/log/fail2ban.log
