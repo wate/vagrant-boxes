@@ -33,6 +33,13 @@ if [ ! -e /etc/yum.repos.d/epel.repo ]; then
   yum -y install epel-release || exit 1
 fi
 
+yum install -y --enablerepo=epel etckeeper tig || exit 1
+
+if [ ! -e /etc/.etckeeper ]; then
+  etckeeper init || exit 1
+  etckeeper commit "initial commit" || exit 1
+fi
+
 yum install -y httpd mod_ssl || exit 1
 
 systemctl start httpd.service || exit 1
