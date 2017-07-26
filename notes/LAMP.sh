@@ -55,6 +55,9 @@ fi
 yum install -y --enablerepo=epel,remi,${REMI_PHP_REPO_ID} php php-devel php-pear php-gd php-pdo php-intl php-mcrypt php-mbstring php-mysqlnd php-xml || exit 1
 
 if [ ! -e /usr/local/bin/composer ]; then
+  if [ -z "${HOME}" ]; then
+    export COMPOSER_HOME=/root
+  fi
   EXPECTED_SIGNATURE=$(wget -q -O - https://composer.github.io/installer.sig)
   php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" || exit 1
   ACTUAL_SIGNATURE=$(php -r "echo hash_file('SHA384', 'composer-setup.php');")
