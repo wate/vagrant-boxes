@@ -33,7 +33,7 @@ if [ ! -e /etc/yum.repos.d/epel.repo ]; then
   yum -y install epel-release || exit 1
 fi
 
-yum install -y --enablerepo=epel etckeeper tig || exit 1
+yum install -y --enablerepo=epel etckeeper tig bash-completion || exit 1
 
 if [ ! -e /etc/.etckeeper ]; then
   etckeeper init || exit 1
@@ -66,18 +66,28 @@ if [ ! -e /usr/local/bin/composer ]; then
   rm composer-setup.php || exit 1
 fi
 
+if [ ! -e /usr/local/bin/wp ]; then
+  curl -s https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp || exit 1
+  chmod +x /usr/local/bin/wp || exit 1
+  if [ -e /etc/bash_completion.d -a ! -e /etc/bash_completion.d/wp-completion.bash ]; then
+    curl -s https://raw.githubusercontent.com/wp-cli/wp-cli/master/utils/wp-completion.bash -o /etc/bash_completion.d/wp-completion.bash || exit 1
+  fi
+fi
+
 yum install -y mariadb-server || exit 1
 systemctl start mariadb.service || exit 1
 systemctl enable mariadb.service || exit 1
 
-# Remove anonymous users
-/usr/bin/mysql -u root -D mysql -e "DELETE FROM user WHERE User='';"
-# Disallow root login remotely
-/usr/bin/mysql -u root -D mysql -e "DELETE FROM user WHERE User='root' AND Host NOT IN ('localhost',  '127.0.0.1',  '::1');"
-# Remove test database
-/usr/bin/mysql -u root -e "DROP DATABASE test;"
-# Change MariaDB root password
-/usr/bin/mysqladmin -u root password "$MARIADB_ROOT_PASSWIRD" || exit 1
+if [ ! -e /root/.my.cnf ]; then
+  # Remove anonymous users
+  /usr/bin/mysql -u root -D mysql -e "DELETE FROM user WHERE User='';"
+  # Disallow root login remotely
+  /usr/bin/mysql -u root -D mysql -e "DELETE FROM user WHERE User='root' AND Host NOT IN ('localhost',  '127.0.0.1',  '::1');"
+  # Remove test database
+  /usr/bin/mysql -u root -e "DROP DATABASE test;"
+  # Change MariaDB root password
+  /usr/bin/mysqladmin -u root password "$MARIADB_ROOT_PASSWIRD" || exit 1
+fi
 
 cat <<EOT > /root/.my.cnf
 [client]
