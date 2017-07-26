@@ -22,11 +22,16 @@ if [ "$MARIADB_ROOT_PASSWIRD" = "@@@mariadb_root_password@@@" ]; then
   yum install -y expect || exit 1
   MARIADB_ROOT_PASSWIRD=$(mkpasswd -l 32 -d 9 -c 9 -C 9 -s 0 -2)
 fi
+
 yum update -y
 
 yum install -y firewalld || exit 1
 systemctl start firewalld.service || exit 1
 systemctl enable firewalld.service || exit 1
+
+if [ ! -e /etc/yum.repos.d/epel.repo ]; then
+  yum -y install epel-release || exit 1
+fi
 
 yum install -y httpd mod_ssl || exit 1
 
@@ -36,7 +41,23 @@ firewall-cmd --add-service=http --zone=public --permanent || exit 1
 firewall-cmd --add-service=https --zone=public --permanent || exit 1
 firewall-cmd --reload || exit 1
 
+if [ ! -e /etc/yum.repos.d/remi.repo ]; then
+  rpm --import https://rpms.remirepo.net/RPM-GPG-KEY-remi || exit 1
+  yum install -y https://rpms.remirepo.net/enterprise/remi-release-7.rpm || exit 1
+fi
 yum install -y --enablerepo=epel,remi,${REMI_PHP_REPO_ID} php php-devel php-pear php-gd php-pdo php-intl php-mcrypt php-mbstring php-mysqlnd php-xml || exit 1
+
+if [ ! -e /usr/local/bin/composer ]; then
+  EXPECTED_SIGNATURE=$(wget -q -O - https://composer.github.io/installer.sig)
+  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" || exit 1
+  ACTUAL_SIGNATURE=$(php -r "echo hash_file('SHA384', 'composer-setup.php');")
+  if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]; then
+      >&2 echo 'ERROR: Invalid installer signature'
+      rm composer-setup.php || exit 1
+  fi
+  php composer-setup.php --quiet --install-dir=/usr/local/bin --filename=composer || exit 1
+  rm composer-setup.php || exit 1
+fi
 
 yum install -y mariadb-server || exit 1
 systemctl start mariadb.service || exit 1
