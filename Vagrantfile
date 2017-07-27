@@ -9,6 +9,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define 'centos-7' do |centos7|
     centos7.vm.box = 'wate/centos-7'
+    centos7.vm.provision "shell", path: "notes/LAMP.sh"
     centos7.vm.provider 'virtualbox' do |v|
       v.name = 'centos7'
       v.customize ["modifyvm", :id, "--ostype", "Redhat_64"]
