@@ -13,14 +13,14 @@
 # @sacloud-password minlen=8 mariadb_root_password "MariaDBのrootパスワード" ex="省略された場合は自動生成されます"
 
 REMI_PHP_REPO_ID=@@@php_version@@@
-MARIADB_ROOT_PASSWIRD=@@@mariadb_root_password@@@
+MARIADB_ROOT_PASSWORD=@@@mariadb_root_password@@@
 
 if [ "$REMI_PHP_REPO_ID" = "@@@php_version@@@" ]; then
   REMI_PHP_REPO_ID="remi-php70"
 fi
-if [ "$MARIADB_ROOT_PASSWIRD" = "@@@mariadb_root_password@@@" ]; then
+if [ "$MARIADB_ROOT_PASSWORD" = "@@@mariadb_root_password@@@" ]; then
   yum install -y expect || exit 1
-  MARIADB_ROOT_PASSWIRD=$(mkpasswd -l 32 -d 9 -c 9 -C 9 -s 0 -2)
+  MARIADB_ROOT_PASSWORD=$(mkpasswd -l 32 -d 9 -c 9 -C 9 -s 0 -2)
 fi
 
 yum update -y
@@ -89,14 +89,14 @@ if [ ! -e /root/.my.cnf ]; then
   # Remove test database
   /usr/bin/mysql -u root -e "DROP DATABASE test;"
   # Change MariaDB root password
-  /usr/bin/mysqladmin -u root password "$MARIADB_ROOT_PASSWIRD" || exit 1
+  /usr/bin/mysqladmin -u root password "$MARIADB_ROOT_PASSWORD" || exit 1
 fi
 
 cat <<EOT > /root/.my.cnf
 [client]
 host     = localhost
 user     = root
-password = $MARIADB_ROOT_PASSWIRD
+password = $MARIADB_ROOT_PASSWORD
 socket   = /var/lib/mysql/mysql.sock
 EOT
 chmod 600 /root/.my.cnf
