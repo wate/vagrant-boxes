@@ -2,19 +2,15 @@
   "variables": {
     "do_api_token": "{{env `DO_API_TOKEN`}}"
   },
-  "builders": [
-    {
-      "type": "digitalocean",
-      "api_token": "{{user `do_api_token`}}",
-      "image": "debian-8-x64",
-      "region": "sgp1",
-      "size": "1gb"
-    }
-  ],
-  "provisioners": [
-    {
-      "type": "shell",
-      "inline": "echo 'Hello World'"
-    }
-  ]
+  "builders": [{
+    "type": "digitalocean",
+    "api_token": "{{user `do_api_token`}}",
+    "image": "debian-8-x64",
+    "region": "sgp1",
+    "size": "1gb"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "inline": "echo 'Hello World'"
+  }]
 }

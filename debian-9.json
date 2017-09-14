@@ -2,52 +2,47 @@
   "variables": {
     "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}"
   },
-  "builders": [
-    {
-      "type": "virtualbox-iso",
-      "guest_os_type": "Debian_64",
-      "disk_size": 20480,
-      "iso_url": "http://cdimage.debian.org/debian-cd/9.1.0/amd64/iso-cd/debian-9.1.0-amd64-netinst.iso",
-      "iso_checksum_type": "sha1",
-      "iso_checksum": "151c200204d2930aa74e92c9884d7b613296e7bf",
-      "http_directory": "http",
-      "boot_wait": "5s",
-      "boot_command": [
-        "<esc><wait>",
-        "auto <wait>",
-        "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-9/preseed.cfg <wait>",
-        "frontend=noninteractive <wait>",
-        "<enter><wait>"
-      ],
-      "ssh_password": "vagrant",
-      "ssh_username": "vagrant",
-      "ssh_port": 22,
-      "ssh_wait_timeout": "20m",
-      "shutdown_command": "sudo /sbin/shutdown -h now",
-      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
-      "virtualbox_version_file": ".vbox_version"
-    }
-  ],
-  "provisioners": [
-    {
-      "type": "shell",
-      "execute_command": "echo 'vagrant'|sudo -S bash '{{.Path}}'",
-      "scripts": [
-        "scripts/debian/pre-base.sh",
-        "scripts/01-base.sh",
-        "scripts/debian/post-base.sh",
-        "scripts/02-vagrant.sh",
-        "scripts/debian/pre-virtualbox.sh",
-        "scripts/03-virtualbox.sh",
-        "scripts/90-cleanup.sh",
-        "scripts/debian/post-cleanup.sh",
-        "scripts/99-minimize.sh"
-      ]
-    }
-  ],
+  "builders": [{
+    "type": "virtualbox-iso",
+    "guest_os_type": "Debian_64",
+    "disk_size": 20480,
+    "iso_url": "http://cdimage.debian.org/debian-cd/9.1.0/amd64/iso-cd/debian-9.1.0-amd64-netinst.iso",
+    "iso_checksum_type": "sha1",
+    "iso_checksum": "151c200204d2930aa74e92c9884d7b613296e7bf",
+    "http_directory": "http",
+    "boot_wait": "5s",
+    "boot_command": [
+      "<esc><wait>",
+      "auto <wait>",
+      "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-9/preseed.cfg <wait>",
+      "frontend=noninteractive <wait>",
+      "<enter><wait>"
+    ],
+    "ssh_password": "vagrant",
+    "ssh_username": "vagrant",
+    "ssh_port": 22,
+    "ssh_wait_timeout": "20m",
+    "shutdown_command": "sudo /sbin/shutdown -h now",
+    "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+    "virtualbox_version_file": ".vbox_version"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "execute_command": "echo 'vagrant'|sudo -S bash '{{.Path}}'",
+    "scripts": [
+      "scripts/debian/pre-base.sh",
+      "scripts/01-base.sh",
+      "scripts/debian/post-base.sh",
+      "scripts/02-vagrant.sh",
+      "scripts/debian/pre-virtualbox.sh",
+      "scripts/03-virtualbox.sh",
+      "scripts/90-cleanup.sh",
+      "scripts/debian/post-cleanup.sh",
+      "scripts/99-minimize.sh"
+    ]
+  }],
   "post-processors": [
-    [
-      {
+    [{
         "type": "vagrant",
         "output": "debian9.box"
       },

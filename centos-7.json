@@ -1,46 +1,43 @@
 {
   "variables": {
-      "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}"
+    "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}"
   },
-  "builders": [
-    {
-      "boot_command": [
-        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos-7/ks.cfg<enter><wait>"
+  "builders": [{
+    "boot_command": [
+      "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centos-7/ks.cfg<enter><wait>"
+    ],
+    "boot_wait": "10s",
+    "disk_size": 20480,
+    "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+    "guest_os_type": "RedHat_64",
+    "hard_drive_interface": "sata",
+    "http_directory": "http",
+    "iso_checksum": "156f4cb711fdbd668943711f853fb6da89581aad",
+    "iso_checksum_type": "sha1",
+    "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1611.iso",
+    "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
+    "ssh_password": "vagrant",
+    "ssh_port": 22,
+    "ssh_username": "vagrant",
+    "ssh_wait_timeout": "10000s",
+    "type": "virtualbox-iso",
+    "vboxmanage": [
+      [
+        "modifyvm",
+        "{{.Name}}",
+        "--memory",
+        "1024"
       ],
-      "boot_wait": "10s",
-      "disk_size": 20480,
-      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
-      "guest_os_type": "RedHat_64",
-      "hard_drive_interface": "sata",
-      "http_directory": "http",
-      "iso_checksum": "156f4cb711fdbd668943711f853fb6da89581aad",
-      "iso_checksum_type": "sha1",
-      "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1611.iso",
-      "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
-      "ssh_password": "vagrant",
-      "ssh_port": 22,
-      "ssh_username": "vagrant",
-      "ssh_wait_timeout": "10000s",
-      "type": "virtualbox-iso",
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "1024"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "1"
-        ]
-      ],
-      "virtualbox_version_file": ".vbox_version"
-    }
-  ],
-  "provisioners": [
-    {
+      [
+        "modifyvm",
+        "{{.Name}}",
+        "--cpus",
+        "1"
+      ]
+    ],
+    "virtualbox_version_file": ".vbox_version"
+  }],
+  "provisioners": [{
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "inline": [
@@ -64,8 +61,7 @@
     }
   ],
   "post-processors": [
-    [
-      {
+    [{
         "type": "vagrant",
         "output": "centos7.box"
       },
