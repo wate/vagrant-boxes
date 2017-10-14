@@ -6,9 +6,9 @@
     "type": "virtualbox-iso",
     "guest_os_type": "Debian_64",
     "disk_size": 20480,
-    "iso_url": "http://cdimage.debian.org/debian-cd/9.1.0/amd64/iso-cd/debian-9.1.0-amd64-netinst.iso",
+    "iso_url": "http://cdimage.debian.org/debian-cd/9.2.0/amd64/iso-cd/debian-9.2.0-amd64-netinst.iso",
     "iso_checksum_type": "sha1",
-    "iso_checksum": "151c200204d2930aa74e92c9884d7b613296e7bf",
+    "iso_checksum": "7786a9b66bbde9ac55106594a7c84adc9ccf8cb8",
     "http_directory": "http",
     "boot_wait": "5s",
     "boot_command": [
@@ -50,9 +50,8 @@
         "type": "vagrant-cloud",
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "wate/debian-9",
-        "no_release": false,
-        "version": "0.1.0",
-        "version_description": "Debian 9.1(64bit)日本語環境用"
+        "version": "0.2.0",
+        "version_description": "Debian 9.2(64bit)日本語環境用"
       }
     ]
   ]
