@@ -6,9 +6,9 @@
     "type": "virtualbox-iso",
     "guest_os_type": "Debian_64",
     "disk_size": 20480,
-    "iso_url": "https://cdimage.debian.org/mirror/cdimage/archive/8.9.0/amd64/iso-cd/debian-8.9.0-amd64-netinst.iso",
+    "iso_url": "https://cdimage.debian.org/mirror/cdimage/archive/8.10.0/amd64/iso-cd/debian-8.10.0-amd64-netinst.iso",
     "iso_checksum_type": "sha1",
-    "iso_checksum": "02514e325937cb149f0a277702942a949caf55c5",
+    "iso_checksum": "2bff15521a3e90400603732bf095c80f2b3b1cf8",
     "http_directory": "http",
     "boot_wait": "5s",
     "boot_command": [
@@ -53,8 +53,8 @@
         "access_token": "{{user `vagrantcloud_token`}}",
         "box_tag": "wate/debian-8",
         "no_release": false,
-        "version": "0.9.0",
-        "version_description": "Debian 8.9(64bit)日本語環境用"
+        "version": "0.10.0",
+        "version_description": "Debian 8.10(64bit)日本語環境用"
       }
     ]
   ]
