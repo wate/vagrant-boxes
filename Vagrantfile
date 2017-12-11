@@ -6,34 +6,25 @@ Vagrant.configure(2) do |config|
   if Vagrant.has_plugin?('vagrant-cachier')
     config.cache.scope = :box
   end
-
   config.vm.define 'centos-7' do |centos7|
     centos7.vm.box = 'wate/centos-7'
     centos7.vm.provision "shell", path: "notes/LAMP.sh"
     centos7.vm.provider 'virtualbox' do |v|
-      v.name = 'centos7'
-      v.customize ["modifyvm", :id, "--ostype", "Redhat_64"]
-    end
-  end
-  config.vm.define 'sakura_cloud' do |sakura_cloud|
-    sakura_cloud.vm.box = 'sakura_cloud'
-    sakura_cloud.vm.provision "shell", path: "notes/LAMP.sh"
-    sakura_cloud.vm.provider 'virtualbox' do |v|
-      v.name = 'sakura_cloud'
+      v.name = 'packer_centos7'
       v.customize ["modifyvm", :id, "--ostype", "Redhat_64"]
     end
   end
   config.vm.define 'debian-8' do |jessie|
     jessie.vm.box = 'wate/debian-8'
     jessie.vm.provider 'virtualbox' do |v|
-      v.name = 'jessie'
+      v.name = 'packer_jessie'
       v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
     end
   end
   config.vm.define 'debian-9' do |stretch|
     stretch.vm.box = 'wate/debian-9'
     stretch.vm.provider 'virtualbox' do |v|
-      v.name = 'stretch'
+      v.name = 'packer_stretch'
       v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
     end
   end
