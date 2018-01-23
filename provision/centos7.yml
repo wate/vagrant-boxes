@@ -1,0 +1,72 @@
+- name: CentOS 7 Base Image
+  hosts: all
+  pre_tasks:
+    - name: update all packages to the latest version
+      yum:
+        name: "*"
+        state: latest
+  roles:
+    - name: dev-sec.os-hardening
+    - name: dev-sec.ssh-hardening
+  vars:
+    ssh_use_pam: yes
+    ssh_deny_users: "toor administrator administrateur admin adm test guest info mysql user oracle"
+  tasks:
+    - name: install commmon packages
+      yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - epel-release
+        - firewalld
+        - yum-utils
+    - name: Enable EPEL repo
+      yum_repository:
+        name: epel
+        description: "Extra Packages for Enterprise Linux {{ ansible_distribution_major_version }} - $basearch"
+        mirrorlist: "https://mirrors.fedoraproject.org/metalink?repo=epel-{{ ansible_distribution_major_version }}&arch=$basearch"
+        failovermethod: priority
+        enabled: yes
+        gpgcheck: yes
+        gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
+    - name: install etckeeper
+      yum:
+        update_cache: yes
+        name: etckeeper
+        state: latest
+    - name: install fail2ban
+      yum:
+        update_cache: yes
+        name: fail2ban
+        state: latest
+    - name: Ensure fail2ban log setting
+      ini_file:
+        path: /etc/fail2ban/fail2ban.conf
+        section: Definition
+        option: logtarget
+        value: /var/log/fail2ban.log
+    - name: Ensure fail2ban jail settings
+      ini_file:
+        path: /etc/fail2ban/jail.d/local.conf
+        section: "{{ item.section }}"
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
+        create: yes
+      with_items:
+        - section: DEFAULT
+          option: banaction
+          value: firewallcmd-ipset
+        - section: DEFAULT
+          option: backend
+          value: systemd
+        - section: sshd
+          option: enabled
+          value: yes
+    - name: Ensure active and enabled on system startup service
+      systemd:
+        name: "{{ item }}"
+        enabled: yes
+        state: started
+      with_items:
+        - firewalld
+        - fail2ban

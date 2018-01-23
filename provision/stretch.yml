@@ -1,0 +1,18 @@
+- name: Debian 9 Base Image
+  hosts: all
+  pre_tasks:
+    - name: update all packages to the latest version
+      apt:
+        update_cache: yes
+        upgrade: dist
+  roles:
+    - name: dev-sec.os-hardening
+    - name: dev-sec.ssh-hardening
+  vars:
+    ssh_use_pam: yes
+    ssh_deny_users: "toor administrator administrateur admin adm test guest info mysql user oracle"
+  tasks:
+    - name: clean packages
+      apt:
+        autoremove: yes
+        autoclean: yes
