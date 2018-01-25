@@ -1,7 +1,7 @@
-- name: CentOS 7 Base Image
+- name: Create CentOS 7 Base Image
   hosts: all
   pre_tasks:
-    - name: update all packages to the latest version
+    - name: Update all packages
       yum:
         name: "*"
         state: latest
@@ -9,8 +9,11 @@
     - name: dev-sec.os-hardening
     - name: dev-sec.ssh-hardening
   vars:
+    ssh_max_auth_retries: 5
     ssh_use_pam: yes
     ssh_deny_users: "toor administrator administrateur admin adm test guest info mysql user oracle"
+    swap_size: 2
+    swap_dest: /var/spool/swap/swapfile
   tasks:
     - name: install commmon packages
       yum:
@@ -62,6 +65,38 @@
         - section: sshd
           option: enabled
           value: yes
+    - name: for IDCF
+      block:
+        - name: check swapfile exist
+          stat:
+            path: "{{ swap_dest }}"
+          register: result
+        - name: create swapfile
+          block:
+            - name: create swapfile directory
+              file:
+                path: "{{ swap_dest|dirname }}"
+                state: directory
+            - name: create swapfile
+              file:
+                path: "{{ swap_dest }}"
+                owner: root
+                group: root
+                mode: 0600
+                state: touch
+            - name: initilize swapfile
+              command: "dd if=/dev/zero of={{ swap_dest }} bs=1M count={{ swap_size * 1024 }}"
+            - name: create swap
+              command: "mkswap {{ swap_dest }}"
+          when: not result.stat.exists
+        - name: Ensure mounted swap
+          mount:
+            path: none
+            src: "{{ swap_dest }}"
+            fstype: swap
+            opts: default
+            state: present
+      when: packer_builder_type == 'cloudstack'
     - name: Ensure active and enabled on system startup service
       systemd:
         name: "{{ item }}"
