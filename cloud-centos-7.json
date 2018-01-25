@@ -1,0 +1,46 @@
+{
+  "variables": {
+    "home": "{{env `HOME`}}",
+    "image_name": "centos7"
+  },
+  "builders": [{
+    "type": "conoha",
+    "ssh_username": "root",
+    "ssh_ip_version": 4,
+    "ssh_keypair_name": "main",
+    "ssh_private_key_file": "{{user `home`}}/.ssh/ConoHa",
+    "image_name": "{{user `image_name`}}",
+    "source_image_name": "vmi-centos-7.4-amd64",
+    "flavor": "g-1gb",
+    "security_groups": [
+      "default",
+      "gncs-ipv6-all",
+      "gncs-ipv4-all"
+    ]
+  }, {
+    "type": "sakuracloud",
+    "zone": "is1b",
+    "os_type": "centos",
+    "ssh_username": "root",
+    "ssh_private_key_file": "{{user `home`}}/.ssh/sakura",
+    "archive_name": "{{user `image_name`}}"
+  }, {
+    "type": "cloudstack",
+    "service_offering": "light.S1",
+    "source_template": "CentOS 7.4 64-bit",
+    "zone": "newton",
+    "network": "newton-network1",
+    "keypair": "main",
+    "ssh_username": "root",
+    "ssh_private_key_file": "{{user `home`}}/.ssh/IDCF",
+    "template_name": "{{user `image_name`}}",
+    "template_os": "CentOS 7.1",
+    "template_scalable": true,
+    "template_password_enabled": true,
+    "template_featured": true
+  }],
+  "provisioners": [{
+    "type": "ansible",
+    "playbook_file": "provision/centos7.yml"
+  }]
+}
