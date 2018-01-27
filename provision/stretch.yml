@@ -9,9 +9,21 @@
     - name: dev-sec.os-hardening
     - name: dev-sec.ssh-hardening
   vars:
+    ssh_allow_root_with_key: yes
+    ssh_max_auth_retries: 3
     ssh_use_pam: yes
     ssh_deny_users: "toor administrator administrateur admin adm test guest info mysql user oracle"
+    sftp_enabled: yes
+    swap_size: 2
+    swap_dest: /var/spool/swap/swapfile
   tasks:
+    - name: install commmon packages
+      yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - bash-completion
+        - ufw
     - name: clean packages
       apt:
         autoremove: yes

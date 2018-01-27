@@ -9,9 +9,11 @@
     - name: dev-sec.os-hardening
     - name: dev-sec.ssh-hardening
   vars:
-    ssh_max_auth_retries: 5
+    ssh_allow_root_with_key: yes
+    ssh_max_auth_retries: 3
     ssh_use_pam: yes
     ssh_deny_users: "toor administrator administrateur admin adm test guest info mysql user oracle"
+    sftp_enabled: yes
     swap_size: 2
     swap_dest: /var/spool/swap/swapfile
   tasks:
@@ -32,6 +34,11 @@
         enabled: yes
         gpgcheck: yes
         gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
+    - name: install bash-completion
+      yum:
+        update_cache: yes
+        name: bash-completion
+        state: latest
     - name: install etckeeper
       yum:
         update_cache: yes
