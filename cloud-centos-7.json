@@ -8,14 +8,14 @@
     "zone": "is1b",
     "os_type": "centos",
     "ssh_username": "root",
-    "archive_name": "{{user `image_name`}}-{{isotime \"20060102_150405\"}}"
+    "archive_name": "{{user `image_name`}}-{{isotime \"20060102\"}}"
   }, {
     "type": "conoha",
     "ssh_username": "root",
     "ssh_ip_version": 4,
     "ssh_keypair_name": "main",
     "ssh_private_key_file": "{{user `home`}}/.ssh/ConoHa",
-    "image_name": "{{user `image_name`}}-{{isotime \"20060102_150405\"}}",
+    "image_name": "{{user `image_name`}}-{{isotime \"20060102\"}}",
     "source_image_name": "vmi-centos-7.4-amd64",
     "flavor": "g-1gb",
     "security_groups": [
@@ -32,7 +32,7 @@
     "keypair": "main",
     "ssh_username": "root",
     "ssh_private_key_file": "{{user `home`}}/.ssh/IDCF",
-    "template_name": "{{user `image_name`}}-{{isotime \"20060102_150405\"}}",
+    "template_name": "{{user `image_name`}}-{{isotime \"20060102\"}}",
     "template_os": "CentOS 7.1",
     "template_scalable": true,
     "template_password_enabled": true,
