@@ -103,7 +103,7 @@
             fstype: swap
             opts: default
             state: present
-      when: packer_builder_type == 'cloudstack'
+      when: packer_builder_type is defined and packer_builder_type == 'cloudstack'
     - name: Ensure active and enabled on system startup service
       systemd:
         name: "{{ item }}"
