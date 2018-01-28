@@ -1,12 +1,12 @@
 {
   "variables": {
     "home": "{{env `HOME`}}",
-    "image_name": "centos7"
+    "image_name": "stretch"
   },
   "builders": [{
     "type": "sakuracloud",
     "zone": "is1b",
-    "os_type": "centos",
+    "os_type": "debian",
     "ssh_username": "root",
     "archive_name": "{{user `image_name`}}-{{isotime \"20060102\"}}"
   }, {
@@ -16,30 +16,16 @@
     "ssh_ip_version": 4,
     "ssh_private_key_file": "{{user `home`}}/.ssh/ConoHa",
     "image_name": "{{user `image_name`}}-{{isotime \"20060102\"}}",
-    "source_image_name": "vmi-centos-7.4-amd64",
+    "source_image_name": "vmi-debian-9.0-amd64-unified",
     "flavor": "g-1gb",
     "security_groups": [
       "default",
       "gncs-ipv6-all",
       "gncs-ipv4-all"
     ]
-  }, {
-    "type": "cloudstack",
-    "service_offering": "light.S1",
-    "source_template": "CentOS 7.4 64-bit",
-    "zone": "newton",
-    "network": "newton-network1",
-    "keypair": "main",
-    "ssh_username": "root",
-    "ssh_private_key_file": "{{user `home`}}/.ssh/IDCF",
-    "template_name": "{{user `image_name`}}-{{isotime \"20060102\"}}",
-    "template_os": "CentOS 7.1",
-    "template_scalable": true,
-    "template_password_enabled": true,
-    "template_featured": true
   }],
   "provisioners": [{
     "type": "ansible",
-    "playbook_file": "provision/centos7.yml"
+    "playbook_file": "provision/stretch.yml"
   }]
 }
