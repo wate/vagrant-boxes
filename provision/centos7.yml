@@ -25,6 +25,7 @@
         - epel-release
         - firewalld
         - yum-utils
+        - sudo
     - name: Enable EPEL repo
       yum_repository:
         name: epel

@@ -18,12 +18,13 @@
     swap_dest: /var/spool/swap/swapfile
   tasks:
     - name: install commmon packages
-      yum:
+      apt:
         name: "{{ item }}"
         state: latest
       with_items:
         - bash-completion
         - ufw
+        - sudo
     - name: for IDCF
       block:
         - name: check swapfile exist
