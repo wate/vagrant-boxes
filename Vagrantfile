@@ -21,4 +21,7 @@ Vagrant.configure(2) do |config|
       v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
     end
   end
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "test.yml"
+  end
 end

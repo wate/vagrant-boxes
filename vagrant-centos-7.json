@@ -1,6 +1,11 @@
 {
   "variables": {
-    "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}"
+    "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}",
+    "centos_version_major": "7",
+    "centos_version_minor": "4",
+    "centos_version_build": "1708",
+    "iso_checksum_type": "sha256",
+    "iso_checksum": "fe3d960cce4d2c1c9f1b66817fe87cc0ee1a1c6c5dd126204cb5c33d51a45620"
   },
   "builders": [{
     "boot_command": [
@@ -12,9 +17,9 @@
     "guest_os_type": "RedHat_64",
     "hard_drive_interface": "sata",
     "http_directory": "http",
-    "iso_checksum": "fe3d960cce4d2c1c9f1b66817fe87cc0ee1a1c6c5dd126204cb5c33d51a45620",
-    "iso_checksum_type": "sha256",
-    "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1708.iso",
+    "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/CentOS/{{user `centos_version_major`}}/isos/x86_64/CentOS-{{user `centos_version_major`}}-x86_64-NetInstall-{{user `centos_version_build`}}.iso",
+    "iso_checksum_type": "{{user `iso_checksum_type`}}",
+    "iso_checksum": "{{user `iso_checksum`}}",
     "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
     "ssh_password": "vagrant",
     "ssh_port": 22,
@@ -70,10 +75,10 @@
       {
         "type": "vagrant-cloud",
         "access_token": "{{user `vagrantcloud_token`}}",
-        "box_tag": "wate/centos-7",
+        "box_tag": "wate/centos-{{user `centos_version_major`}}",
         "no_release": false,
-        "version": "0.4.1",
-        "version_description": "CentOS 7.4(64bit)日本語環境用"
+        "version": "{{user `centos_version_major`}}.{{user `centos_version_minor`}}.0",
+        "version_description": "CentOS {{user `centos_version_major`}}.{{user `centos_version_minor`}} Build {{user `centos_version_build`}} (64bit)日本語環境用"
       }
     ]
   ]
