@@ -1,9 +1,9 @@
 {
   "variables": {
     "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}",
-    "centos_version_major": "7",
-    "centos_version_minor": "4",
-    "centos_version_build": "1708",
+    "version_major": "7",
+    "version_minor": "4",
+    "version_build": "1708",
     "iso_checksum_type": "sha256",
     "iso_checksum": "fe3d960cce4d2c1c9f1b66817fe87cc0ee1a1c6c5dd126204cb5c33d51a45620"
   },
@@ -17,7 +17,7 @@
     "guest_os_type": "RedHat_64",
     "hard_drive_interface": "sata",
     "http_directory": "http",
-    "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/CentOS/{{user `centos_version_major`}}/isos/x86_64/CentOS-{{user `centos_version_major`}}-x86_64-NetInstall-{{user `centos_version_build`}}.iso",
+    "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/CentOS/{{user `version_major`}}/isos/x86_64/CentOS-{{user `version_major`}}-x86_64-NetInstall-{{user `version_build`}}.iso",
     "iso_checksum_type": "{{user `iso_checksum_type`}}",
     "iso_checksum": "{{user `iso_checksum`}}",
     "shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
@@ -27,18 +27,8 @@
     "ssh_wait_timeout": "10000s",
     "type": "virtualbox-iso",
     "vboxmanage": [
-      [
-        "modifyvm",
-        "{{.Name}}",
-        "--memory",
-        "1024"
-      ],
-      [
-        "modifyvm",
-        "{{.Name}}",
-        "--cpus",
-        "1"
-      ]
+      ["modifyvm", "{{.Name}}", "--memory", "1024"],
+      ["modifyvm", "{{.Name}}", "--cpus", "1"]
     ],
     "virtualbox_version_file": ".vbox_version"
   }],
@@ -75,10 +65,10 @@
       {
         "type": "vagrant-cloud",
         "access_token": "{{user `vagrantcloud_token`}}",
-        "box_tag": "wate/centos-{{user `centos_version_major`}}",
+        "box_tag": "wate/centos-{{user `version_major`}}",
         "no_release": false,
-        "version": "{{user `centos_version_major`}}.{{user `centos_version_minor`}}.0",
-        "version_description": "CentOS {{user `centos_version_major`}}.{{user `centos_version_minor`}} Build {{user `centos_version_build`}} (64bit)日本語環境用"
+        "version": "{{user `version_major`}}.{{user `version_minor`}}.0",
+        "version_description": "CentOS {{user `version_major`}}.{{user `version_minor`}} Build {{user `version_build`}} (64bit)日本語環境用"
       }
     ]
   ]
