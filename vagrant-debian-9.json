@@ -4,8 +4,8 @@
     "version_major": "9",
     "version_minor": "4",
     "version_patch": "0",
-    "iso_checksum_type": "sha1",
-    "iso_checksum": "da34180d8f618a6a311fe31fb08508496eb91601"
+    "iso_checksum_type": "sha256",
+    "iso_checksum": "124d270006703f2111224dec3bf7a9d01450168be41d4834f88fdd035552b044"
   },
   "builders": [{
     "guest_os_type": "Debian_64",
