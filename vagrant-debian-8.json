@@ -11,7 +11,7 @@
     "type": "virtualbox-iso",
     "guest_os_type": "Debian_64",
     "disk_size": 20480,
-    "iso_url": "https://cdimage.debian.org/mirror/cdimage/archive/8.11.0/amd64/iso-cd/debian-8.11.0-amd64-netinst.iso",
+    "iso_url": "https://cdimage.debian.org/mirror/cdimage/archive/{{user `version_major`}}.{{user `version_minor`}}.{{user `version_patch`}}/amd64/iso-cd/debian-{{user `version_major`}}.{{user `version_minor`}}.{{user `version_patch`}}-amd64-netinst.iso",
     "iso_checksum_type": "{{user `iso_checksum_type`}}",
     "iso_checksum": "{{user `iso_checksum`}}",
     "http_directory": "http",
