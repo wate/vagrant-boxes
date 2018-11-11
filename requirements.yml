@@ -4,5 +4,8 @@
 - src: dev-sec.ssh-hardening
 - src: geerlingguy.mysql
 - src: geerlingguy.apache
+- src: geerlingguy.repo-epel
+- src: geerlingguy.repo-remi
+- src: geerlingguy.php-versions
 - src: geerlingguy.php
 - src: geerlingguy.composer
