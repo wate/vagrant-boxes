@@ -29,11 +29,11 @@
         create: yes
     - name: install commmon packages
       apt:
-        name: "{{ item }}"
+        name:
+          - ufw
+          - sudo
         state: latest
       with_items:
-        - ufw
-        - sudo
     - name: install bash-completion
       apt:
         name: bash-completion

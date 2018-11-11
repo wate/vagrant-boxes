@@ -10,3 +10,5 @@ output-virtualbox-iso/
 
 ### Vagrant ###
 .vagrant/
+
+roles/
