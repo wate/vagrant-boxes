@@ -27,6 +27,6 @@ Test
 ----------------------------------
 
 ```
-ansible-galaxy install -p ./roles -r requirements.yml
+ansible-galaxy install -p ./roles -r requirements.yml --force
 vagrant up
 ```
