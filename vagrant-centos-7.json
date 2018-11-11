@@ -61,7 +61,7 @@
   "post-processors": [
     [{
         "type": "vagrant",
-        "output": "centos-7.box"
+        "output": "centos-{{user `version_minor`}}.box"
       },
       {
         "type": "vagrant-cloud",
