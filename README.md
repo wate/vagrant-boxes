@@ -10,26 +10,23 @@ Requiment
 building Debian Vagrant box
 ----------------------------------
 
-### Debian 7.9
+### Debian 9
 
 ```
-packer build debian-7.json
+packer build debian-9.json
 ```
 
-### Debian 8.4
-
-```
-packer build debian-8.json
-```
-
-### CentOS 6.8
-
-```
-packer build centos-6.json
-```
-
-### CentOS 7.2
+### CentOS 7
 
 ```
 packer build centos-7.json
+```
+
+
+Test
+----------------------------------
+
+```
+ansible-galaxy install -p ./roles -r requirements.yml
+vagrant up
 ```
