@@ -6,6 +6,9 @@ Vagrant.configure(2) do |config|
   if Vagrant.has_plugin?('vagrant-cachier')
     config.cache.scope = :box
   end
+  if Vagrant.has_plugin?('vagrant-vbguest')
+    config.vbguest.auto_update = false
+  end
   config.vm.define 'centos-7' do |centos7|
     centos7.vm.box = 'wate/centos-7'
     centos7.vm.network :private_network, ip: "192.168.33.101"
