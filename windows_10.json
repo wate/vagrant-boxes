@@ -60,7 +60,7 @@
   "post-processors": [{
     "type": "vagrant",
     "keep_input_artifact": false,
-    "output": "windows_10.box",
-    "vagrantfile_template": "vagrantfile-windows_10.rb"
+    "output": "win10.box",
+    "vagrantfile_template": "vagrantfile-win10.rb"
   }]
 }
