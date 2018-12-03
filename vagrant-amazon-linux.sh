@@ -5,7 +5,7 @@
 
 set -e
 
-IMAGE_VERSION="2.0.20181024"
+IMAGE_VERSION="2.0.20181114"
 DOWNLOAD_URL="https://cdn.amazonlinux.com/os-images/${IMAGE_VERSION}/virtualbox/amzn2-virtualbox-${IMAGE_VERSION}-x86_64.xfs.gpt.vdi"
 SAVE_FILE="amzn2-virtualbox-x86_64.vdi"
 VAGRANT_CLOUD_BOX="wate/amazon-linux"
