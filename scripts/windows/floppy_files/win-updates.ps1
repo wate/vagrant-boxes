@@ -63,7 +63,7 @@ function Install-WindowsUpdates() {
     $CurrentUpdates = $SearchResult.Updates
     while($script:i -lt $CurrentUpdates.Count -and $script:CycleUpdateCount -lt $MaxUpdatesPerCycle) {
         $Update = $CurrentUpdates.Item($script:i)
-        if (($Update -ne $null) -and (!$Update.IsDownloaded)) {
+        if (($null -ne $Update) -and (!$Update.IsDownloaded)) {
             [bool]$addThisUpdate = $false
             if ($Update.InstallationBehavior.CanRequestUserInput) {
                 LogWrite "> Skipping: $($Update.Title) because it requires user input"
