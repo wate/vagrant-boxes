@@ -1,8 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.require_version ">= 1.6.2"
-
 Vagrant.configure("2") do |config|
     config.vm.define "wind10"
     config.vm.box = "win10"
