@@ -3,9 +3,12 @@
 # Amazon Linux 2 LTSの綺麗なVagrant boxを作ってみた
 # https://qiita.com/mitsubachi/items/4bb3c63862bc70ac92bc
 
+# 仮想マシンイメージは以下のURLを参照
+# https://cdn.amazonlinux.com/os-images/latest/
+
 set -e
 
-IMAGE_VERSION="2.0.20181114"
+IMAGE_VERSION="2.0.20190115"
 DOWNLOAD_URL="https://cdn.amazonlinux.com/os-images/${IMAGE_VERSION}/virtualbox/amzn2-virtualbox-${IMAGE_VERSION}-x86_64.xfs.gpt.vdi"
 SAVE_FILE="amzn2-virtualbox-x86_64.vdi"
 VAGRANT_CLOUD_BOX="wate/amazon-linux"
@@ -31,6 +34,8 @@ if [ ! -e vagrant.pem ]; then
     curl -sL https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant -o vagrant.pem
     chmod 600 vagrant.pem
 fi
+
+ssh-keygen -R "[127.0.0.1]:2222"
 
 VM_NAME=amazon_linux
 
