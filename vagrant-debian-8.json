@@ -3,9 +3,9 @@
     "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}",
     "version_major": "8",
     "version_minor": "11",
-    "version_patch": "0",
+    "version_patch": "1",
     "iso_checksum_type": "sha256",
-    "iso_checksum": "ea799ed959d77359783e7922ed4c94a7437b083a4ce6f09e9fe41a7af6ba60df"
+    "iso_checksum": "ea444d6f8ac95fd51d2aedb8015c57410d1ad19b494cedec6914c17fda02733c"
   },
   "builders": [{
     "type": "virtualbox-iso",
