@@ -18,20 +18,46 @@ Vagrant.configure(2) do |config|
       v.customize ["modifyvm", :id, "--ostype", "Redhat_64"]
     end
   end
+  config.vm.define 'centos-8' do |centos8|
+    centos8.vm.box = 'wate/centos-8'
+    centos8.vm.network :private_network, ip: "192.168.33.102"
+    centos8.vm.network "forwarded_port", guest: 22, host: 2221, id: "ssh"
+    centos8.vm.provider 'virtualbox' do |v|
+      v.name = 'packer_test_centos8'
+      v.customize ["modifyvm", :id, "--ostype", "Redhat_64"]
+    end
+  end
   config.vm.define 'debian-9' do |debian9|
     debian9.vm.box = 'wate/debian-9'
-    debian9.vm.network :private_network, ip: "192.168.33.102"
-    debian9.vm.network "forwarded_port", guest: 22, host: 2221, id: "ssh"
+    debian9.vm.network :private_network, ip: "192.168.33.103"
+    debian9.vm.network "forwarded_port", guest: 22, host: 2222, id: "ssh"
     debian9.vm.provider 'virtualbox' do |v|
       v.name = 'packer_test_debian9'
       v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
     end
   end
-  config.vm.provision "ansible" do |ansible|
-    ansible.compatibility_mode = "2.0"
-    ansible.config_file = "ansible.cfg"
-    ansible.galaxy_roles_path = './roles'
-    ansible.playbook = "playbook.yml"
-    ansible.become = false
+  config.vm.define 'debian-10' do |debian10|
+    debian10.vm.box = 'wate/debian-10'
+    debian10.vm.network :private_network, ip: "192.168.33.104"
+    debian10.vm.network "forwarded_port", guest: 22, host: 2223, id: "ssh"
+    debian10.vm.provider 'virtualbox' do |v|
+      v.name = 'packer_test_debian10'
+      v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
+    end
   end
+  config.vm.define 'amazon-linux' do |amazonlinux|
+    amazonlinux.vm.box = 'wate/amazon-linux'
+    amazonlinux.vm.network :private_network, ip: "192.168.33.105"
+    amazonlinux.vm.network "forwarded_port", guest: 22, host: 2224, id: "ssh"
+    amazonlinux.vm.provider 'virtualbox' do |v|
+      v.name = 'packer_test_amazon_linux'
+    end
+  end
+  # config.vm.provision "ansible" do |ansible|
+  #   ansible.compatibility_mode = "2.0"
+  #   ansible.config_file = "ansible.cfg"
+  #   ansible.galaxy_roles_path = './roles'
+  #   ansible.playbook = "playbook.yml"
+  #   ansible.become = false
+  # end
 end
