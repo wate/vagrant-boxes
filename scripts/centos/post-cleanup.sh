@@ -36,14 +36,15 @@ LANG=C
 # delete all connection
 for con in \`nmcli -t -f uuid con\`; do
   if [ "\$con" != "" ]; then
-    nmcli con del \$con
+    nmcli connection delete \$con
   fi
 done
 # add gateway interface connection.
 gwdev=\`nmcli dev | grep ethernet | egrep -v 'unmanaged' | head -n 1 | awk '{print \$1}'\`
 if [ "\$gwdev" != "" ]; then
-  nmcli c add type eth ifname \$gwdev con-name \$gwdev
+  nmcli connection add type ethernet ifname \$gwdev con-name \$gwdev
 fi
+
 sed -i "/^#PACKER-BEGIN/,/^#PACKER-END/d" /etc/rc.d/rc.local
 chmod -x /etc/rc.d/rc.local
 #PACKER-END
