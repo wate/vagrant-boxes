@@ -45,19 +45,20 @@ Vagrant.configure(2) do |config|
       v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
     end
   end
-  config.vm.define 'amazon-linux' do |amazonlinux|
-    amazonlinux.vm.box = 'wate/amazon-linux'
-    amazonlinux.vm.network :private_network, ip: "192.168.33.105"
-    amazonlinux.vm.network "forwarded_port", guest: 22, host: 2224, id: "ssh"
-    amazonlinux.vm.provider 'virtualbox' do |v|
-      v.name = 'packer_test_amazon_linux'
-    end
-  end
-  # config.vm.provision "ansible" do |ansible|
-  #   ansible.compatibility_mode = "2.0"
-  #   ansible.config_file = "ansible.cfg"
-  #   ansible.galaxy_roles_path = './roles'
-  #   ansible.playbook = "playbook.yml"
-  #   ansible.become = false
+  # config.vm.define 'amazon-linux' do |amazonlinux|
+  #   amazonlinux.vm.box = 'bento/amazonlinux-2'
+  #   amazonlinux.vm.network :private_network, ip: "192.168.33.105"
+  #   amazonlinux.vm.network "forwarded_port", guest: 22, host: 2224, id: "ssh"
+  #   amazonlinux.vm.provider 'virtualbox' do |v|
+  #     v.name = 'packer_test_amazon_linux'
+  #   end
+  # end
+  # config.vm.define 'kusanagi' do |kusanagi|
+  #   kusanagi.vm.box = 'primestrategy/kusanagi'
+  #   kusanagi.vm.network :private_network, ip: "192.168.33.106"
+  #   kusanagi.vm.network "forwarded_port", guest: 22, host: 2225, id: "ssh"
+  #   kusanagi.vm.provider 'virtualbox' do |v|
+  #     v.name = 'packer_test_kusanagi'
+  #   end
   # end
 end

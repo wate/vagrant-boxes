@@ -2,9 +2,26 @@
 
 MAJOR_VERSION="`sed 's/^.\+ release \([.0-9]\+\).*/\1/' /etc/redhat-release | awk -F. '{print $1}'`";
 
+# make sure we use dnf on EL 8+
+if [ "$MAJOR_VERSION" -ge 8 ]; then
+  pkg_cmd="dnf"
+else
+  pkg_cmd="yum"
+fi
+
+# remove previous kernels that yum/dnf preserved for rollback
+if [ "$MAJOR_VERSION" -ge 8 ]; then
+  dnf autoremove -y
+  dnf remove -y $(dnf repoquery --installonly --latest-limit=-1 -q)
+elif [ "$MAJOR_VERSION" -gt 5 ]; then # yum-utils isn't in RHEL 5 so don't try to run this
+  if ! command -v package-cleanup >/dev/null 2>&1; then
+    yum install -y yum-utils
+  fi
+  package-cleanup --oldkernels --count=1 -y
+fi
+
 # Remove development and kernel source packages
-yum -y remove gcc cpp kernel-devel kernel-headers perl
-yum -y clean all
+$pkg_cmd -y remove gcc cpp kernel-devel kernel-headers;
 
 # Clean up network interface persistence
 rm -f /etc/udev/rules.d/70-persistent-net.rules;
@@ -64,7 +81,7 @@ else
   package-cleanup --oldkernels --count=1 -y
 fi
 
-yum remove -y \
+$pkg_cmd remove -y \
   aic94xx-firmware \
   atmel-firmware \
   bfa-firmware \
