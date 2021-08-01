@@ -78,12 +78,12 @@
     }
   ],
   "variables": {
-    "iso_checksum": "101bc813d2af9ccf534d112cbe8670e6d900425b297d1a4d2529c5ad5f226372",
+    "iso_checksum": "b79079ad71cc3c5ceb3561fff348a1b67ee37f71f4cddfec09480d4589c191d6",
     "iso_checksum_type": "sha256",
     "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}",
-    "version_build": "2003",
     "version_major": "7",
-    "version_minor": "8",
+    "version_minor": "9",
+    "version_build": "2009",
     "version_patch": "0"
   }
 }

@@ -75,7 +75,7 @@
     "iso_checksum_type": "sha256",
     "vagrantcloud_token": "{{env `VAGRANTCLOUD_TOKEN`}}",
     "version_major": "10",
-    "version_minor": "7",
+    "version_minor": "10",
     "version_patch": "0"
   }
 }
