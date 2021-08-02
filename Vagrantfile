@@ -18,29 +18,11 @@ Vagrant.configure(2) do |config|
       v.customize ["modifyvm", :id, "--ostype", "Redhat_64"]
     end
   end
-  config.vm.define 'centos-8' do |centos8|
-    centos8.vm.box = 'wate/centos-8'
-    centos8.vm.network :private_network, ip: "192.168.33.102"
-    centos8.vm.network "forwarded_port", guest: 22, host: 2221, id: "ssh"
-    centos8.vm.provider 'virtualbox' do |v|
-      v.name = 'packer_test_centos8'
-      v.customize ["modifyvm", :id, "--ostype", "Redhat_64"]
-    end
-  end
-  config.vm.define 'debian-9' do |debian9|
-    debian9.vm.box = 'wate/debian-9'
-    debian9.vm.network :private_network, ip: "192.168.33.103"
-    debian9.vm.network "forwarded_port", guest: 22, host: 2222, id: "ssh"
-    debian9.vm.provider 'virtualbox' do |v|
-      v.name = 'packer_test_debian9'
-      v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
-    end
-  end
-  config.vm.define 'debian-10' do |debian10|
-    debian10.vm.box = 'wate/debian-10'
-    debian10.vm.network :private_network, ip: "192.168.33.104"
-    debian10.vm.network "forwarded_port", guest: 22, host: 2223, id: "ssh"
-    debian10.vm.provider 'virtualbox' do |v|
+  config.vm.define 'buster' do |buster|
+    buster.vm.box = 'wate/debian-10'
+    buster.vm.network :private_network, ip: "192.168.33.104"
+    buster.vm.network "forwarded_port", guest: 22, host: 2223, id: "ssh"
+    buster.vm.provider 'virtualbox' do |v|
       v.name = 'packer_test_debian10'
       v.customize ["modifyvm", :id, "--ostype", "Debian_64"]
     end
