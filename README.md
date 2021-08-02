@@ -1,4 +1,4 @@
-Packer Template Debian Vagrant box
+Packer Template Vagrant box
 =========================================
 
 Requiment
@@ -7,26 +7,18 @@ Requiment
 - [Packer](http://www.packer.io/ "Packer")
 - [Oracle VM VirtualBox](https://www.virtualbox.org/ "Oracle VM VirtualBox")
 
-building Debian Vagrant box
+building Vagrant box
 ----------------------------------
 
-### Debian 9
+### Debian 10(buster)
 
 ```
-packer build debian-9.json
+packer build debian-10.pkr.hcl
 ```
 
 ### CentOS 7
 
 ```
-packer build centos-7.json
+packer build centos-7.pkr.hcl
 ```
 
-
-Test
-----------------------------------
-
-```
-ansible-galaxy install -p ./roles -r requirements.yml --force
-vagrant up
-```

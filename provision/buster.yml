@@ -1,0 +1,114 @@
+- name: Debian 10 Base Image
+  hosts: all
+  pre_tasks:
+    - name: update all packages to the latest version
+      apt:
+        update_cache: yes
+        upgrade: dist
+  roles:
+    - name: dev-sec.os-hardening
+    - name: dev-sec.ssh-hardening
+  vars:
+    ssh_allow_root_with_key: yes
+    ssh_max_auth_retries: 3
+    ssh_use_pam: yes
+    ssh_deny_users: "toor administrator administrateur admin adm test guest info mysql user oracle"
+    sftp_enabled: yes
+    swap_size: 2
+    swap_dest: /var/spool/swap/swapfile
+  tasks:
+    - name: add debian backports repo
+      apt_repository:
+        repo: "deb http://ftp.debian.org/debian {{ ansible_distribution_release }}-backports main"
+        filename: backports
+    - name: set apt default target
+      lineinfile:
+        path: /etc/apt/apt.conf.d/99target
+        regexp: "^APT::Default-Release .*"
+        line: 'APT::Default-Release "{{ ansible_distribution_release }}-backports";'
+        create: yes
+    - name: install commmon packages
+      apt:
+        name:
+          - ufw
+          - sudo
+        state: latest
+      with_items:
+    - name: install bash-completion
+      apt:
+        name: bash-completion
+        state: latest
+    - name: install etckeeper
+      apt:
+        name: etckeeper
+        state: latest
+    - name: install fail2ban
+      apt:
+        name: fail2ban
+        state: latest
+    - name: Ensure fail2ban log setting
+      ini_file:
+        path: /etc/fail2ban/fail2ban.conf
+        section: Definition
+        option: logtarget
+        value: /var/log/fail2ban.log
+    - name: Ensure fail2ban jail settings
+      ini_file:
+        path: /etc/fail2ban/jail.d/local.conf
+        section: "{{ item.section }}"
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
+        create: yes
+      with_items:
+        - section: DEFAULT
+          option: banaction
+          value: firewallcmd-ipset
+        - section: DEFAULT
+          option: backend
+          value: systemd
+        - section: sshd
+          option: enabled
+          value: yes
+    - name: for IDCF ro Vultr
+      block:
+        - name: check swapfile exist
+          stat:
+            path: "{{ swap_dest }}"
+          register: result
+        - name: create swapfile
+          block:
+            - name: create swapfile directory
+              file:
+                path: "{{ swap_dest|dirname }}"
+                state: directory
+            - name: create swapfile
+              file:
+                path: "{{ swap_dest }}"
+                owner: root
+                group: root
+                mode: 0600
+                state: touch
+            - name: initilize swapfile
+              command: "dd if=/dev/zero of={{ swap_dest }} bs=1M count={{ swap_size * 1024 }}"
+            - name: create swap
+              command: "mkswap {{ swap_dest }}"
+          when: not result.stat.exists
+        - name: Ensure mounted swap
+          mount:
+            path: none
+            src: "{{ swap_dest }}"
+            fstype: swap
+            opts: default
+            state: present
+      when: packer_builder_type is defined and packer_builder_type in ['cloudstack', 'vultr']
+    - name: clean packages
+      apt:
+        autoremove: yes
+        autoclean: yes
+    - name: Ensure active and enabled on system startup service
+      systemd:
+        name: "{{ item }}"
+        enabled: yes
+        state: started
+      with_items:
+        - fail2ban
