@@ -31,7 +31,7 @@ variable "version_minor" {
 
 variable "version_patch" {
   type    = string
-  default = "0"
+  default = "20211021"
 }
 
 source "virtualbox-iso" "centos7" {
