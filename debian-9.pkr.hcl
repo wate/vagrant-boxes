@@ -30,7 +30,7 @@ variable "version_patch" {
 }
 
 source "virtualbox-iso" "stretch" {
-  boot_command            = ["<esc><wait>", "auto <wait>", "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-9/preseed.cfg <wait>", "frontend=noninteractive <wait>", "<enter><wait>"]
+  boot_command            = ["<esc><wait>", "auto <wait>", "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-${var.version_major}/preseed.cfg <wait>", "frontend=noninteractive <wait>", "<enter><wait>"]
   boot_wait               = "5s"
   disk_size               = 20480
   guest_additions_path    = "VBoxGuestAdditions_{{ .Version }}.iso"
