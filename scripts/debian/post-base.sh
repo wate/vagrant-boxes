@@ -1,12 +1,11 @@
 #!/bin/bash -eux
 
-# Only add the secure path line if it is not already present - Debian 7
-# includes it by default.
+# Only add the secure path line if it is not already present
 grep -q 'secure_path' /etc/sudoers \
   || sed -i -e '/Defaults\s\+env_reset/a Defaults\tsecure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' /etc/sudoers;
 
-debian_version="`lsb_release -r | awk '{print $2}'`";
-major_version="`echo $debian_version | awk -F. '{print $1}'`";
+debian_version=$(lsb_release -r | awk '{print $2}')
+major_version=$(echo $debian_version | awk -F. '{print $1}');
 
 # Disable systemd apt timers/services
 if [ "$major_version" -ge "9" ]; then
