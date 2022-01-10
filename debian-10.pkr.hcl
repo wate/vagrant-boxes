@@ -1,7 +1,7 @@
 
 variable "iso_checksum" {
   type    = string
-  default = "b317d87b0a3d5b568f48a92dcabfc4bc51fe58d9f67ca13b013f1b8329d1306d"
+  default = "133430141272d8bf96cfb10b6bfd1c945f5a59ea0efc2bcb56d1033c7f2866ea"
 }
 
 variable "iso_checksum_type" {
@@ -21,7 +21,7 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "10"
+  default = "11"
 }
 
 variable "version_patch" {
@@ -37,7 +37,7 @@ source "virtualbox-iso" "buster" {
   guest_os_type           = "Debian_64"
   http_directory          = "http"
   iso_checksum            = "${var.iso_checksum_type}:${var.iso_checksum}"
-  iso_url                 = "http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-amd64-netinst.iso"
+  iso_url                 = "https://cdimage.debian.org/mirror/cdimage/archive/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-amd64-netinst.iso"
   shutdown_command        = "echo 'vagrant' | sudo -S /sbin/shutdown -hP now"
   ssh_password            = "vagrant"
   ssh_port                = 22

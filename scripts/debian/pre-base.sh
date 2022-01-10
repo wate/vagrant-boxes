@@ -7,11 +7,6 @@ apt-get update;
 apt-get -y upgrade linux-image-${arch}
 apt-get -y install linux-headers-$(uname -r);
 
-echo "pre-base"
-
-
-exit;
-
 if [ -d /etc/init ]; then
     # update package index on boot
     cat <<EOF >/etc/init/refresh-apt.conf;
