@@ -80,11 +80,11 @@ build {
     post-processor "vagrant" {
       output = "debian${var.version_major}.box"
     }
-    // post-processor "vagrant-cloud" {
-    //   access_token        = "${var.vagrantcloud_token}"
-    //   box_tag             = "wate/debian-${var.version_major}"
-    //   version             = "${var.version_major}.${var.version_minor}.${var.version_patch}"
-    //   version_description = "Debian ${var.version_major}.${var.version_minor} (64bit)日本語環境用"
-    // }
+    post-processor "vagrant-cloud" {
+      access_token        = "${var.vagrantcloud_token}"
+      box_tag             = "wate/debian-${var.version_major}"
+      version             = "${var.version_major}.${var.version_minor}.${var.version_patch}"
+      version_description = "Debian ${var.version_major}.${var.version_minor} (64bit)日本語環境用"
+    }
   }
 }
