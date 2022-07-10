@@ -1,7 +1,7 @@
 
 variable "iso_checksum" {
   type    = string
-  default = "7892981e1da216e79fb3a1536ce5ebab157afdd20048fe458f2ae34fbc26c19b"
+  default = "d490a35d36030592839f24e468a5b818c919943967012037d6ab3d65d030ef7f"
 }
 
 variable "iso_checksum_type" {
@@ -21,7 +21,7 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "3"
+  default = "4"
 }
 
 variable "version_patch" {
