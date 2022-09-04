@@ -26,7 +26,7 @@ variable "version_minor" {
 
 variable "version_patch" {
   type    = string
-  default = "0"
+  default = "1"
 }
 
 source "virtualbox-iso" "bullseye" {
