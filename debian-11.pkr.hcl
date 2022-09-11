@@ -1,7 +1,7 @@
 
 variable "iso_checksum" {
   type    = string
-  default = "d490a35d36030592839f24e468a5b818c919943967012037d6ab3d65d030ef7f"
+  default = "e307d0e583b4a8f7e5b436f8413d4707dd4242b70aea61eb08591dc0378522f3"
 }
 
 variable "iso_checksum_type" {
@@ -21,12 +21,12 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "4"
+  default = "5"
 }
 
 variable "version_patch" {
   type    = string
-  default = "1"
+  default = "0"
 }
 
 source "virtualbox-iso" "bullseye" {
