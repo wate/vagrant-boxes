@@ -10,3 +10,4 @@
           distribution_release: {{ ansible_facts['distribution_release'] }}
           distribution_major_version: {{ ansible_facts['distribution_major_version'] }}
           machine: {{ ansible_facts['machine'] }}
+          kernel: {{ ansible_facts['kernel'] }}
