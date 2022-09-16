@@ -8,11 +8,11 @@ Vagrant.configure(2) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "playbook.yml"
     ansible.groups = {
-      "debian" => [
-        "bullseye",
-        "jammy"
+      "debian_family" => [
+        "debian",
+        "ubuntu"
       ],
-      "redhat"  => [
+      "redhat_family"  => [
         "rockylinux",
         "almalinux",
         "amazonlinux",
@@ -20,7 +20,7 @@ Vagrant.configure(2) do |config|
         ]
     }
   end
-  config.vm.define 'bullseye' do |debian|
+  config.vm.define 'debian' do |debian|
     debian.vm.box = 'wate/debian-11'
     debian.vm.network :private_network, ip: "192.168.56.101"
     debian.vm.network "forwarded_port", guest: 22, host: 2101, id: "ssh"
@@ -28,7 +28,7 @@ Vagrant.configure(2) do |config|
       v.name = 'packer_test_debian'
     end
   end
-  config.vm.define 'jammy' do |ubuntu|
+  config.vm.define 'ubuntu' do |ubuntu|
     ubuntu.vm.box = 'bento/ubuntu-22.04'
     ubuntu.vm.network :private_network, ip: "192.168.56.102"
     ubuntu.vm.network "forwarded_port", guest: 22, host: 2102, id: "ssh"
