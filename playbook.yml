@@ -9,3 +9,6 @@
           distribution: {{ ansible_facts['distribution'] }}
           distribution_release: {{ ansible_facts['distribution_release'] }}
           distribution_major_version: {{ ansible_facts['distribution_major_version'] }}
+          system: {{ ansible_facts['system'] }}
+          architecture: {{ ansible_facts['architecture'] }}
+          kernel: {{ ansible_facts['kernel'] }}

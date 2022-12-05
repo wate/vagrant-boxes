@@ -13,9 +13,9 @@ Vagrant.configure(2) do |config|
         "ubuntu"
       ],
       "redhat_family"  => [
-        "rockylinux",
-        "almalinux",
-        "amazonlinux",
+        "rocky",
+        "alma",
+        "amazon",
         "oracle"
         ]
     }
@@ -36,28 +36,28 @@ Vagrant.configure(2) do |config|
       v.name = 'packer_test_ubuntu'
     end
   end
-  config.vm.define 'rockylinux' do |rockylinux|
-    rockylinux.vm.box = 'bento/rockylinux-9'
-    rockylinux.vm.network :private_network, ip: "192.168.56.103"
-    rockylinux.vm.network "forwarded_port", guest: 22, host: 2103, id: "ssh"
-    rockylinux.vm.provider 'virtualbox' do |v|
-      v.name = 'packer_test_rockylinux'
+  config.vm.define 'rocky' do |rocky|
+    rocky.vm.box = 'bento/rockylinux-9'
+    rocky.vm.network :private_network, ip: "192.168.56.103"
+    rocky.vm.network "forwarded_port", guest: 22, host: 2103, id: "ssh"
+    rocky.vm.provider 'virtualbox' do |v|
+      v.name = 'packer_test_rocky'
     end
   end
-  config.vm.define 'almalinux' do |almalinux|
-    almalinux.vm.box = 'bento/almalinux-9'
-    almalinux.vm.network :private_network, ip: "192.168.56.104"
-    almalinux.vm.network "forwarded_port", guest: 22, host: 2104, id: "ssh"
-    almalinux.vm.provider 'virtualbox' do |v|
-      v.name = 'packer_test_almalinux'
+  config.vm.define 'alma' do |alma|
+    alma.vm.box = 'bento/almalinux-9'
+    alma.vm.network :private_network, ip: "192.168.56.104"
+    alma.vm.network "forwarded_port", guest: 22, host: 2104, id: "ssh"
+    alma.vm.provider 'virtualbox' do |v|
+      v.name = 'packer_test_alma'
     end
   end
-  config.vm.define 'amazonlinux' do |amazonlinux|
-    amazonlinux.vm.box = 'bento/amazonlinux-2'
-    amazonlinux.vm.network :private_network, ip: "192.168.56.105"
-    amazonlinux.vm.network "forwarded_port", guest: 22, host: 2105, id: "ssh"
-    amazonlinux.vm.provider 'virtualbox' do |v|
-      v.name = 'packer_test_amazonlinux'
+  config.vm.define 'amazon' do |amazon|
+    amazon.vm.box = 'bento/amazonlinux-2'
+    amazon.vm.network :private_network, ip: "192.168.56.105"
+    amazon.vm.network "forwarded_port", guest: 22, host: 2105, id: "ssh"
+    amazon.vm.provider 'virtualbox' do |v|
+      v.name = 'packer_test_amazon'
     end
   end
   config.vm.define 'oracle' do |oracle|
