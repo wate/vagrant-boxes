@@ -68,4 +68,16 @@ Vagrant.configure(2) do |config|
       v.name = 'packer_test_oracle'
     end
   end
+  config.trigger.after :provision do |trigger|
+    trigger.name = "Generate orverview"
+    trigger.run = {
+      inline: "bash -c 'ansible-cmdb --template orverview.tpl .vagrant/facts/ >orverview.md'"
+    }
+  end
+  config.trigger.after :destroy do |trigger|
+    trigger.name = "Cleanup"
+    trigger.run = {
+      inline: "bash -c 'rm -fr .vagrant/facts/'"
+    }
+  end
 end

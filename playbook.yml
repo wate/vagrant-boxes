@@ -1,3 +1,5 @@
+---
+# code: lang=ansible
 - name: Display Server Info
   hosts: all
   gather_facts: true
@@ -5,10 +7,25 @@
     - name: Display Server Info
       ansible.builtin.debug:
         msg: |
-          os_family: {{ ansible_facts['os_family'] }}
-          distribution: {{ ansible_facts['distribution'] }}
-          distribution_release: {{ ansible_facts['distribution_release'] }}
-          distribution_major_version: {{ ansible_facts['distribution_major_version'] }}
-          system: {{ ansible_facts['system'] }}
-          architecture: {{ ansible_facts['architecture'] }}
-          kernel: {{ ansible_facts['kernel'] }}
+          System: {{ ansible_facts['system'] }}
+          OS family: {{ ansible_facts['os_family'] }}
+          Distribution: {{ ansible_facts['distribution'] }}
+          Distribution major version: {{ ansible_facts['distribution_major_version'] }}
+          Distribution release: {{ ansible_facts['distribution_release'] }}
+          Package manager: {{ ansible_facts['pkg_mgr'] }}
+          Architecture: {{ ansible_facts['architecture'] }}
+          Kernel: {{ ansible_facts['kernel'] }}
+    - name: Output fact data
+      delegate_to: localhost
+      become: false
+      environment:
+        ANSIBLE_INVENTORY: .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory
+      block:
+        - name: Create cache directory
+          ansible.builtin.file:
+            path: .vagrant/facts
+            state: directory
+            mode: "0755"
+        - name: Dump fact data
+          ansible.builtin.command:
+            cmd: ansible -m setup --tree .vagrant/facts {{ inventory_hostname }}
