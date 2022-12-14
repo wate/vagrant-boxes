@@ -10,15 +10,8 @@ Requiment
 building Vagrant box
 ----------------------------------
 
-### Debian 10(buster)
+### Debian 11(bullseye)
 
 ```
-packer build debian-10.pkr.hcl
+packer build debian-11.pkr.hcl
 ```
-
-### CentOS 7
-
-```
-packer build centos-7.pkr.hcl
-```
-
