@@ -35,6 +35,7 @@ source "virtualbox-iso" "stretch" {
   vboxmanage = [
     ["modifyvm", "{{ .Name }}", "--cpus", "1"],
     ["modifyvm", "{{ .Name }}", "--memory", "1024"],
+    // @see https://github.com/hashicorp/packer/issues/12118
     ["modifyvm", "{{.Name}}", "--nat-localhostreachable1", "on"]
   ]
   virtualbox_version_file = ".vbox_version"
