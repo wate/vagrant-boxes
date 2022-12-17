@@ -1,14 +1,3 @@
-
-variable "iso_checksum" {
-  type    = string
-  default = "75aa64071060402a594dcf1e14afd669ca0f8bf757b56d4c9c1a31b8f7c8f931"
-}
-
-variable "iso_checksum_type" {
-  type    = string
-  default = "sha256"
-}
-
 variable "vagrantcloud_token" {
   type    = string
   default = "${env("VAGRANTCLOUD_TOKEN")}"
@@ -30,20 +19,25 @@ variable "version_patch" {
 }
 
 source "virtualbox-iso" "buster" {
-  boot_command            = ["<esc><wait>", "auto <wait>", "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-${var.version_major}/preseed.cfg <wait>", "frontend=noninteractive <wait>", "<enter><wait>"]
-  boot_wait               = "5s"
-  disk_size               = 20480
-  guest_additions_path    = "VBoxGuestAdditions_{{ .Version }}.iso"
-  guest_os_type           = "Debian10_64"
-  http_directory          = "http"
-  iso_checksum            = "${var.iso_checksum_type}:${var.iso_checksum}"
-  iso_url                 = "https://cdimage.debian.org/mirror/cdimage/archive/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-amd64-netinst.iso"
-  shutdown_command        = "echo 'vagrant' | sudo -S /sbin/shutdown -hP now"
-  ssh_password            = "vagrant"
-  ssh_port                = 22
-  ssh_timeout             = "20m"
-  ssh_username            = "vagrant"
-  vboxmanage              = [["modifyvm", "{{ .Name }}", "--memory", "1024"], ["modifyvm", "{{ .Name }}", "--cpus", "1"]]
+  boot_command         = ["<esc><wait>", "auto <wait>", "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-${var.version_major}/preseed.cfg <wait>", "frontend=noninteractive <wait>", "<enter><wait>"]
+  boot_wait            = "5s"
+  disk_size            = 20480
+  guest_additions_path = "VBoxGuestAdditions_{{ .Version }}.iso"
+  guest_os_type        = "Debian10_64"
+  http_directory       = "http"
+  iso_checksum         = "file:https://cdimage.debian.org/mirror/cdimage/archive/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/SHA256SUMS"
+  iso_url              = "https://cdimage.debian.org/mirror/cdimage/archive/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-amd64-netinst.iso"
+  shutdown_command     = "echo 'vagrant' | sudo -S /sbin/shutdown -hP now"
+  ssh_password         = "vagrant"
+  ssh_port             = 22
+  ssh_timeout          = "20m"
+  ssh_username         = "vagrant"
+  vboxmanage = [
+    ["modifyvm", "{{ .Name }}", "--cpus", "1"],
+    ["modifyvm", "{{ .Name }}", "--memory", "1024"],
+    // @see https://github.com/hashicorp/packer/issues/12118
+    ["modifyvm", "{{.Name}}", "--nat-localhostreachable1", "on"]
+  ]
   virtualbox_version_file = ".vbox_version"
 }
 
