@@ -34,7 +34,7 @@ source "virtualbox-iso" "stretch" {
   boot_wait               = "5s"
   disk_size               = 20480
   guest_additions_path    = "VBoxGuestAdditions_{{ .Version }}.iso"
-  guest_os_type           = "Debian_64"
+  guest_os_type           = "Debian9_64"
   http_directory          = "http"
   iso_checksum            = "${var.iso_checksum_type}:${var.iso_checksum}"
   iso_url                 = "https://cdimage.debian.org/mirror/cdimage/archive/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-amd64-netinst.iso"
