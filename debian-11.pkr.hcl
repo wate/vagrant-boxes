@@ -10,7 +10,7 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "5"
+  default = "6"
 }
 
 variable "version_patch" {
