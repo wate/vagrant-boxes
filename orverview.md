@@ -4,76 +4,76 @@ Host overview
 alma
 -------------------
 
-* **System**(`ansible_facts.system`): `Linux`
-* **OS Family**(`ansible_facts.os_family`): `RedHat`
-* **Distribution**(`ansible_facts.distribution`): `AlmaLinux`
-* **Distribution major version**(`ansible_facts.distribution_major_version`): `9`
-* **Distribution release**(`ansible_facts.ansible_distribution_release`): `Lime Lynx`
-* **Package manager**(`ansible_facts.pkg_mgr`): `dnf`
-* **Architecture**(`ansible_facts.architecture`): `x86_64`
-* **Kernel**(`ansible_facts.kernel`): `5.14.0-162.6.1.el9_1.x86_64`
+* `ansible_facts.system`：`Linux`
+* `ansible_facts.os_family`：`RedHat`
+* `ansible_facts.distribution`：`AlmaLinux`
+* `ansible_facts.distribution_major_version`：`9`
+* `ansible_facts.ansible_distribution_release`：`Lime Lynx`
+* `ansible_facts.pkg_mgr`：`dnf`
+* `ansible_facts.architecture`：`x86_64`
+* `ansible_facts.kernel`：`5.14.0-162.6.1.el9_1.x86_64`
 
 amazon
 -------------------
 
-* **System**(`ansible_facts.system`): `Linux`
-* **OS Family**(`ansible_facts.os_family`): `RedHat`
-* **Distribution**(`ansible_facts.distribution`): `Amazon`
-* **Distribution major version**(`ansible_facts.distribution_major_version`): `2`
-* **Distribution release**(`ansible_facts.ansible_distribution_release`): `NA`
-* **Package manager**(`ansible_facts.pkg_mgr`): `yum`
-* **Architecture**(`ansible_facts.architecture`): `x86_64`
-* **Kernel**(`ansible_facts.kernel`): `4.14.299-223.520.amzn2.x86_64`
+* `ansible_facts.system`：`Linux`
+* `ansible_facts.os_family`：`RedHat`
+* `ansible_facts.distribution`：`Amazon`
+* `ansible_facts.distribution_major_version`：`2`
+* `ansible_facts.ansible_distribution_release`：`NA`
+* `ansible_facts.pkg_mgr`：`yum`
+* `ansible_facts.architecture`：`x86_64`
+* `ansible_facts.kernel`：`4.14.299-223.520.amzn2.x86_64`
 
 debian
 -------------------
 
-* **System**(`ansible_facts.system`): `Linux`
-* **OS Family**(`ansible_facts.os_family`): `Debian`
-* **Distribution**(`ansible_facts.distribution`): `Debian`
-* **Distribution major version**(`ansible_facts.distribution_major_version`): `11`
-* **Distribution release**(`ansible_facts.ansible_distribution_release`): `bullseye`
-* **Package manager**(`ansible_facts.pkg_mgr`): `apt`
-* **Architecture**(`ansible_facts.architecture`): `x86_64`
-* **Kernel**(`ansible_facts.kernel`): `5.10.0-18-amd64`
+* `ansible_facts.system`：`Linux`
+* `ansible_facts.os_family`：`Debian`
+* `ansible_facts.distribution`：`Debian`
+* `ansible_facts.distribution_major_version`：`11`
+* `ansible_facts.ansible_distribution_release`：`bullseye`
+* `ansible_facts.pkg_mgr`：`apt`
+* `ansible_facts.architecture`：`x86_64`
+* `ansible_facts.kernel`：`5.10.0-18-amd64`
 
 oracle
 -------------------
 
-* **System**(`ansible_facts.system`): `Linux`
-* **OS Family**(`ansible_facts.os_family`): `RedHat`
-* **Distribution**(`ansible_facts.distribution`): `OracleLinux`
-* **Distribution major version**(`ansible_facts.distribution_major_version`): `9`
-* **Distribution release**(`ansible_facts.ansible_distribution_release`): `NA`
-* **Package manager**(`ansible_facts.pkg_mgr`): `dnf`
-* **Architecture**(`ansible_facts.architecture`): `x86_64`
-* **Kernel**(`ansible_facts.kernel`): `5.15.0-4.70.5.2.el9uek.x86_64`
+* `ansible_facts.system`：`Linux`
+* `ansible_facts.os_family`：`RedHat`
+* `ansible_facts.distribution`：`OracleLinux`
+* `ansible_facts.distribution_major_version`：`9`
+* `ansible_facts.ansible_distribution_release`：`NA`
+* `ansible_facts.pkg_mgr`：`dnf`
+* `ansible_facts.architecture`：`x86_64`
+* `ansible_facts.kernel`：`5.15.0-4.70.5.2.el9uek.x86_64`
 
 rocky
 -------------------
 
-* **System**(`ansible_facts.system`): `Linux`
-* **OS Family**(`ansible_facts.os_family`): `RedHat`
-* **Distribution**(`ansible_facts.distribution`): `Rocky`
-* **Distribution major version**(`ansible_facts.distribution_major_version`): `9`
-* **Distribution release**(`ansible_facts.ansible_distribution_release`): `Blue Onyx`
-* **Package manager**(`ansible_facts.pkg_mgr`): `dnf`
-* **Architecture**(`ansible_facts.architecture`): `x86_64`
-* **Kernel**(`ansible_facts.kernel`): `5.14.0-162.6.1.el9_1.0.1.x86_64`
+* `ansible_facts.system`：`Linux`
+* `ansible_facts.os_family`：`RedHat`
+* `ansible_facts.distribution`：`Rocky`
+* `ansible_facts.distribution_major_version`：`9`
+* `ansible_facts.ansible_distribution_release`：`Blue Onyx`
+* `ansible_facts.pkg_mgr`：`dnf`
+* `ansible_facts.architecture`：`x86_64`
+* `ansible_facts.kernel`：`5.14.0-162.6.1.el9_1.0.1.x86_64`
 
 ubuntu
 -------------------
 
-* **System**(`ansible_facts.system`): `Linux`
-* **OS Family**(`ansible_facts.os_family`): `Debian`
-* **Distribution**(`ansible_facts.distribution`): `Ubuntu`
-* **Distribution major version**(`ansible_facts.distribution_major_version`): `22`
-* **Distribution release**(`ansible_facts.ansible_distribution_release`): `jammy`
-* **Package manager**(`ansible_facts.pkg_mgr`): `apt`
-* **Architecture**(`ansible_facts.architecture`): `x86_64`
-* **Kernel**(`ansible_facts.kernel`): `5.15.0-56-generic`
+* `ansible_facts.system`：`Linux`
+* `ansible_facts.os_family`：`Debian`
+* `ansible_facts.distribution`：`Ubuntu`
+* `ansible_facts.distribution_major_version`：`22`
+* `ansible_facts.ansible_distribution_release`：`jammy`
+* `ansible_facts.pkg_mgr`：`apt`
+* `ansible_facts.architecture`：`x86_64`
+* `ansible_facts.kernel`：`5.15.0-56-generic`
 
 
 ---------------
 
-Generated by [ansible-cmdb](https://github.com/fboender/ansible-cmdb) on 2022-12-18 00:13
+Generated by [ansible-cmdb](https://github.com/fboender/ansible-cmdb) on 2022-12-18 00:36
