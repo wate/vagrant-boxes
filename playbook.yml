@@ -29,3 +29,6 @@
         - name: Dump fact data
           ansible.builtin.command:
             cmd: ansible -m setup --tree .vagrant/facts {{ inventory_hostname }}
+        - name: Display Update overview command
+          ansible.builtin.debug:
+            msg: "ansible-cmdb -t orverview.tpl .vagrant/facts/ >overview.md"
