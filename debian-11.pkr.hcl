@@ -10,7 +10,7 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "6"
+  default = "7"
 }
 
 variable "version_patch" {
@@ -32,7 +32,7 @@ source "virtualbox-iso" "bullseye" {
   guest_additions_path = "VBoxGuestAdditions_{{ .Version }}.iso"
   guest_os_type        = "Debian11_64"
   http_directory       = "http"
-  iso_checksum         = "file:http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/SHA256SUMS"
+  iso_checksum         = "file:http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/SHA512SUMS"
   iso_url              = "http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-amd64-netinst.iso"
   shutdown_command     = "echo 'vagrant' | sudo -S /sbin/shutdown -hP now"
   ssh_password         = "vagrant"
