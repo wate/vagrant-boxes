@@ -1,0 +1,125 @@
+---
+# code: lang=ansible
+- name: Setup test
+  hosts: all
+  gather_facts: true
+  become: true
+  roles:
+    - role: common
+    - role: nodejs
+    - role: mariadb
+    - role: php
+    - role: nginx
+    - role: tools
+  tasks:
+    - name: Copy Sample PHP file
+      ansible.builtin.copy:
+        src: index.php
+        dest: /var/www/html/index.php
+        mode: "0644"
+    ## パッケージのテスト
+    - name: Gather the package facts
+      ansible.builtin.package_facts:
+    - name: Assert packages
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.packages['etckeeper']
+          - ansible_facts.packages['ufw']
+          - ansible_facts.packages['sysstat']
+          - ansible_facts.packages['vnstat']
+          - ansible_facts.packages['cron-apt']
+          - ansible_facts.packages['postfix']
+          - ansible_facts.packages['glances']
+          - ansible_facts.packages['ufw']
+          - ansible_facts.packages['glances']
+          - ansible_facts.packages['jc']
+          - ansible_facts.packages['strace']
+          - ansible_facts.packages['jq']
+          - ansible_facts.packages['tig']
+          - ansible_facts.packages['rclone']
+          - ansible_facts.packages['nodejs']
+          - ansible_facts.packages['mariadb-server']
+          - ansible_facts.packages['nginx']
+          - ansible_facts.packages['goaccess']
+          - ansible_facts.packages['php8.2-fpm']
+    ## サービスのテスト
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+    - name: Assert service
+      ansible.builtin.assert:
+        that:
+          # ufw
+          - ansible_facts.services['ufw']
+          - ansible_facts.services['ufw']['state'] == 'running'
+          - ansible_facts.services['ufw']['source'] == 'sysv'
+          # vnstat
+          - ansible_facts.services['vnstat.service']
+          - ansible_facts.services['vnstat.service']['state'] == 'running'
+          - ansible_facts.services['vnstat.service']['status'] == 'enabled'
+          # Nginx
+          - ansible_facts.services['nginx.service']
+          - ansible_facts.services['nginx.service']['state'] == 'running'
+          - ansible_facts.services['nginx.service']['status'] == 'enabled'
+          # MariaDB
+          - ansible_facts.services['mariadb.service']
+          - ansible_facts.services['mariadb.service']['state'] == 'running'
+          - ansible_facts.services['mariadb.service']['status'] == 'enabled'
+          # php-fpm
+          - ansible_facts.services['php8.2-fpm.service']
+          - ansible_facts.services['php8.2-fpm.service']['state'] == 'running'
+          - ansible_facts.services['php8.2-fpm.service']['status'] == 'enabled'
+    ## 待ち受けポートのテスト
+    - name: Gather facts on listening ports
+      community.general.listen_ports_facts:
+        command: ss
+    - name: Set assert variables
+      ansible.builtin.set_fact:
+        listen_tcp_posts: "{{ ansible_facts.tcp_listen | map(attribute='port') | unique | list }}"
+        listen_udp_posts: "{{ ansible_facts.udp_listen | map(attribute='port') | unique | list }}"
+    - name: Assert listen port
+      ansible.builtin.assert:
+        that:
+          # Nginx
+          - 80 in listen_tcp_posts
+          # MariaDB
+          - 3306 in listen_tcp_posts
+    ## PHPモジュールのテスト
+    - name: Gather installed PHP module
+      ansible.builtin.command:
+        cmd: php -m
+      register: result
+    - name: Assert listen port
+      ansible.builtin.assert:
+        that:
+          - "'apcu' in result.stdout_lines"
+          - "'bcmath' in result.stdout_lines"
+          - "'bz2' in result.stdout_lines"
+          - "'curl' in result.stdout_lines"
+          - "'gd' in result.stdout_lines"
+          - "'gettext' in result.stdout_lines"
+          - "'intl' in result.stdout_lines"
+          - "'imagick' in result.stdout_lines"
+          - "'mysqlnd' in result.stdout_lines"
+          - "'sqlite3' in result.stdout_lines"
+          - "'PDO' in result.stdout_lines"
+          - "'pdo_mysql' in result.stdout_lines"
+          - "'pdo_sqlite' in result.stdout_lines"
+          - "'mbstring' in result.stdout_lines"
+          - "'xml' in result.stdout_lines"
+          - "'zip' in result.stdout_lines"
+          - "'Zend OPcache' in result.stdout_lines"
+    ## ufwのテスト
+    - name: Gather ufw status
+      ansible.builtin.shell:
+        cmd: ufw status | jc --ufw
+      register: result
+    - name: Set ufw variable
+      ansible.builtin.set_fact:
+        ufw: "{{ result.stdout | from_json }}"
+    - name: Assert ufw status
+      ansible.builtin.assert:
+        that:
+          - ufw.status == 'active'
+    - name: Output finish message
+      ansible.builtin.debug:
+        msg: Finish setup test

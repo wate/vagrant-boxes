@@ -1,0 +1,63 @@
+---
+# backportsをデフォルトのリリースにしない
+common_repository_enable: false
+#  mroongaリポジトリを追加しない
+mariadb_append_mroonga_repository: false
+# goaccessリポジトリを追加しない
+nginx_append_goaccess_repository: false
+
+
+php_version: "8.2"
+
+nginx_vhosts:
+  # --------------
+  # Simple static site
+  # --------------
+  - name: default
+    default: true
+    server_name: example.com
+    access_log: /var/log/nginx/access.log
+    error_log: /var/log/nginx/error.log
+    document_root: /var/www/html
+    index:
+      - index.html
+      - index.php
+    redirect_hosts:
+      - www.example.com
+    client_max_body_size: 20M
+    locations:
+      - pattern: /favicon.ico
+        content: |
+          access_log off;
+          log_not_found off;
+      - pattern: /robots.txt
+        content: |
+          access_log off;
+          log_not_found off;
+      - pattern: /.well-known/acme-challenge/
+        match_type: ^~
+        content: |
+          default_type "text/plain";
+          alias /var/lib/dehydrated/acme-challenges/;
+      - pattern: /
+        content: try_files $uri $uri/ =404;
+      - pattern: \.php$
+        match_type: "~"
+        content: |
+          include snippets/fastcgi-php.conf;
+          fastcgi_pass unix:/run/php/php{{ php_version | default('8.2') }}-fpm.sock;
+      - pattern: /\.ht
+        match_type: "~"
+        content: |
+          deny all;
+  # --------------
+  # status page
+  # --------------
+  - name: status
+    server_name: localhost
+    listen: 8080
+    access_log: "off"
+    locations:
+      - pattern: /nginx_status
+        content: |
+          stub_status on;

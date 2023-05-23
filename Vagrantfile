@@ -6,7 +6,7 @@ Vagrant.configure(2) do |config|
     config.vbguest.auto_update = false
   end
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "playbook.yml"
+    ansible.playbook = "overview.yml"
     ansible.groups = {
       "debian_family" => [
         "debian",
@@ -24,8 +24,15 @@ Vagrant.configure(2) do |config|
     debian.vm.box = 'wate/debian-12'
     debian.vm.network :private_network, ip: "192.168.56.101"
     debian.vm.network "forwarded_port", guest: 22, host: 2101, id: "ssh"
+    debian.vm.network "forwarded_port", guest: 80, host: 8080
     debian.vm.provider 'virtualbox' do |v|
       v.name = 'packer_test_debian'
+    end
+    debian.vm.provision "ansible" do |ansible|
+      ansible.playbook = "setup_test.yml"
+      ansible.config_file = "ansible.cfg"
+      ansible.galaxy_role_file = "requirements.yml"
+      ansible.galaxy_roles_path = ".vagrant/provisioners/ansible/roles"
     end
   end
   config.vm.define 'ubuntu' do |ubuntu|
@@ -71,7 +78,7 @@ Vagrant.configure(2) do |config|
   config.trigger.after :provision do |trigger|
     trigger.name = "Generate orverview"
     trigger.run = {
-      inline: "bash -c 'ansible-cmdb --template orverview.tpl .vagrant/facts/ >orverview.md'"
+      inline: "bash -c 'ansible-cmdb --template overview.tpl .vagrant/facts/ >overview.md'"
     }
   end
   config.trigger.after :destroy do |trigger|
