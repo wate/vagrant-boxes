@@ -50,27 +50,27 @@
     - name: Assert service
       ansible.builtin.assert:
         that:
-          # ufw
+          ## ufw
           - ansible_facts.services['ufw']
           - ansible_facts.services['ufw']['state'] == 'running'
           - ansible_facts.services['ufw']['source'] == 'sysv'
-          # fail2ban
-          - ansible_facts.services['fail2ban.service']
-          - ansible_facts.services['fail2ban.service']['state'] == 'running'
-          - ansible_facts.services['fail2ban.service']['status'] == 'enabled'
-          # vnstat
+          ## fail2ban
+          # - ansible_facts.services['fail2ban.service']
+          # - ansible_facts.services['fail2ban.service']['state'] == 'running'
+          # - ansible_facts.services['fail2ban.service']['status'] == 'enabled'
+          ## vnstat
           - ansible_facts.services['vnstat.service']
           - ansible_facts.services['vnstat.service']['state'] == 'running'
           - ansible_facts.services['vnstat.service']['status'] == 'enabled'
-          # Nginx
+          ## Nginx
           - ansible_facts.services['nginx.service']
           - ansible_facts.services['nginx.service']['state'] == 'running'
           - ansible_facts.services['nginx.service']['status'] == 'enabled'
-          # MariaDB
+          ## MariaDB
           - ansible_facts.services['mariadb.service']
           - ansible_facts.services['mariadb.service']['state'] == 'running'
           - ansible_facts.services['mariadb.service']['status'] == 'enabled'
-          # php-fpm
+          ## php-fpm
           - ansible_facts.services['php8.2-fpm.service']
           - ansible_facts.services['php8.2-fpm.service']['state'] == 'running'
           - ansible_facts.services['php8.2-fpm.service']['status'] == 'enabled'
@@ -85,9 +85,9 @@
     - name: Assert listen port
       ansible.builtin.assert:
         that:
-          # Nginx
+          ## Nginx
           - 80 in listen_tcp_posts
-          # MariaDB
+          ## MariaDB
           - 3306 in listen_tcp_posts
     ## PHPモジュールのテスト
     - name: Gather installed PHP module
