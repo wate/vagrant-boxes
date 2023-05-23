@@ -32,6 +32,8 @@
           - ansible_facts.packages['glances']
           - ansible_facts.packages['ufw']
           - ansible_facts.packages['glances']
+          - ansible_facts.packages['fonts-morisawa-bizud-gothic']
+          - ansible_facts.packages['fonts-morisawa-bizud-mincho']
           - ansible_facts.packages['jc']
           - ansible_facts.packages['strace']
           - ansible_facts.packages['jq']
@@ -52,6 +54,10 @@
           - ansible_facts.services['ufw']
           - ansible_facts.services['ufw']['state'] == 'running'
           - ansible_facts.services['ufw']['source'] == 'sysv'
+          # fail2ban
+          - ansible_facts.services['fail2ban.service']
+          - ansible_facts.services['fail2ban.service']['state'] == 'running'
+          - ansible_facts.services['fail2ban.service']['status'] == 'enabled'
           # vnstat
           - ansible_facts.services['vnstat.service']
           - ansible_facts.services['vnstat.service']['state'] == 'running'
