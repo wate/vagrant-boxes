@@ -8,9 +8,9 @@ rm /etc/resolv.conf;
 
 # Delete all Linux headers
 dpkg --list \
-  | awk '{ print $2 }' \
-  | grep 'linux-headers' \
-  | xargs apt-get -y purge;
+    | awk '{ print $2 }' \
+    | grep 'linux-headers' \
+    | xargs apt-get -y purge;
 
 # Remove specific Linux kernels, such as linux-image-3.11.0-15 but
 # keeps the current kernel and does not touch the virtual packages,

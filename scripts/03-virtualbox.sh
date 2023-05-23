@@ -1,6 +1,6 @@
 #!/bin/sh -eux
 
-VBOX_VERSION="`cat .vbox_version`";
+VBOX_VERSION=$(cat .vbox_version);
 
 echo "Virtualbox Tools Version: $VBOX_VERSION";
 
