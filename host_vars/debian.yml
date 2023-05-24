@@ -11,7 +11,7 @@ php_version: "8.2"
 
 nginx_vhosts:
   # --------------
-  # Simple static site
+  # Default site
   # --------------
   - name: default
     default: true
