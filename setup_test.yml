@@ -6,10 +6,12 @@
   become: true
   roles:
     - role: common
+    - role: logrotate
     - role: nodejs
     - role: mariadb
     - role: php
     - role: nginx
+    - role: dehydrated
     - role: tools
   tasks:
     - name: Copy Sample PHP file
@@ -117,7 +119,10 @@
     ## ufwのテスト
     - name: Gather ufw status
       ansible.builtin.shell:
-        cmd: ufw status | jc --ufw
+        cmd: |
+          set -euo pipefail
+          ufw status | jc --ufw
+        executable: /bin/bash
       register: result
     - name: Set ufw variable
       ansible.builtin.set_fact:

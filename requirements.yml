@@ -15,8 +15,11 @@ roles:
   - name: mariadb
     src: https://github.com/wate/ansible-role-mariadb
     version: develop
-  - name: php
-    src: https://github.com/wate/ansible-role-php
+  - name: logrotate
+    src: https://github.com/wate/ansible-role-logrotate
+    version: develop
+  - name: dehydrated
+    src: https://github.com/wate/ansible-role-dehydrated
     version: develop
   - name: tools
     src: https://github.com/wate/ansible-role-tools

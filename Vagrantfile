@@ -78,7 +78,7 @@ Vagrant.configure(2) do |config|
     end
   end
   config.trigger.after :provision do |trigger|
-    trigger.name = "Generate orverview"
+    trigger.name = "Generate overview"
     trigger.run = {
       inline: "bash -c 'ansible-cmdb --template overview.tpl .vagrant/facts/ >overview.md'"
     }

@@ -15,7 +15,7 @@ variable "version_minor" {
 
 variable "version_patch" {
   type    = string
-  default = "0.rc.3"
+  default = "0.rc.4"
 }
 
 source "virtualbox-iso" "bookworm" {
@@ -32,8 +32,8 @@ source "virtualbox-iso" "bookworm" {
   guest_additions_path = "VBoxGuestAdditions_{{ .Version }}.iso"
   guest_os_type        = "Debian_64"
   http_directory       = "http"
-  iso_checksum         = "file:https://cdimage.debian.org/cdimage/bookworm_di_rc3/amd64/iso-cd/SHA512SUMS"
-  iso_url              = "https://cdimage.debian.org/cdimage/bookworm_di_rc3/amd64/iso-cd/debian-bookworm-DI-rc3-amd64-netinst.iso"
+  iso_checksum         = "file:https://cdimage.debian.org/cdimage/bookworm_di_rc4/amd64/iso-cd/SHA512SUMS"
+  iso_url              = "https://cdimage.debian.org/cdimage/bookworm_di_rc4/amd64/iso-cd/debian-bookworm-DI-rc4-amd64-netinst.iso"
   shutdown_command     = "echo 'vagrant' | sudo -S /sbin/shutdown -hP now"
   ssh_password         = "vagrant"
   ssh_port             = 22
