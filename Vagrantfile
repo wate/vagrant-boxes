@@ -7,6 +7,7 @@ Vagrant.configure(2) do |config|
   end
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "overview.yml"
+    ansible.compatibility_mode = "2.0"
     ansible.groups = {
       "debian_family" => [
         "debian",
@@ -31,6 +32,7 @@ Vagrant.configure(2) do |config|
     debian.vm.provision "ansible" do |ansible|
       ansible.playbook = "setup_test.yml"
       ansible.config_file = "ansible.cfg"
+      ansible.compatibility_mode = "2.0"
       ansible.galaxy_role_file = "requirements.yml"
       ansible.galaxy_roles_path = ".vagrant/provisioners/ansible/roles"
     end
