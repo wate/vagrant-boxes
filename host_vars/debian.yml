@@ -1,7 +1,7 @@
 ---
 # backportsをデフォルトのリリースにしない
 common_repository_enable: false
-#  mroongaリポジトリを追加しない
+# mroongaリポジトリを追加しない
 mariadb_append_mroonga_repository: false
 # goaccessリポジトリを追加しない
 nginx_append_goaccess_repository: false
