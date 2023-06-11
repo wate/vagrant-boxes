@@ -15,6 +15,8 @@
     architecture_types:
       x86_64: amd64
       aarch64: arm64
+- name: Reboot
+  ansible.builtin.reboot:
 - name: Stat /etc/init
   ansible.builtin.stat:
     path: /etc/init
@@ -71,7 +73,7 @@
 - name: Add authorized_key
   ansible.posix.authorized_key:
     user: "{{ ansible_facts.user_id }}"
-    key: "{{ lookup('ansible.builtin.url', 'https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub') }}"
+    key: https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub
 ## Debian/pre-virtualbox.sh
 - name: Install dependency packages
   ansible.builtin.apt:
@@ -94,7 +96,7 @@
     path: /tmp/vbox
     state: directory
     mode: "0755"
-- name: Mount iso image
+- name: Mount ISO image
   ansible.posix.mount:
     path: /tmp/vbox
     src: /tmp/VBoxGuestAdditions_{{ vbox_version }}.iso
@@ -102,11 +104,10 @@
     opts: loop
     state: mounted
 - name: Install Guest Additions
-  ansible.builtin.script:
+  ansible.builtin.command:
     cmd: /tmp/vbox/VBoxLinuxAdditions.run
     chdir: /tmp
-    executable: /bin/sh
-- name: Unmount iso image
+- name: Unmount ISO image
   ansible.posix.mount:
     path: /tmp/vbox
     state: unmounted
@@ -114,10 +115,12 @@
   ansible.builtin.file:
     path: /tmp/vbox
     state: absent
-- name: Remove iso image file
+- name: Remove ISO image file
   ansible.builtin.file:
     path: /tmp/VBoxGuestAdditions_{{ vbox_version }}.iso
     state: absent
+- name: Reboot
+  ansible.builtin.reboot:
 - name: Create vagrant shared directory
   ansible.builtin.file:
     path: /vagrant
@@ -141,5 +144,3 @@
   loop: "{{ find_iso_file_result.files }}"
   loop_control:
     label: "{{ item.path }}"
-- name: Reboot
-  ansible.builtin.reboot:

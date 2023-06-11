@@ -1,19 +1,11 @@
 ---
 # code: language=ansible
 - name: Setup Vagrant Image
-  hosts: all
+  hosts: default
   become: true
   gather_facts: false
   vars:
     vbox_version: "{{ lookup('ansible.builtin.pipe', 'VBoxManage --version').split('r')[0] }}"
-  # pre_tasks:
-  #   - name: Fetch Conneton ssh private key
-  #     ansible.builtin.get_url:
-  #       url: "https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant"
-  #       dest: "../files/vagrant"
-  #       mode: "0600"
-  #     become: false
-  #     delegate_to: local
   tasks:
     - name: Gather facts
       ansible.builtin.setup:
