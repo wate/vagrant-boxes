@@ -11,7 +11,7 @@ fi
 
 mkdir -p /tmp/vbox;
 mount -o loop /home/vagrant/${VBOX_ISO} /tmp/vbox;
-sh /tmp/vbox/VBoxLinuxAdditions.run;
+/tmp/vbox/VBoxLinuxAdditions.run;
 umount /tmp/vbox;
 rm -rf /tmp/vbox;
 rm -f $HOME_DIR/*.iso;

@@ -15,7 +15,7 @@ variable "version_minor" {
 
 variable "version_patch" {
   type    = string
-  default = "0.rc.4"
+  default = "0"
 }
 
 source "virtualbox-iso" "bookworm" {
@@ -32,16 +32,16 @@ source "virtualbox-iso" "bookworm" {
   guest_additions_path = "VBoxGuestAdditions_{{ .Version }}.iso"
   guest_os_type        = "Debian_64"
   http_directory       = "http"
-  iso_checksum         = "file:https://cdimage.debian.org/cdimage/bookworm_di_rc4/amd64/iso-cd/SHA512SUMS"
-  iso_url              = "https://cdimage.debian.org/cdimage/bookworm_di_rc4/amd64/iso-cd/debian-bookworm-DI-rc4-amd64-netinst.iso"
+  iso_checksum         = "file:http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/SHA512SUMS"
+  iso_url              = "http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-amd64-netinst.iso"
   shutdown_command     = "echo 'vagrant' | sudo -S /sbin/shutdown -hP now"
   ssh_password         = "vagrant"
   ssh_port             = 22
   ssh_timeout          = "20m"
   ssh_username         = "vagrant"
   vboxmanage = [
-    ["modifyvm", "{{ .Name }}", "--cpus", "1"],
-    ["modifyvm", "{{ .Name }}", "--memory", "1024"],
+    ["modifyvm", "{{ .Name }}", "--cpus", "2"],
+    ["modifyvm", "{{ .Name }}", "--memory", "2048"],
     // @see https://github.com/hashicorp/packer/issues/12118
     ["modifyvm", "{{.Name}}", "--nat-localhostreachable1", "on"]
   ]
@@ -58,15 +58,15 @@ build {
     execute_command   = "echo 'vagrant'|sudo -S bash '{{ .Path }}'"
     expect_disconnect = true
     scripts = [
-      "scripts/debian/pre-base.sh",
-      "scripts/01-base.sh",
-      "scripts/debian/post-base.sh",
-      "scripts/02-vagrant.sh",
-      "scripts/debian/pre-virtualbox.sh",
-      "scripts/03-virtualbox.sh",
-      "scripts/90-cleanup.sh",
-      "scripts/debian/post-cleanup.sh",
-      "scripts/99-minimize.sh"
+      "provision/Debian/pre-base.sh",
+      "provision/01-base.sh",
+      "provision/Debian/post-base.sh",
+      "provision/02-vagrant.sh",
+      "provision/Debian/pre-virtualbox.sh",
+      "provision/03-virtualbox.sh",
+      "provision/90-cleanup.sh",
+      "provision/Debian/post-cleanup.sh",
+      "provision/99-minimize.sh"
     ]
   }
 
