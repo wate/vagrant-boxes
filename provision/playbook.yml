@@ -25,51 +25,49 @@
           - distribution
           - distribution_major_version
           - architecture
-    - name: 01-base.sh
-      block:
-        - name: Modify sshd config
-          ansible.builtin.lineinfile:
-            path: /etc/ssh/sshd_config
-            regexp: "^\\s*{{ item }}"
-            line: "{{ item }} no"
-          loop:
-            - UseDNS
-            - GSSAPIAuthentication
-    - name: 01-base.sh
-      block:
-        - name: Modify sshd config
-          ansible.builtin.lineinfile:
-            path: /etc/ssh/sshd_config
-            regexp: "^\\s*{{ item }}"
-            line: "{{ item }} no"
-          loop:
-            - UseDNS
-            - GSSAPIAuthentication
-    - name: 02-vagrant.sh
-      block:
-        - name: Add authorized_key
-          ansible.posix.authorized_key:
-            user: "{{ ansible_facts.user_id }}"
-            key: "{{ lookup('ansible.builtin.url', 'https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub') }}"
-    - name: debian/pre-virtualbox.sh
-      block:
-        - name: Install dependency packages
-          ansible.builtin.apt:
-            name:
-              - gcc
-              - make
-        - name: Purge xauth package
-          ansible.builtin.apt:
-            name: xauth
-            purge: true
-            autoremove: true
-    - name: 03-virtualbox.sh
-      block:
-        - name: Debug
-          ansible.builtin.debug:
-            var: vbox_version
+    - name: Find pratform variable file
+      ansible.builtin.set_fact:
+        variable_file: "{{ lookup('first_found', params, errors='ignore') }}"
+      vars:
+        params:
+          files:
+            - "{{ ansible_facts.os_family }}/{{ ansible_facts.distribution }}/{{ ansible_facts.distribution_major_version }}.yml"
+            - "{{ ansible_facts.os_family }}/{{ ansible_facts.distribution }}.yml"
+            - "{{ ansible_facts.os_family }}.yml"
+          paths:
+            - vars
+    - name: Include variable file
+      ansible.builtin.include_vars:
+        file: "{{ variable_file }}"
+      when: variable_file | length > 0
+    - name: Find platform task file
+      ansible.builtin.set_fact:
+        include_task_file: "{{ lookup('first_found', params, errors='ignore') }}"
+      vars:
+        params:
+          files:
+            - "{{ ansible_facts.os_family }}/{{ ansible_facts.distribution }}/{{ ansible_facts.distribution_major_version }}.yml"
+            - "{{ ansible_facts.os_family }}/{{ ansible_facts.distribution }}.yml"
+            - "{{ ansible_facts.os_family }}.yml"
+          paths:
+            - tasks
+    - name: Include task file
+      ansible.builtin.include_tasks:
+        file: "{{ include_task_file }}"
+      when: include_task_file | length > 0
   post_tasks:
-    - name: Cleaup packages
-      ansible.builtin.apt:
-        autoremove: true
-        clean: true
+    - name: Find platform task file
+      ansible.builtin.set_fact:
+        include_task_file: "{{ lookup('first_found', params, errors='ignore') }}"
+      vars:
+        params:
+          files:
+            - "{{ ansible_facts.os_family }}/{{ ansible_facts.distribution }}/{{ ansible_facts.distribution_major_version }}.yml"
+            - "{{ ansible_facts.os_family }}/{{ ansible_facts.distribution }}.yml"
+            - "{{ ansible_facts.os_family }}.yml"
+          paths:
+            - post_tasks
+    - name: Include task file
+      ansible.builtin.include_tasks:
+        file: "{{ include_task_file }}"
+      when: include_task_file | length > 0
