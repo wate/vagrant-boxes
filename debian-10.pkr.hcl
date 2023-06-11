@@ -51,7 +51,7 @@ build {
       "provision/01-base.sh",
       "provision/Debian/post-base.sh",
       "provision/02-vagrant.sh",
-      "provision/debian/pre-virtualbox.sh",
+      "provision/Debian/pre-virtualbox.sh",
       "provision/03-virtualbox.sh",
       "provision/90-cleanup.sh",
       "provision/Debian/post-cleanup.sh",

@@ -1,0 +1,145 @@
+---
+## Debian/pre-base.sh
+- name: Update cache and packages
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: true
+- name: Install/update dependency packages
+  ansible.builtin.apt:
+    name: "{{ item }}-{{ architecture_types[ansible_facts['architecture']] }}"
+    state: latest
+  loop:
+    - linux-image
+    - linux-headers
+  vars:
+    architecture_types:
+      x86_64: amd64
+      aarch64: arm64
+- name: Stat /etc/init
+  ansible.builtin.stat:
+    path: /etc/init
+  register: stat_result
+- name: Update package index on boot setting
+  ansible.builtin.blockinfile:
+    path: /etc/init/refresh-apt.conf
+    content: |
+      description "update package index"
+      start on networking
+      task
+      exec /usr/bin/apt-get update
+    mode: "0644"
+    create: true
+  when: stat_result.stat.exists
+## 01-base.sh
+- name: Modify sshd config
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^\\s*{{ item }}"
+    line: "{{ item }} no"
+  loop:
+    - UseDNS
+    - GSSAPIAuthentication
+## Debian/post-base.sh
+- name: Replace sudo secure_path
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    regexp: "^Defaults\\s+secure_path="
+    line: "Defaults\tsecure_path=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\""
+    insertafter: ^Defaults\\s+env_reset
+- name: Disable systemd apt timers/services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: stopped
+    enabled: false
+    masked: true
+    daemon_reload: true
+  loop:
+    - apt-daily
+    - apt-daily-upgrade
+- name: Disable periodic activities of apt
+  ansible.builtin.blockinfile:
+    path: /etc/apt/apt.conf.d/10periodic
+    content: |
+      APT::Periodic::Enable "0";
+      APT::Periodic::Update-Package-Lists "0";
+      APT::Periodic::Download-Upgradeable-Packages "0";
+      APT::Periodic::AutocleanInterval "0";
+      APT::Periodic::Unattended-Upgrade "0";
+    mode: "0644"
+    create: true
+## 02-vagrant.sh
+- name: Add authorized_key
+  ansible.posix.authorized_key:
+    user: "{{ ansible_facts.user_id }}"
+    key: "{{ lookup('ansible.builtin.url', 'https://raw.githubusercontent.com/hashicorp/vagrant/main/keys/vagrant.pub') }}"
+## Debian/pre-virtualbox.sh
+- name: Install dependency packages
+  ansible.builtin.apt:
+    name:
+      - gcc
+      - make
+- name: Purge xauth package
+  ansible.builtin.apt:
+    name: xauth
+    purge: true
+    autoremove: true
+## 03-virtualbox.sh
+- name: Download Guest Additions iso image file
+  ansible.builtin.get_url:
+    url: https://download.virtualbox.org/virtualbox/{{ vbox_version }}/VBoxGuestAdditions_{{ vbox_version }}.iso
+    dest: /tmp/VBoxGuestAdditions_{{ vbox_version }}.iso
+    mode: "0644"
+- name: Create mount point directory
+  ansible.builtin.file:
+    path: /tmp/vbox
+    state: directory
+    mode: "0755"
+- name: Mount iso image
+  ansible.posix.mount:
+    path: /tmp/vbox
+    src: /tmp/VBoxGuestAdditions_{{ vbox_version }}.iso
+    fstype: iso9660
+    opts: loop
+    state: mounted
+- name: Install Guest Additions
+  ansible.builtin.script:
+    cmd: /tmp/vbox/VBoxLinuxAdditions.run
+    chdir: /tmp
+    executable: /bin/sh
+- name: Unmount iso image
+  ansible.posix.mount:
+    path: /tmp/vbox
+    state: unmounted
+- name: Remove mount point directory
+  ansible.builtin.file:
+    path: /tmp/vbox
+    state: absent
+- name: Remove iso image file
+  ansible.builtin.file:
+    path: /tmp/VBoxGuestAdditions_{{ vbox_version }}.iso
+    state: absent
+- name: Create vagrant shared directory
+  ansible.builtin.file:
+    path: /vagrant
+    state: directory
+    mode: "0755"
+## 90-cleanup.sh
+- name: Find Guest Additions iso image  file
+  ansible.builtin.find:
+    name:
+      - VBoxGuestAdditions_*.iso
+      - VBoxGuestAdditions_*.iso.?
+    paths:
+      - /tmp
+      - /home/vagrant
+      - /root
+  register: find_iso_file_result
+- name: Remove iso image file
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ find_iso_file_result.files }}"
+  loop_control:
+    label: "{{ item.path }}"
+- name: Reboot
+  ansible.builtin.reboot:
