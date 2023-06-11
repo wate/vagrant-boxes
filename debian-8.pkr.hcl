@@ -51,7 +51,17 @@ build {
 
   provisioner "shell" {
     execute_command = "echo 'vagrant'|sudo -S bash '{{ .Path }}'"
-    scripts         = ["scripts/debian/pre-base.sh", "scripts/01-base.sh", "scripts/debian/post-base.sh", "scripts/02-vagrant.sh", "scripts/debian/pre-virtualbox.sh", "scripts/03-virtualbox.sh", "scripts/90-cleanup.sh", "scripts/debian/post-cleanup.sh", "scripts/99-minimize.sh"]
+    scripts = [
+      "scripts/debian/pre-base.sh",
+      "scripts/01-base.sh",
+      "scripts/debian/post-base.sh",
+      "scripts/02-vagrant.sh",
+      "scripts/debian/pre-virtualbox.sh",
+      "scripts/03-virtualbox.sh",
+      "scripts/90-cleanup.sh",
+      "scripts/debian/pre-minimize.sh",
+      "scripts/99-minimize.sh"
+    ]
   }
 
   post-processors {
