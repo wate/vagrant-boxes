@@ -32,8 +32,8 @@ source "virtualbox-iso" "bullseye" {
   guest_additions_path = "VBoxGuestAdditions_{{ .Version }}.iso"
   guest_os_type        = "Debian11_64"
   http_directory       = "http"
-  iso_checksum         = "file:http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/SHA512SUMS"
-  iso_url              = "http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-amd64-netinst.iso"
+  iso_checksum         = "file:https://cdimage.debian.org/mirror/cdimage/archive/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/SHA256SUMS"
+  iso_url              = "https://cdimage.debian.org/mirror/cdimage/archive/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-amd64-netinst.iso"
   shutdown_command     = "echo 'vagrant' | sudo -S /sbin/shutdown -hP now"
   ssh_password         = "vagrant"
   ssh_port             = 22
