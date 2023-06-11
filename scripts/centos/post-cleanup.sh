@@ -1,6 +1,6 @@
 #!/bin/bash -eux
 
-MAJOR_VERSION="`sed 's/^.\+ release \([.0-9]\+\).*/\1/' /etc/redhat-release | awk -F. '{print $1}'`";
+MAJOR_VERSION="$(sed 's/^.\+ release \([.0-9]\+\).*/\1/' /etc/redhat-release | awk -F. '{print $1}'))";
 
 # make sure we use dnf on EL 8+
 if [ "$MAJOR_VERSION" -ge 8 ]; then
