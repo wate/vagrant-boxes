@@ -4,6 +4,8 @@
   hosts: all
   gather_facts: true
   become: true
+  vars:
+    common_apt_default_release_backports: false
   roles:
     - role: common
     - role: logrotate
