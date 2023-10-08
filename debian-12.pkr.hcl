@@ -1,3 +1,12 @@
+packer {
+  required_plugins {
+    vagrant = {
+      source  = "github.com/hashicorp/vagrant"
+      version = "~> 1"
+    }
+  }
+}
+
 variable "vagrantcloud_token" {
   type    = string
   default = "${env("VAGRANTCLOUD_TOKEN")}"
@@ -10,7 +19,7 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "1"
+  default = "2"
 }
 
 variable "version_patch" {
