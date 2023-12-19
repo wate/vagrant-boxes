@@ -1,3 +1,12 @@
+packer {
+  required_plugins {
+    virtualbox = {
+      version = "~> 1"
+      source  = "github.com/hashicorp/virtualbox"
+    }
+  }
+}
+
 variable "vagrantcloud_token" {
   type    = string
   default = "${env("VAGRANTCLOUD_TOKEN")}"

@@ -1,11 +1,12 @@
 packer {
   required_plugins {
-    vagrant = {
-      source  = "github.com/hashicorp/vagrant"
+    virtualbox = {
       version = "~> 1"
+      source  = "github.com/hashicorp/virtualbox"
     }
   }
 }
+
 
 variable "vagrantcloud_token" {
   type    = string

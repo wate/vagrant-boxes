@@ -1,8 +1,8 @@
 packer {
   required_plugins {
-    vagrant = {
-      source  = "github.com/hashicorp/vagrant"
+    virtualbox = {
       version = "~> 1"
+      source  = "github.com/hashicorp/virtualbox"
     }
   }
 }
@@ -19,7 +19,7 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "2"
+  default = "4"
 }
 
 variable "version_patch" {
@@ -84,9 +84,9 @@ build {
       output = "debian${var.version_major}.box"
     }
     post-processor "vagrant-cloud" {
-      access_token        = "${var.vagrantcloud_token}"
       box_tag             = "wate/debian-${var.version_major}"
       version             = "${var.version_major}.${var.version_minor}.${var.version_patch}"
+      access_token        = "${var.vagrantcloud_token}"
       version_description = "Debian ${var.version_major}.${var.version_minor} (64bit)日本語環境用"
     }
   }
