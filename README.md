@@ -11,6 +11,12 @@ Requiment
 building Vagrant box
 ----------------------------------
 
+### Debian 12(bookworm)
+
+```
+packer build debian-12.pkr.hcl
+```
+
 ### Debian 11(bullseye)
 
 ```

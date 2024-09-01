@@ -8,13 +8,14 @@
     common_apt_default_release_backports: false
   roles:
     - role: common
-    - role: logrotate
     - role: nodejs
     - role: mariadb
     - role: php
     - role: nginx
     - role: dehydrated
+    - role: logrotate
     - role: tools
+    - role: backup
   tasks:
     - name: Copy Sample PHP file
       ansible.builtin.copy:
@@ -42,6 +43,7 @@
           - ansible_facts.packages['strace']
           - ansible_facts.packages['jq']
           - ansible_facts.packages['tig']
+          - ansible_facts.packages['restic']
           - ansible_facts.packages['rclone']
           - ansible_facts.packages['nodejs']
           - ansible_facts.packages['mariadb-server']
@@ -122,7 +124,7 @@
     - name: Gather ufw status
       ansible.builtin.shell:
         cmd: |
-          set -euo pipefail
+          set -o pipefail
           ufw status | jc --ufw
         executable: /bin/bash
       register: result

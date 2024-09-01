@@ -24,4 +24,7 @@ roles:
   - name: tools
     src: https://github.com/wate/ansible-role-tools
     version: develop
+  - name: backup
+    src: https://github.com/wate/ansible-role-backup
+    version: develop
 collections: []
