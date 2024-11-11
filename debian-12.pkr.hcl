@@ -1,17 +1,24 @@
 packer {
   required_plugins {
+    vagrant = {
+      version = "~> 1"
+      source  = "github.com/hashicorp/vagrant"
+    }
     virtualbox = {
       version = "~> 1"
       source  = "github.com/hashicorp/virtualbox"
     }
   }
 }
-
-variable "vagrantcloud_token" {
+variable "hcp_client_id" {
   type    = string
-  default = "${env("VAGRANTCLOUD_TOKEN")}"
+  default = "${env("HCP_CLIENT_ID")}"
 }
 
+variable "hcp_client_secret" {
+  type    = string
+  default = "${env("HCP_CLIENT_SECRET")}"
+}
 variable "version_major" {
   type    = string
   default = "12"
@@ -19,7 +26,7 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "7"
+  default = "8"
 }
 
 variable "version_patch" {
@@ -83,10 +90,11 @@ build {
     post-processor "vagrant" {
       output = "debian${var.version_major}.box"
     }
-    post-processor "vagrant-cloud" {
+    post-processor "vagrant-registry" {
+      client_id           = "${var.hcp_client_id}"
+      client_secret       = "${var.hcp_client_secret}"
       box_tag             = "wate/debian-${var.version_major}"
       version             = "${var.version_major}.${var.version_minor}.${var.version_patch}"
-      access_token        = "${var.vagrantcloud_token}"
       version_description = "Debian ${var.version_major}.${var.version_minor} (64bit)日本語環境用"
     }
   }
