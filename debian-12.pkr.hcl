@@ -26,7 +26,7 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "9"
+  default = "10"
 }
 
 variable "version_patch" {
@@ -93,6 +93,7 @@ build {
     post-processor "vagrant-registry" {
       client_id           = "${var.hcp_client_id}"
       client_secret       = "${var.hcp_client_secret}"
+      ## https://portal.cloud.hashicorp.com/vagrant/discover/wate/
       box_tag             = "wate/debian-${var.version_major}"
       version             = "${var.version_major}.${var.version_minor}.${var.version_patch}"
       version_description = "Debian ${var.version_major}.${var.version_minor} (64bit)日本語環境用"
