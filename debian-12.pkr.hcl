@@ -19,6 +19,15 @@ variable "hcp_client_secret" {
   type    = string
   default = "${env("HCP_CLIENT_SECRET")}"
 }
+# variable "arch" {
+#   type    = string
+#   default = "amd64"
+# }
+variable "arch" {
+  type    = string
+  default = "arm64"
+}
+
 variable "version_major" {
   type    = string
   default = "12"
@@ -26,12 +35,17 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "10"
+  default = "11"
 }
 
 variable "version_patch" {
   type    = string
   default = "0"
+}
+
+variable "virtualbox_ostype" {
+  type    = string
+  default = "Debian_arm64"
 }
 
 source "virtualbox-iso" "bookworm" {
@@ -46,10 +60,10 @@ source "virtualbox-iso" "bookworm" {
   boot_wait            = "5s"
   disk_size            = 20480
   guest_additions_path = "VBoxGuestAdditions_{{ .Version }}.iso"
-  guest_os_type        = "Debian_64"
+  guest_os_type        = "${var.virtualbox_ostype}"
   http_directory       = "http"
-  iso_checksum         = "file:http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/SHA512SUMS"
-  iso_url              = "http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/amd64/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-amd64-netinst.iso"
+  iso_checksum         = "file:http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/${var.arch}/iso-cd/SHA512SUMS"
+  iso_url              = "http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/${var.arch}/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-${var.arch}-netinst.iso"
   shutdown_command     = "echo 'vagrant' | sudo -S /sbin/shutdown -hP now"
   ssh_password         = "vagrant"
   ssh_port             = 22
