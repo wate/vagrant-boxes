@@ -35,7 +35,7 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "11"
+  default = "12"
 }
 
 variable "version_patch" {
@@ -62,8 +62,8 @@ source "virtualbox-iso" "bookworm" {
   guest_additions_path = "VBoxGuestAdditions_{{ .Version }}.iso"
   guest_os_type        = "${var.virtualbox_ostype}"
   http_directory       = "http"
-  iso_checksum         = "file:http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/${var.arch}/iso-cd/SHA512SUMS"
-  iso_url              = "http://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/${var.arch}/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-${var.arch}-netinst.iso"
+  iso_checksum         = "file:https://cdimage.debian.org/mirror/cdimage/archive/${var.version_major}.${var.version_minor}.${var.version_patch}/${var.arch}/iso-cd/SHA512SUMS"
+  iso_url              = "https://cdimage.debian.org/mirror/cdimage/archive/${var.version_major}.${var.version_minor}.${var.version_patch}/${var.arch}/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-${var.arch}-netinst.iso"
   shutdown_command     = "echo 'vagrant' | sudo -S /sbin/shutdown -hP now"
   ssh_password         = "vagrant"
   ssh_port             = 22
