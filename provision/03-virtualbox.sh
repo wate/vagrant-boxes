@@ -2,7 +2,6 @@
 
 # Get the latest VirtualBox version from LATEST.TXT
 VBOX_VERSION=$(curl -s https://download.virtualbox.org/virtualbox/LATEST.TXT)
-# VBOX_VERSION="7.1.0";
 
 if [ -z "$VBOX_VERSION" ]; then
   echo "Failed to retrieve VirtualBox version" >&2
