@@ -2,6 +2,7 @@
 
 # Get the latest VirtualBox version from LATEST.TXT
 VBOX_VERSION=$(curl -s https://download.virtualbox.org/virtualbox/LATEST.TXT)
+# VBOX_VERSION="7.1.0";
 
 if [ -z "$VBOX_VERSION" ]; then
   echo "Failed to retrieve VirtualBox version" >&2
@@ -18,7 +19,13 @@ fi
 mkdir -p /tmp/vbox;
 mount -o loop $HOME/${VBOX_ISO} /tmp/vbox;
 
-/tmp/vbox/VBoxLinuxAdditions.run;
+ARCH=$(uname -m)
+if [ "$ARCH" = "aarch64" ]; then
+  /tmp/vbox/VBoxLinuxAdditions-arm64.run;
+else
+  /tmp/vbox/VBoxLinuxAdditions.run;
+fi
+
 umount /tmp/vbox;
 rm -f $HOME/*.iso;
 
