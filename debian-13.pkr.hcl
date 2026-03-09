@@ -71,15 +71,20 @@ build {
     ]
   }
 
-  post-processors {
-    post-processor "vagrant" {}
-    post-processor "vagrant-registry" {
-      client_id           = "${var.hcp_client_id}"
-      client_secret       = "${var.hcp_client_secret}"
-      ## https://portal.cloud.hashicorp.com/vagrant/discover/wate/
-      box_tag             = "wate/debian-${var.version_major}"
-      version             = "${var.version_major}.${var.version_minor}.${var.version_patch}"
-      version_description = "Debian ${var.version_major}.${var.version_minor} (64bit)日本語環境用"
-    }
-  }
+  # vagrant-registryへの公開時のみ以下を有効化する。
+  # macOSのgtarが生成する拡張属性（LIBARCHIVE.xattr）により
+  # artificeがmetadata.jsonを認識できない問題があり未解決。
+  # post-processors {
+  #   post-processor "artifice" {
+  #     files = ["output-trixie/package.box"]
+  #   }
+  #   post-processor "vagrant-registry" {
+  #     client_id           = "${var.hcp_client_id}"
+  #     client_secret       = "${var.hcp_client_secret}"
+  #     ## https://portal.cloud.hashicorp.com/vagrant/discover/wate/
+  #     box_tag             = "wate/debian-${var.version_major}"
+  #     version             = "${var.version_major}.${var.version_minor}.${var.version_patch}"
+  #     version_description = "Debian ${var.version_major}.${var.version_minor} (64bit)日本語環境用"
+  #   }
+  # }
 }
