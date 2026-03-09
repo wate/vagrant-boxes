@@ -49,11 +49,21 @@ source "vagrant" "trixie" {
 build {
   sources = ["source.vagrant.trixie"]
 
+  # パッケージ最新化（カーネル更新が発生する可能性があるためexpect_disconnect: trueで切断を許容）
   provisioner "shell" {
     execute_command   = "echo 'vagrant' | sudo -S bash '{{ .Path }}'"
     expect_disconnect = true
     scripts = [
       "provision/bento.sh",
+    ]
+  }
+
+  # リブート後に新カーネルでGuest Additionsをインストールしてからクリーンアップを実行
+  provisioner "shell" {
+    execute_command   = "echo 'vagrant' | sudo -S bash '{{ .Path }}'"
+    expect_disconnect = true
+    scripts = [
+      "provision/03-virtualbox.sh",
       "provision/90-cleanup.sh",
       "provision/Debian/post-cleanup.sh",
       "provision/Debian/pre-minimize.sh",
@@ -62,18 +72,14 @@ build {
   }
 
   post-processors {
-    post-processor "vagrant" {
-      keep_input_artifact = true
-      # provider_override   = "virtualbox"
-      # output = "debian${var.version_major}.box"
+    post-processor "vagrant" {}
+    post-processor "vagrant-registry" {
+      client_id           = "${var.hcp_client_id}"
+      client_secret       = "${var.hcp_client_secret}"
+      ## https://portal.cloud.hashicorp.com/vagrant/discover/wate/
+      box_tag             = "wate/debian-${var.version_major}"
+      version             = "${var.version_major}.${var.version_minor}.${var.version_patch}"
+      version_description = "Debian ${var.version_major}.${var.version_minor} (64bit)日本語環境用"
     }
-    # post-processor "vagrant-registry" {
-    #   client_id           = "${var.hcp_client_id}"
-    #   client_secret       = "${var.hcp_client_secret}"
-    #   ## https://portal.cloud.hashicorp.com/vagrant/discover/wate/
-    #   box_tag             = "wate/debian-${var.version_major}"
-    #   version             = "${var.version_major}.${var.version_minor}.${var.version_patch}"
-    #   version_description = "Debian ${var.version_major}.${var.version_minor} (64bit)日本語環境用"
-    # }
   }
 }
