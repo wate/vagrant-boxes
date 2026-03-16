@@ -4,6 +4,8 @@
 Vagrant.configure(2) do |config|
   config.vm.box_check_update = true
 
+  vm_name = 'packer_test_debian'
+
   # if Vagrant.has_plugin?('vagrant-vbguest')
   #   config.vbguest.auto_update = false
   # end
@@ -13,8 +15,18 @@ Vagrant.configure(2) do |config|
     debian.vm.network "forwarded_port", guest: 22, host: 2101, id: "ssh"
     debian.vm.network "forwarded_port", guest: 80, host: 8081
     debian.vm.provider 'virtualbox' do |v|
-      v.name = 'packer_test_debian'
+      v.name = vm_name
     end
+
+    # VirtualBox管理外の残骸ディレクトリだけを起動前に削除する。
+    debian.trigger.before :up do |trigger|
+      trigger.info = 'Checking stale VirtualBox VM directory...'
+      trigger.run = {
+        path: 'cleanup-vm-dirs.sh',
+        args: ['--name', vm_name]
+      }
+    end
+
     # debian.vm.provision "ansible" do |ansible|
     #   ansible.playbook = "test_setup.yml"
     #   ansible.config_file = "ansible.cfg"
