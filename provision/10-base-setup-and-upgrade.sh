@@ -26,8 +26,13 @@ apt-get -y upgrade
 apt-get -y install openssh-server bzip2 cryptsetup zlib1g-dev wget curl dkms make nfs-common locales-all
 localectl set-locale LANG=ja_JP.UTF-8 LANGUAGE=ja_JP.UTF-8
 
+# 後続のプロビジョニング中にapt-daily系がロックを掴まないよう無効化する。
+systemctl stop apt-daily.timer apt-daily-upgrade.timer apt-daily.service apt-daily-upgrade.service || true
+systemctl disable apt-daily.timer apt-daily-upgrade.timer apt-daily.service apt-daily-upgrade.service || true
+systemctl mask apt-daily.timer apt-daily-upgrade.timer apt-daily.service apt-daily-upgrade.service || true
+
 # パッケージ更新でカーネルが更新された場合に備えてリブートする。
-# 次のプロビジョナー（03-virtualbox.sh）で新カーネル向けに
+# 次のプロビジョナー（40-install-virtualbox-guest-additions.sh）で新カーネル向けに
 # Guest Additionsをビルドするために必要。
 reboot
 

@@ -1,5 +1,0 @@
----
-- name: Cleaup packages
-  ansible.builtin.apt:
-    autoremove: true
-    clean: true

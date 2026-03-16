@@ -1,4 +1,0 @@
----
-- name: Cleaup packages
-  ansible.builtin.dnf:
-    autoremove: true

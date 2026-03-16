@@ -55,20 +55,20 @@ build {
     execute_command   = "echo 'vagrant' | sudo -S bash '{{ .Path }}'"
     expect_disconnect = true
     scripts = [
-      "provision/bento.sh",
+      "provision/10-base-setup-and-upgrade.sh",
     ]
   }
 
-  # リブート後に新カーネルでGuest Additionsをインストールしてからクリーンアップを実行
+  # クリーンアップ後にGuest Additionsを最終実行し、最終イメージに
+  # vboxsfモジュールを確実に残す。
   provisioner "shell" {
     execute_command   = "echo 'vagrant' | sudo -S bash '{{ .Path }}'"
     expect_disconnect = true
     scripts = [
-      "provision/03-virtualbox.sh",
-      "provision/90-cleanup.sh",
-      "provision/Debian/post-cleanup.sh",
-      "provision/Debian/pre-minimize.sh",
-      "provision/99-minimize.sh"
+      "provision/20-remove-vbox-isos.sh",
+      "provision/30-package-prune.sh",
+      "provision/40-install-virtualbox-guest-additions.sh",
+      "provision/50-zero-free-space.sh"
     ]
   }
 

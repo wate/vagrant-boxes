@@ -60,6 +60,8 @@ if ! apt-get install -y "linux-headers-$(uname -r)" 2>/dev/null; then
   echo "Exact kernel headers not found, falling back to ${KERNEL_HEADERS_PACKAGE}..."
   apt-get install -y "${KERNEL_HEADERS_PACKAGE}"
 fi
+# autoremoveで削除されないよう手動インストール済みとしてマークする。
+apt-mark manual "linux-headers-$(uname -r)" || true
 log "Installing build-essential"
 apt-get install -y build-essential
 
@@ -85,4 +87,4 @@ umount /tmp/vbox
 rm -f "${VBOX_ISO_PATH}"
 
 mkdir -p /vagrant
-log "03-virtualbox.sh completed"
+log "40-install-virtualbox-guest-additions.sh completed"

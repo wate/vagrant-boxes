@@ -1,4 +1,0 @@
----
-- name: Cleaup packages
-  ansible.builtin.yum:
-    autoremove: true
