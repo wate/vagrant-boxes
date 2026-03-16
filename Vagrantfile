@@ -8,7 +8,7 @@ Vagrant.configure(2) do |config|
   #   config.vbguest.auto_update = false
   # end
   config.vm.define 'debian' do |debian|
-    debian.vm.box = 'packer_trixie'
+    debian.vm.box = 'wate/debian-13'
     debian.vm.network :private_network, ip: "192.168.56.101"
     debian.vm.network "forwarded_port", guest: 22, host: 2101, id: "ssh"
     debian.vm.network "forwarded_port", guest: 80, host: 8081

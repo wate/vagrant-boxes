@@ -4,6 +4,7 @@
 # Cache objects
 packer_cache/
 output-virtualbox-iso/
+debian-*/
 
 # For built boxes
 *.box

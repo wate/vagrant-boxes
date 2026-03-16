@@ -31,7 +31,7 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "3"
+  default = "4"
 }
 
 variable "version_patch" {
@@ -40,11 +40,12 @@ variable "version_patch" {
 }
 
 source "vagrant" "trixie" {
-  communicator = "ssh"
+  communicator    = "ssh"
   ## https://portal.cloud.hashicorp.com/vagrant/discover/bento/
-  source_path = "bento/debian-13"
-  provider = "virtualbox"
-  add_force = true
+  source_path     = "bento/debian-13"
+  provider        = "virtualbox"
+  add_force       = true
+  output_dir      = "debian-trixie/${var.version_major}.${var.version_minor}"
 }
 build {
   sources = ["source.vagrant.trixie"]
@@ -68,6 +69,15 @@ build {
       "provision/Debian/post-cleanup.sh",
       "provision/Debian/pre-minimize.sh",
       "provision/99-minimize.sh"
+    ]
+  }
+
+  # ビルド後にローカルのvagrant boxとして登録する。
+  # 同名のboxが既に存在する場合は上書きする。
+  post-processor "shell-local" {
+    inline = [
+      "vagrant box add --force wate/debian-${var.version_major} debian-trixie/${var.version_major}.${var.version_minor}/package.box",
+      "rm -rf debian-trixie/${var.version_major}.${var.version_minor}"
     ]
   }
 
