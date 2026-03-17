@@ -22,7 +22,7 @@ Vagrant.configure(2) do |config|
     debian.trigger.before :up do |trigger|
       trigger.info = 'Checking stale VirtualBox VM directory...'
       trigger.run = {
-        path: 'up_before.sh',
+        path: 'up_before_local.sh',
         args: ['--name', vm_name]
       }
     end
