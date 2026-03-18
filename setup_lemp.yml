@@ -22,8 +22,6 @@
         - role_opendkim
     - role: mariadb
       tags: role_mariadb
-    - role: dehydrated
-      tags: role_dehydrated
     - role: nginx
       tags: role_nginx
     - role: php
