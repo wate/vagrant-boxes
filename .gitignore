@@ -29,3 +29,4 @@ debian-*/
 # Ignore all local history of files
 .history
 .ionide
+metadata.yml

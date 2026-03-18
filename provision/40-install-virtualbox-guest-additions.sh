@@ -87,4 +87,9 @@ umount /tmp/vbox
 rm -f "${VBOX_ISO_PATH}"
 
 mkdir -p /vagrant
+
+# Guest Additions ビルドに使った apt キャッシュ・リストを削除する。
+apt-get -y clean
+rm -rf /var/lib/apt/lists/*
+
 log "40-install-virtualbox-guest-additions.sh completed"

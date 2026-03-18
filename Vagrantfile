@@ -10,7 +10,7 @@ Vagrant.configure(2) do |config|
   #   config.vbguest.auto_update = false
   # end
   config.vm.define 'debian' do |debian|
-    debian.vm.box = 'wate/debian-13'
+    debian.vm.box = 'debian-13'
     debian.vm.network :private_network, ip: "192.168.56.101"
     debian.vm.network "forwarded_port", guest: 22, host: 2101, id: "ssh"
     debian.vm.network "forwarded_port", guest: 80, host: 8081
@@ -21,12 +21,8 @@ Vagrant.configure(2) do |config|
     # VirtualBox管理外の残骸ディレクトリだけを起動前に削除する。
     debian.trigger.before :up do |trigger|
       trigger.info = 'Checking stale VirtualBox VM directory...'
-      trigger.run = {
-        path: 'up_before_local.sh',
-        args: ['--name', vm_name]
-      }
+      trigger.run = { path: 'up_before_local.sh' }
     end
-
     # debian.vm.provision "ansible" do |ansible|
     #   ansible.playbook = "test_setup.yml"
     #   ansible.config_file = "ansible.cfg"

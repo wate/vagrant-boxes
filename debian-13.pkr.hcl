@@ -19,9 +19,10 @@ variable "hcp_client_secret" {
   type    = string
   default = "${env("HCP_CLIENT_SECRET")}"
 }
-variable "arch" {
+
+variable "version_codename" {
   type    = string
-  default = "arm64"
+  default = "trixie"
 }
 
 variable "version_major" {
@@ -39,13 +40,18 @@ variable "version_patch" {
   default = "0"
 }
 
+variable "arch" {
+  type    = string
+  default = "arm64"
+}
+
 source "vagrant" "trixie" {
   communicator    = "ssh"
   ## https://portal.cloud.hashicorp.com/vagrant/discover/bento/
-  source_path     = "bento/debian-13"
+  source_path     = "bento/debian-${var.version_major}"
   provider        = "virtualbox"
   add_force       = true
-  output_dir      = "debian-trixie/${var.version_major}.${var.version_minor}"
+  output_dir      = "debian-${var.version_codename}/${var.version_major}.${var.version_minor}"
 }
 build {
   sources = ["source.vagrant.trixie"]
@@ -76,8 +82,9 @@ build {
   # 同名のboxが既に存在する場合は上書きする。
   post-processor "shell-local" {
     inline = [
-      "vagrant box add --force wate/debian-${var.version_major} debian-trixie/${var.version_major}.${var.version_minor}/package.box",
-      "rm -rf debian-trixie/${var.version_major}.${var.version_minor}"
+      "vagrant box add --force debian-${var.version_major} debian-${var.version_codename}/${var.version_major}.${var.version_minor}/package.box",
+      "printf 'version_codename: \"%s\"\\nversion_major: \"%s\"\\nversion_minor: \"%s\"\\nversion_patch: \"%s\"\\narch: \"%s\"\\n' '${var.version_codename}' '${var.version_major}' '${var.version_minor}' '${var.version_patch}' '${var.arch}' > metadata.yml",
+      "rm -rf debian-${var.version_codename}/${var.version_major}.${var.version_minor}"
     ]
   }
 
