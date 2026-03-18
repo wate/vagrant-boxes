@@ -1,0 +1,37 @@
+- name: Setup LEMP Environment
+  hosts: all
+  become: true
+  pre_tasks:
+    - name: Update Debian repository mirror
+      ansible.builtin.replace:
+        path: /etc/apt/sources.list.d/debian.sources
+        regexp: 'http://.*\.debian\.org/debian/'
+        replace: "http://deb.debian.org/debian/"
+        # replace: "http://ftp.jp.debian.org/debian/"
+    - name: Update package cache
+      ansible.builtin.apt:
+        update_cache: true
+  roles:
+    - role: common
+      tags: role_common
+    - role: nodejs
+      tags: role_nodejs
+    - role: opendkim
+      tags:
+        - role_dkim
+        - role_opendkim
+    - role: mariadb
+      tags: role_mariadb
+    - role: dehydrated
+      tags: role_dehydrated
+    - role: nginx
+      tags: role_nginx
+    - role: php
+      tags: role_php
+    - role: tools
+      tags: role_tools
+    - role: logrotate
+      tags: role_logrotate
+    - role: backup
+      tags: role_backup
+  tasks: []

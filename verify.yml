@@ -1,0 +1,22 @@
+- name: Verify LEMP Environment
+  hosts: all
+  become: true
+  tasks:
+    - name: Gather package facts
+      ansible.builtin.package_facts:
+        manager: auto
+    - name: Gather service facts
+      ansible.builtin.service_facts:
+    - name: Gather listening ports facts
+      community.general.listen_ports_facts:
+        command: ss
+    - name: Set test variables from listening ports
+      ansible.builtin.set_fact:
+        listen_tcp_posts: "{{ ansible_facts.tcp_listen | map(attribute='port') | unique | sort | list }}"
+        listen_udp_posts: "{{ ansible_facts.udp_listen | map(attribute='port') | unique | sort | list }}"
+    - name: Get all users
+      ansible.builtin.getent:
+        database: passwd
+    - name: Get all groups
+      ansible.builtin.getent:
+        database: group

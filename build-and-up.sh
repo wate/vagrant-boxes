@@ -16,6 +16,6 @@ vagrant destroy -f || true
 
 # Shared folder mount and Guest Additions state are verified as part of boot.
 echo "[4/4] Booting VM with Vagrant..."
-vagrant up
+time vagrant up
 
 echo "Done: packer build and vagrant up completed successfully."

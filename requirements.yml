@@ -1,0 +1,66 @@
+---
+roles:
+  - name: common
+    src: https://github.com/wate/ansible-role-common
+    version: develop
+  - name: nodejs
+    src: https://github.com/wate/ansible-role-nodejs
+    version: develop
+  - name: opendkim
+    src: https://github.com/wate/ansible-role-opendkim
+    version: develop
+  - name: nginx
+    src: https://github.com/wate/ansible-role-nginx
+    version: develop
+  - name: apache
+    src: https://github.com/wate/ansible-role-apache
+    version: develop
+  - name: php
+    src: https://github.com/wate/ansible-role-php
+    version: develop
+  - name: mariadb
+    src: https://github.com/wate/ansible-role-mariadb
+    version: develop
+  - name: postgresql
+    src: https://github.com/wate/ansible-role-postgresql
+    version: develop
+  - name: dehydrated
+    src: https://github.com/wate/ansible-role-dehydrated
+    version: develop
+  - name: redis
+    src: https://github.com/wate/ansible-role-redis
+    version: develop
+  - name: spamassassin
+    src: https://github.com/wate/ansible-role-spamassassin
+    version: develop
+  - name: mailpit
+    src: https://github.com/wate/ansible-role-mailpit
+    version: develop
+  - name: logdy
+    src: https://github.com/wate/ansible-role-logdy
+    version: develop
+  - name: tools
+    src: https://github.com/wate/ansible-role-tools
+    version: develop
+  - name: logrotate
+    src: https://github.com/wate/ansible-role-logrotate
+    version: develop
+  - name: mackerel_agent
+    src: https://github.com/wate/ansible-role-mackerel_agent
+    version: develop
+  - name: font
+    src: https://github.com/wate/ansible-role-font
+    version: develop
+  - name: backup
+    src: https://github.com/wate/ansible-role-backup
+    version: develop
+  - name: report
+    src: https://github.com/wate/ansible-role-report
+    version: main
+  - name: utils
+    src: https://github.com/wate/ansible-role-utils
+    version: main
+  - name: meilisearch
+    src: https://github.com/wate/ansible-role-meilisearch
+    version: develop
+collections: []

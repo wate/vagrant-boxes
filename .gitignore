@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io
 
+.ansible
+.cache
+
 ### Packer ###
 # Cache objects
 packer_cache/

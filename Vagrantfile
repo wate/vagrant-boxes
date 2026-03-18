@@ -17,18 +17,24 @@ Vagrant.configure(2) do |config|
     debian.vm.provider 'virtualbox' do |v|
       v.name = vm_name
     end
+    ## テスト用にLEMPスタックを構築する。
+    debian.vm.provision "ansible" do |ansible|
+      ansible.playbook = "setup_lemp.yml"
+      ansible.config_file = "ansible.cfg"
+      ansible.compatibility_mode = "2.0"
+      ansible.galaxy_role_file = "requirements.yml"
+      ansible.galaxy_roles_path = ".vagrant/provisioners/ansible/roles"
+    end
+    # debian.vm.provision "ansible" do |ansible|
+    #   ansible.playbook = "verify.yml"
+    #   ansible.config_file = "ansible.cfg"
+    #   ansible.compatibility_mode = "2.0"
+    # end
 
     # VirtualBox管理外の残骸ディレクトリだけを起動前に削除する。
     debian.trigger.before :up do |trigger|
       trigger.info = 'Checking stale VirtualBox VM directory...'
       trigger.run = { path: 'up_before_local.sh' }
     end
-    # debian.vm.provision "ansible" do |ansible|
-    #   ansible.playbook = "test_setup.yml"
-    #   ansible.config_file = "ansible.cfg"
-    #   ansible.compatibility_mode = "2.0"
-    #   ansible.galaxy_role_file = "requirements.yml"
-    #   ansible.galaxy_roles_path = ".vagrant/provisioners/ansible/roles"
-    # end
   end
 end
