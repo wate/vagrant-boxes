@@ -20,3 +20,125 @@
     - name: Get all groups
       ansible.builtin.getent:
         database: group
+    # ===========================
+    # role: common
+    # ===========================
+    - name: Verify Postfix is running
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services['postfix.service'] is defined
+          - ansible_facts.services['postfix.service']['state'] == 'running'
+          - ansible_facts.services['postfix.service']['status'] == 'enabled'
+        fail_msg: "Postfix is not running"
+        success_msg: "Postfix is running"
+    - name: Verify fail2ban is running
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services['fail2ban.service'] is defined
+          - ansible_facts.services['fail2ban.service']['state'] == 'running'
+          - ansible_facts.services['fail2ban.service']['status'] == 'enabled'
+        fail_msg: "fail2ban is not running"
+        success_msg: "fail2ban is running"
+    # ===========================
+    # role: nodejs
+    # ===========================
+    - name: Verify Node.js is installed
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.packages['nodejs'] is defined
+        fail_msg: "Node.js is not installed"
+        success_msg: "Node.js is installed"
+    # ===========================
+    # role: opendkim
+    # ===========================
+    - name: Verify OpenDKIM is running
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services['opendkim.service'] is defined
+          - ansible_facts.services['opendkim.service']['state'] == 'running'
+          - ansible_facts.services['opendkim.service']['status'] == 'enabled'
+        fail_msg: "OpenDKIM is not running"
+        success_msg: "OpenDKIM is running"
+    # ===========================
+    # role: mariadb
+    # ===========================
+    - name: Verify MariaDB is running
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services['mariadb.service'] is defined
+          - ansible_facts.services['mariadb.service']['state'] == 'running'
+          - ansible_facts.services['mariadb.service']['status'] == 'enabled'
+        fail_msg: "MariaDB is not running"
+        success_msg: "MariaDB is running"
+    - name: Verify MariaDB is listening on port 3306
+      ansible.builtin.assert:
+        that:
+          - 3306 in listen_tcp_posts
+        fail_msg: "MariaDB is not listening on port 3306"
+        success_msg: "MariaDB is listening on port 3306"
+    # ===========================
+    # role: nginx
+    # ===========================
+    - name: Verify Nginx is running
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services['nginx.service'] is defined
+          - ansible_facts.services['nginx.service']['state'] == 'running'
+          - ansible_facts.services['nginx.service']['status'] == 'enabled'
+        fail_msg: "Nginx is not running"
+        success_msg: "Nginx is running"
+    - name: Verify Nginx is listening on port 80
+      ansible.builtin.assert:
+        that:
+          - 80 in listen_tcp_posts
+        fail_msg: "Nginx is not listening on port 80"
+        success_msg: "Nginx is listening on port 80"
+    # ===========================
+    # role: php
+    # ===========================
+    - name: Detect PHP-FPM service
+      ansible.builtin.set_fact:
+        php_fpm_service: "{{ ansible_facts.services.keys() | select('match', 'php.*-fpm\\.service') | first | default('') }}"
+    - name: Verify PHP-FPM is running
+      ansible.builtin.assert:
+        that:
+          - php_fpm_service != ''
+          - ansible_facts.services[php_fpm_service]['state'] == 'running'
+          - ansible_facts.services[php_fpm_service]['status'] == 'enabled'
+        fail_msg: "PHP-FPM is not running"
+        success_msg: "PHP-FPM ({{ php_fpm_service }}) is running"
+    # ===========================
+    # role: tools
+    # ===========================
+    - name: Verify tools are installed
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.packages['eza'] is defined
+          - ansible_facts.packages['lnav'] is defined
+          - ansible_facts.packages['restic'] is defined
+          - ansible_facts.packages['ripgrep'] is defined
+        fail_msg: "Required tools are not installed"
+        success_msg: "Required tools are installed"
+    # ===========================
+    # role: logrotate
+    # ===========================
+    - name: Verify logrotate is installed
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.packages['logrotate'] is defined
+        fail_msg: "logrotate is not installed"
+        success_msg: "logrotate is installed"
+    # ===========================
+    # role: backup
+    # ===========================
+    - name: Check backup base directory
+      ansible.builtin.stat:
+        path: /backup
+      register: backup_base_result
+    - name: Verify backup base directory exists
+      ansible.builtin.assert:
+        that:
+          - backup_base_result.stat.exists
+          - backup_base_result.stat.isdir
+        fail_msg: "Backup base directory (/backup) does not exist"
+        success_msg: "Backup base directory (/backup) exists"
