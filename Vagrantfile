@@ -6,9 +6,6 @@ Vagrant.configure(2) do |config|
 
   vm_name = 'packer_test_debian'
 
-  # if Vagrant.has_plugin?('vagrant-vbguest')
-  #   config.vbguest.auto_update = false
-  # end
   config.vm.define 'debian' do |debian|
     debian.vm.box = 'debian-13'
     debian.vm.network :private_network, ip: "192.168.56.101"
@@ -22,7 +19,13 @@ Vagrant.configure(2) do |config|
       trigger.info = 'Checking stale VirtualBox VM directory...'
       trigger.run = { path: 'up_before_local.sh' }
     end
-    ## テスト用にLEMPスタックを構築する。
+    ## Metaデータとの整合性を確認
+    debian.vm.provision "ansible" do |ansible|
+      ansible.playbook = "prepare.yml"
+      ansible.config_file = "ansible.cfg"
+      ansible.compatibility_mode = "2.0"
+    end
+    ## テスト用にLEMPスタックを構築
     debian.vm.provision "ansible" do |ansible|
       ansible.playbook = "setup_lemp.yml"
       ansible.config_file = "ansible.cfg"
@@ -30,7 +33,7 @@ Vagrant.configure(2) do |config|
       ansible.galaxy_role_file = "requirements.yml"
       ansible.galaxy_roles_path = ".vagrant/provisioners/ansible/roles"
     end
-    ## 仮想マシンの構築後に、LEMPスタックが正しく構築されているかを確認するためのPlaybookを実行する。
+    ## LEMPスタックが正しく構築されているかを確認
     debian.vm.provision "ansible" do |ansible|
       ansible.playbook = "verify.yml"
       ansible.config_file = "ansible.cfg"

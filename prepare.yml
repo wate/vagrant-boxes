@@ -1,0 +1,38 @@
+- name: Verify Environment
+  hosts: all
+  become: true
+  tasks:
+    # ===========================
+    # metadata.yml との一致確認
+    # ===========================
+    - name: Load metadata
+      ansible.builtin.include_vars:
+        file: metadata.yml
+    - name: Verify distribution codename
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['distribution_release'] == version_codename
+        fail_msg: "Distribution codename does not match: expected={{ version_codename }}, actual={{ ansible_facts['distribution_release'] }}"
+        success_msg: "Distribution codename matches: {{ version_codename }}"
+    - name: Verify distribution major version
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['distribution_major_version'] == version_major
+        fail_msg: "Distribution major version does not match: expected={{ version_major }}, actual={{ ansible_facts['distribution_major_version'] }}"
+        success_msg: "Distribution major version matches: {{ version_major }}"
+    - name: Verify distribution version
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['distribution_version'] == version_major ~ '.' ~ version_minor
+        fail_msg: "Distribution version does not match: expected={{ version_major }}.{{ version_minor }}, actual={{ ansible_facts['distribution_version'] }}"
+        success_msg: "Distribution version matches: {{ version_major }}.{{ version_minor }}"
+    - name: Verify architecture
+      vars:
+        arch_map:
+          arm64: aarch64
+          amd64: x86_64
+      ansible.builtin.assert:
+        that:
+          - arch_map[arch] == ansible_facts['architecture']
+        fail_msg: "Architecture does not match: expected={{ arch }}, actual={{ ansible_facts['architecture'] }}"
+        success_msg: "Architecture matches: {{ arch }}"
