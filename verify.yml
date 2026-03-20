@@ -1,4 +1,4 @@
-- name: Verify LEMP Environment
+- name: Verify Environment
   hosts: all
   become: true
   tasks:
