@@ -22,7 +22,10 @@ if [ -f /etc/apt/sources.list.d/debian.sources ]; then
     /etc/apt/sources.list.d/debian.sources
 fi
 apt-get -y update
-apt-get -y upgrade
+# full-upgrade は依存関係の変更を伴う更新（例: カーネルメタパッケージの更新に伴う
+# 新規イメージパッケージの導入）も適用する。ベースイメージビルドでは
+# plain upgrade だと held back が残り、セキュリティ更新が入らないため必須。
+apt-get -y full-upgrade
 apt-get -y install openssh-server bzip2 cryptsetup zlib1g-dev wget curl dkms make nfs-common locales
 # 必要なロケールのみ生成する（locales-all の代わり）。
 sed -i 's/^# \(ja_JP.UTF-8\)/\1/' /etc/locale.gen

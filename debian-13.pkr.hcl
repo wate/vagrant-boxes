@@ -32,7 +32,7 @@ variable "version_major" {
 
 variable "version_minor" {
   type    = string
-  default = "4"
+  default = "6"
 }
 
 variable "version_patch" {

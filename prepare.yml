@@ -20,12 +20,14 @@
           - ansible_facts['distribution_major_version'] == version_major
         fail_msg: "Distribution major version does not match: expected={{ version_major }}, actual={{ ansible_facts['distribution_major_version'] }}"
         success_msg: "Distribution major version matches: {{ version_major }}"
+    # full-upgrade によりポイントリリースが進むため、マイナーは指定値以上で検証する。
+    # 例: 13.5 を指定してビルドしても 13.6 に更新されていれば合格。
     - name: Verify distribution version
       ansible.builtin.assert:
         that:
-          - ansible_facts['distribution_version'] == version_major ~ '.' ~ version_minor
-        fail_msg: "Distribution version does not match: expected={{ version_major }}.{{ version_minor }}, actual={{ ansible_facts['distribution_version'] }}"
-        success_msg: "Distribution version matches: {{ version_major }}.{{ version_minor }}"
+          - ansible_facts['distribution_version'] is version(version_major ~ '.' ~ version_minor, '>=')
+        fail_msg: "Distribution version is older than expected: expected>={{ version_major }}.{{ version_minor }}, actual={{ ansible_facts['distribution_version'] }}"
+        success_msg: "Distribution version is current: {{ ansible_facts['distribution_version'] }}"
     - name: Verify architecture
       vars:
         arch_map:
