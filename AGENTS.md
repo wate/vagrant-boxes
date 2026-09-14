@@ -6,7 +6,7 @@ AIエージェント ガイドライン
 プロジェクト目的
 -------------------------
 
-Packer + VirtualBox を使用して Debian 13(trixie) ARM64 の Vagrant box をビルドし、
+Packer + VirtualBox / QEMU を使用して Debian 13(trixie) ARM64 の Vagrant box をビルドし、
 Ansible プロビジョニングで LEMP スタックの動作確認環境を構築・検証するプロジェクトです。
 詳細は [README.md](README.md) を参照してください。
 
@@ -20,7 +20,7 @@ Ansible プロビジョニングで LEMP スタックの動作確認環境を構
 ├ files/                    # プロビジョニング配布ファイル
 ├ .ticket/                  # MD-Ticket チケット管理
 ├ .github/                  # プロセス・インストラクション・スキル
-├ debian-13.pkr.hcl         # Packer テンプレート(Debian 13)
+├ debian-13.pkr.hcl         # Packer テンプレート
 ├ Vagrantfile               # Vagrant VM 設定
 ├ setup_lemp.yml            # LEMP 環境構築 Ansible プレイブック
 ├ prepare.yml               # メタデータ整合確認 Ansible プレイブック
@@ -33,11 +33,15 @@ Ansible プロビジョニングで LEMP スタックの動作確認環境を構
 -------------------------
 
 ```bash
-# Vagrant box ビルド
-packer build -force debian-13.pkr.hcl
+# Vagrant box ビルド（VirtualBox 用）
+packer build -force debian-13-virtualbox.pkr.hcl
+
+# Vagrant box ビルド（QEMU 用）
+packer build -force debian-13-qemu.pkr.hcl
 
 # VM 操作
-vagrant up                  # VM 起動(Ansible プロビジョニング自動実行)
+vagrant up                  # VM 起動(Ansible プロビジョニング自動実行 / VirtualBox)
+vagrant up --provider=qemu  # VM 起動(QEMU)
 vagrant provision           # プロビジョニング再実行
 vagrant destroy -f          # VM 削除
 

@@ -7,6 +7,7 @@
 # Cache objects
 packer_cache/
 output-virtualbox-iso/
+output-*/
 debian-*/
 
 # For built boxes
@@ -33,3 +34,6 @@ debian-*/
 .history
 .ionide
 metadata.yml
+
+### 一時作業用 ###
+.tmp/

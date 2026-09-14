@@ -30,7 +30,7 @@ Apple Silicon を利用する開発者が増える中、このまま VirtualBox 
 ### 前提条件
 
 - 実行環境は Apple Silicon の macOS(既存環境と同じ)で完結させる
-- QEMU 対応のため追加ツールの導入が必要(vagrant-qemu プラグイン等)
+- 追加ツール: QEMU 11.0.3 / vagrant-qemu 0.3.12 / xorriso 1.5.8 は導入済み(2026-08-01 確認)
 
 ### 制約事項
 
@@ -52,23 +52,35 @@ Apple Silicon を利用する開発者が増える中、このまま VirtualBox 
 
 #### 1.1. `debian-13-qemu.pkr.hcl`(新規作成・Packer テンプレート)
 
-QEMU ビルド専用のテンプレートを新規作成する。
+QEMU ビルド専用のテンプレートを新規作成する。**カスタム ISO 方式**(2026-08-01 に方針変更)。
 
 - `required_plugins` に QEMU プラグインを追加する
-- QEMU 用の source を定義する(ISO + preseed から自前ビルド)
+- QEMU 用の source を定義する(カスタム ISO + preseed から自前ビルド)
     - `qemu-system-aarch64` を使用し、EFI ファームウェア(AAVMF)を指定する
+    - boot_command(VNC キー入力)は不使用。カスタム ISO の grub.cfg に preseed/url を直書きする
 - provisioner の scripts は共通スクリプトのみ適用する
     - `20-remove-vbox-isos.sh` と `40-install-virtualbox-guest-additions.sh` は除外(10 / 30 / 50 のみ)
 - post-processor の box 登録名を QEMU 用に変更する(既存 `debian-13` と衝突しない名前)
 - `metadata.yml` 生成は共通(既存の生成処理と同様の処理を追加する)
 - 変数定義(version 系・arch など)は既存ファイルから複製する
 
+#### 1.1.1. `build-custom-iso.sh`(新規作成・追加タスク)
+
+カスタム ISO 生成スクリプト。以下の処理を再現可能に固定する。
+
+- 公式 ISO を展開し、`boot/grub/grub.cfg` の `Install` エントリに preseed/url を直書き(`http://10.0.2.2:8000/preseed.cfg` + `auto=true priority=critical` + `console=ttyS0,115200`)
+- `set default=0` + `set timeout=5` を追加(GRUB 自動起動)
+- xorriso で再パッケージ(UEFI エントリのみ。`-b` を付けない)
+- 生成後に El Torito レポートで UEFI のみを検証
+
 #### 1.5. `http/debian-13/preseed.cfg`(新規作成)
 
-既存 `http/debian-12/preseed.cfg` をベースに debian-13 用を作成する。
+**公式 trixie サンプル**(https://www.debian.org/releases/trixie/example-preseed.txt)をベースに作成する(2026-08-01 に再作成)。
 
-- キーボード設定を固定済みのため、インストール中の対話操作は不要(キーボード問題を回避できる)
-- late_command で vagrant ユーザーの sudo 設定を適用する(既存の debian-12 と同様)
+- インストーラーは英語(en_US.UTF-8 / keymap us)+ `priority=critical` で自動化する
+    - preseed/url では言語を preseed できない(Debian 仕様)ため
+- 最終イメージの日本語化(ロケール ja_JP.UTF-8 生成・設定)は provision が担う
+- late_command で vagrant ユーザーの sudo 設定を適用する
 
 #### 2. `Vagrantfile`
 
@@ -111,10 +123,12 @@ QEMU ビルド専用のテンプレートを新規作成する。
 - Packer テンプレートは2ファイル構成にする
     - `debian-13-virtualbox.pkr.hcl`: 既存 `debian-13.pkr.hcl` をリネーム(内容は変更しない)
     - `debian-13-qemu.pkr.hcl`: 新規作成
-- QEMU source は bento 等の既存 box を使わず、ISO + preseed から自前ビルドする
+- QEMU source は bento 等の既存 box を使わず、カスタム ISO + preseed から自前ビルドする
     - 既存 box は VirtualBox でキーボード入力を受け付けない問題の原因と切り分けできないため使わない
-    - Debian 13 は preseed による自動インストールを公式サポートしている
-    - 既存 `http/debian-12/preseed.cfg` をベースに `http/debian-13/preseed.cfg` を新規作成する
+    - Packer の boot_command(VNC キー入力)は edk2-aarch64 + QEMU で動作しない既知問題があるため、カスタム ISO 方式で回避する
+    - カスタム ISO は `build-custom-iso.sh` で生成する(xorriso 使用・UEFI エントリのみ)
+    - preseed は公式 trixie サンプルをベースに作成する
+    - インストーラーは英語 + `priority=critical` で自動化し、日本語化は provision が担う
 
 期待する成果物
 -------------------------
@@ -133,6 +147,9 @@ QEMU ビルド専用のテンプレートを新規作成する。
 
 - Packer は QEMU builder をサポートしている
 - Vagrant は QEMU(libvirt 経由含む)プロバイダをサポートしている
+- **既知問題**: [Packer cannot send boot commands to QEMU (hashicorp/packer-plugin-qemu#28)](https://github.com/hashicorp/packer-plugin-qemu/issues/28) — edk2-aarch64 ファームウェア + QEMU で VNC キー入力が GRUB に届かない問題。カスタム ISO 方式の採用理由
+- **参考**: [Debian 公式 preseed サンプル (trixie)](https://www.debian.org/releases/trixie/example-preseed.txt) — preseed.cfg のベース
+- **参考**: [Debian Installation Guide - Automating the installation using preseeding](https://www.debian.org/releases/trixie/arm64/apb.en.html) — preseed の仕様(言語は preseed/url では設定不可など)
 
 関連ファイル
 -------------------------
@@ -141,11 +158,11 @@ QEMU ビルド専用のテンプレートを新規作成する。
 
 実際の作業は作業プランを作成した上で開始する。
 
-- 作業プラン - QEMU対応 (`workplan-qemu-support.md` 予定)
-    - 作成日: 未作成
-    - 最終更新: 未作成
-    - 状況: 未着手
-    - 進捗: 0%
+- [作業プラン - QEMU対応](../../workplan-qemu-support.md)
+    - 作成日: 2026-08-01
+    - 最終更新: 2026-08-01
+    - 状況: 進行中(タスク1〜4・6〜7 完了、タスク5・8・9 未着手)
+    - 進捗: 約60%
 
 ### 作業プラン作成時に検討・明確化すべき事項
 
@@ -158,8 +175,12 @@ QEMU ビルド専用のテンプレートを新規作成する。
     - x86_64 対応は対象外
     - libvirt プロバイダ対応は対象外(vagrant-qemu のみ)
     - VirtualBox ビルドの機能変更は対象外(リネームのみ)
-- リスク・既知の課題
-    - preseed でのキーボード問題回避が想定どおり動くかは要検証
-    - `qemu-system-aarch64` + AAVMF のブート構成の初期調整が必要
-    - vagrant-qemu プラグインのネットワーク設定制約
+- ~~リスク・既知の課題(解消済み)~~
+    - ~~preseed でのキーボード問題回避~~ → カスタム ISO 方式で解決済み
+    - ~~`qemu-system-aarch64` + AAVMF のブート構成の初期調整~~ → QEMU 同梱の edk2 で解決済み
+    - ~~vagrant-qemu プラグインのネットワーク設定制約~~ → ポートフォワードのみ方針で解決済み
 - 優先度・期日(任意)
+
+### チェックリスト
+
+- [チェックリスト - QEMU対応](../../checklist-qemu-support.md): 作業完了確認用チェックリスト
