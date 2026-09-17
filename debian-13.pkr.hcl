@@ -42,7 +42,7 @@ variable "arch" {
 }
 
 source "virtualbox-iso" "trixie" {
-  vm_name              = "packer-iso-debian"
+  vm_name              = "packer-debian"
   guest_os_type        = "Debian13_arm64"
   iso_url              = "https://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/${var.arch}/iso-cd/debian-${var.version_major}.${var.version_minor}.${var.version_patch}-${var.arch}-netinst.iso"
   iso_checksum         = "file:https://cdimage.debian.org/debian-cd/${var.version_major}.${var.version_minor}.${var.version_patch}/${var.arch}/iso-cd/SHA256SUMS"

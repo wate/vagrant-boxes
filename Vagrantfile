@@ -7,7 +7,7 @@ Vagrant.configure(2) do |config|
   vm_name = 'packer_test_debian'
 
   config.vm.define 'debian' do |debian|
-    debian.vm.box = 'debian-13-iso'
+    debian.vm.box = 'debian-13'
 
     # SSH: ssh vagrant@127.0.0.1 -p 2101 / HTTP: http://127.0.0.1:8081
     debian.vm.network "forwarded_port", guest: 22, host: 2101, id: "ssh"
