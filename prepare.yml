@@ -21,7 +21,7 @@
         fail_msg: "Distribution major version does not match: expected={{ version_major }}, actual={{ ansible_facts['distribution_major_version'] }}"
         success_msg: "Distribution major version matches: {{ version_major }}"
     # full-upgrade によりポイントリリースが進むため、マイナーは指定値以上で検証する。
-    # 例: 13.5 を指定してビルドしても 13.6 に更新されていれば合格。
+    # 例: 13.7 を指定してビルドしても 13.8 に更新されていれば合格。
     - name: Verify distribution version
       ansible.builtin.assert:
         that:

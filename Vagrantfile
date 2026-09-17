@@ -7,16 +7,14 @@ Vagrant.configure(2) do |config|
   vm_name = 'packer_test_debian'
 
   config.vm.define 'debian' do |debian|
-    debian.vm.box = 'debian-13'
+    debian.vm.box = 'debian-13-iso'
 
-    # 共通のポートフォワード（両プロバイダで利用）
     # SSH: ssh vagrant@127.0.0.1 -p 2101 / HTTP: http://127.0.0.1:8081
     debian.vm.network "forwarded_port", guest: 22, host: 2101, id: "ssh"
     debian.vm.network "forwarded_port", guest: 80, host: 8081
 
     debian.vm.provider 'virtualbox' do |vb, override|
       vb.name = vm_name
-      # VirtualBox host-only ネットワーク（QEMU では定義しない）
       override.vm.network :private_network, ip: "192.168.56.101"
       # VirtualBox管理外の残骸ディレクトリだけを起動前に削除する。
       override.trigger.before :up do |trigger|
